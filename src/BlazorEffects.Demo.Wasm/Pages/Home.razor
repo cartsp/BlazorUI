@@ -1,12 +1,9 @@
 @page "/"
 @using BlazorEffects.MatrixRain
-@using BlazorEffects.GradientWaves
 
 <div class="relative min-h-screen overflow-hidden bg-[#0a0a0a]">
-    @* Hero background effect — Gradient Waves *@
-    <div class="fixed inset-0 z-0 opacity-40">
-        <GradientWaves Colors="_heroColors" Speed="0.3" />
-    </div>
+    @* Hero background — static gradient *@
+    <div class="fixed inset-0 z-0 opacity-40 bg-gradient-to-br from-purple-900/80 via-pink-900/60 to-cyan-900/80"></div>
 
     @* Content layer *@
     <div class="relative z-10">

@@ -48,6 +48,33 @@ jobs:
       - name: Publish BlazorEffects Demo
         run: dotnet publish src/BlazorEffects.Demo.Wasm/BlazorEffects.Demo.Wasm.csproj -c Release -o publish-output
 
+      - name: Fix content-hashed framework files
+        shell: pwsh
+        run: |
+          $frameworkDir = "publish-output/wwwroot/_framework"
+
+          # .NET 10 ignores WasmEnableContentHashing=false — files still get content-hashed names.
+          # index.html references blazor.webassembly.js (unhashed)
+          # blazor.webassembly.js internally loads dotnet.js (unhashed)
+          # Both must exist alongside their hashed originals.
+
+          $copies = @(
+            @{ Pattern = 'blazor.webassembly.*.js'; Target = 'blazor.webassembly.js' },
+            @{ Pattern = 'dotnet.*.js'; Target = 'dotnet.js' }
+          )
+
+          foreach ($entry in $copies) {
+            $hashed = Get-ChildItem "$frameworkDir/$($entry.Pattern)" -Exclude '*.br','*.gz' |
+              Where-Object { $_.Name -notmatch '^dotnet\.(native|runtime)' } |
+              Select-Object -First 1
+            if ($hashed) {
+              Copy-Item $hashed.FullName "$frameworkDir/$($entry.Target)"
+              Write-Host "Copied $($hashed.Name) -> $($entry.Target)"
+            } else {
+              Write-Host "No hashed file matching $($entry.Pattern) — already unhashed or missing"
+            }
+          }
+
       - name: Add .nojekyll
         run: touch publish-output/wwwroot/.nojekyll
 

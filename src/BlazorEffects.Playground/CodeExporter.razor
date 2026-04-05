@@ -1,0 +1,43 @@
+<div class="px-4 py-3">
+    <div class="flex items-center justify-between mb-2">
+        <h3 class="text-xs font-medium uppercase tracking-wider text-white/40">Generated Code</h3>
+        <button @onclick="CopyCode"
+                aria-label="Copy generated code"
+                class="px-3 py-1 text-xs font-medium rounded-md transition-colors duration-150 @GetCopyButtonClass">
+            @_copyLabel
+        </button>
+    </div>
+    <pre class="bg-black/40 rounded-lg p-4 font-mono text-xs text-green-400 overflow-x-auto whitespace-pre border border-white/5 leading-relaxed">@Code</pre>
+</div>
+
+@code {
+    [Parameter] public string Code { get; set; } = "";
+    [Inject] private IJSRuntime JS { get; set; } = default!;
+
+    private string _copyLabel = "Copy";
+    private bool _copied;
+
+    private string GetCopyButtonClass => _copied
+        ? "bg-accent-500/20 text-accent-400"
+        : "bg-white/5 text-white/60 hover:bg-white/10 hover:text-white/80";
+
+    private async Task CopyCode()
+    {
+        try
+        {
+            await JS.InvokeVoidAsync("navigator.clipboard.writeText", Code);
+            _copied = true;
+            _copyLabel = "Copied!";
+            StateHasChanged();
+            await Task.Delay(1500);
+            _copied = false;
+            _copyLabel = "Copy";
+            StateHasChanged();
+        }
+        catch
+        {
+            _copyLabel = "Failed";
+            StateHasChanged();
+        }
+    }
+}

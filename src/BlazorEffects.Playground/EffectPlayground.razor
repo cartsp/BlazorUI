@@ -1,0 +1,133 @@
+@* Main playground page — Studio Console layout *@
+@* Dark-by-default, sidebar + live preview, real-time parameter editing *@
+
+<div class="playground-grid h-screen flex flex-col bg-[#0f172a]">
+    @* Header with effect selector *@
+    <EffectSelector Effects="_effects"
+                    ActiveEffect="_activeDescriptor?.EffectName"
+                    OnEffectSelected="SwitchEffect" />
+
+    @* Main content: sidebar + preview *@
+    <div class="flex flex-1 overflow-hidden">
+        @* Control Panel Sidebar *@
+        <aside class="w-[340px] flex-shrink-0 border-r border-white/10 bg-[#0f172a]/95 backdrop-blur-sm overflow-hidden
+                      max-md:fixed max-md:inset-0 max-md:z-50 max-md:w-full max-md:bg-[#0f172a]/98
+                      @(_panelOpen ? "" : "max-md:hidden")">
+            @* Mobile close button *@
+            <div class="md:hidden flex justify-end p-3">
+                <button @onclick="TogglePanel"
+                        class="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 transition-colors flex items-center justify-center text-white text-sm"
+                        aria-label="Close controls">
+                    ✕
+                </button>
+            </div>
+
+            @if (_activeDescriptor is not null)
+            {
+                <ControlPanel Presets="_activePresets"
+                              ActivePreset="_activePresetName"
+                              OnPresetSelect="ApplyPreset"
+                              Definitions="_parameterDefinitions"
+                              ConfigValues="_configValues"
+                              OnParameterChange="HandleParameterChange"
+                              OnReset="ResetToDefaults"
+                              GeneratedCode="_generatedCode" />
+            }
+        </aside>
+
+        @* Live Preview *@
+        <main class="flex-1 relative bg-black overflow-hidden">
+            @if (_activeDescriptor is not null)
+            {
+                <LivePreview ComponentType="_activeDescriptor.ComponentType"
+                             Parameters="_componentParameters" />
+            }
+            else
+            {
+                <div class="flex items-center justify-center h-full text-white/20 text-lg">
+                    Select an effect to begin
+                </div>
+            }
+
+            @* Mobile panel toggle *@
+            <button @onclick="TogglePanel"
+                    class="md:hidden fixed bottom-6 right-6 z-40 w-12 h-12 rounded-full bg-accent-500 text-white shadow-lg flex items-center justify-center text-xl"
+                    aria-label="Open controls">
+                ⚙
+            </button>
+        </main>
+    </div>
+</div>
+
+@code {
+    [Inject] private IEffectRegistry Registry { get; set; } = default!;
+
+    private IReadOnlyList<IEffectDescriptorAdapter> _effects = [];
+    private IEffectDescriptorAdapter? _activeDescriptor;
+    private IReadOnlyList<EffectPresetView> _activePresets = [];
+    private IReadOnlyList<EffectParameterDefinition> _parameterDefinitions = [];
+    private object _currentConfig = null!;
+    private IDictionary<string, object?> _configValues = new Dictionary<string, object?>();
+    private IDictionary<string, object?> _componentParameters = new Dictionary<string, object?>();
+    private string? _activePresetName;
+    private string _generatedCode = "";
+    private bool _panelOpen = true;
+
+    protected override void OnInitialized()
+    {
+        _effects = Registry.GetAll();
+        if (_effects.Count > 0)
+        {
+            SwitchEffect(_effects[0].EffectName);
+        }
+    }
+
+    private void SwitchEffect(string effectName)
+    {
+        _activeDescriptor = Registry.GetByName(effectName);
+        _activePresets = _activeDescriptor.GetPresets();
+        _parameterDefinitions = _activeDescriptor.GetParameterDefinitions();
+
+        // Start with default config
+        _currentConfig = _activeDescriptor.GetDefaultConfig();
+        _activePresetName = null;
+
+        RefreshState();
+    }
+
+    private void ApplyPreset(string presetName)
+    {
+        var preset = _activePresets.FirstOrDefault(p => p.Name == presetName);
+        if (preset is null) return;
+
+        _currentConfig = preset.Config;
+        _activePresetName = presetName;
+        RefreshState();
+    }
+
+    private void HandleParameterChange((string propertyName, object? value) change)
+    {
+        _currentConfig = _activeDescriptor!.ApplyParameter(_currentConfig, change.propertyName, change.value);
+        _activePresetName = null; // Custom — no preset selected
+        RefreshState();
+    }
+
+    private void ResetToDefaults()
+    {
+        _currentConfig = _activeDescriptor!.GetDefaultConfig();
+        _activePresetName = null;
+        RefreshState();
+    }
+
+    private void RefreshState()
+    {
+        _componentParameters = _activeDescriptor!.BuildComponentParameters(_currentConfig);
+        _configValues = new Dictionary<string, object?>(_componentParameters);
+        _generatedCode = _activeDescriptor.GenerateBlazorMarkup(_currentConfig);
+    }
+
+    private void TogglePanel()
+    {
+        _panelOpen = !_panelOpen;
+    }
+}

@@ -1,0 +1,58 @@
+<div class="py-3 px-4 border-b border-white/5">
+    <label class="block text-sm font-medium text-white/80 mb-2">@Label</label>
+
+    @* Gradient preview bar *@
+    <div class="h-3 rounded-full mb-2"
+         style="background: linear-gradient(90deg, @string.Join(", ", Colors))">
+    </div>
+
+    @* Individual color stops *@
+    <div class="flex flex-wrap items-center gap-2">
+        @for (var i = 0; i < Colors.Length; i++)
+        {
+            var index = i;
+            <div class="flex flex-col items-center gap-0.5">
+                <div class="relative w-6 h-6 rounded border border-white/20 cursor-pointer overflow-hidden">
+                    <div class="absolute inset-0" style="background: @Colors[index]"></div>
+                    <input type="color"
+                           value="@Colors[index]"
+                           @oninput="e => HandleColorChange(index, e)"
+                           aria-label="@($"{Label} color stop {index + 1}")"
+                           class="absolute inset-0 opacity-0 w-full h-full cursor-pointer" />
+                </div>
+                <span class="text-[10px] font-mono text-white/30">@Colors[index][Math.Min(1, Colors[index].Length - 5)..]</span>
+            </div>
+        }
+        <button @onclick="AddColor"
+                class="w-6 h-6 rounded border border-dashed border-white/20 text-white/30 text-xs hover:border-white/40 hover:text-white/60 transition-colors flex items-center justify-center"
+                aria-label="Add color stop">
+            +
+        </button>
+    </div>
+
+    @if (Description is not null)
+    {
+        <p class="text-xs text-white/30 mt-1.5">@Description</p>
+    }
+</div>
+
+@code {
+    [Parameter] public string Label { get; set; } = "";
+    [Parameter] public string[] Colors { get; set; } = ["#0f172a", "#6366f1"];
+    [Parameter] public string? Description { get; set; }
+    [Parameter] public EventCallback<string[]> OnChange { get; set; }
+
+    private async Task HandleColorChange(int index, ChangeEventArgs e)
+    {
+        var newColor = e.Value?.ToString() ?? Colors[index];
+        var newColors = (string[])Colors.Clone();
+        newColors[index] = newColor;
+        await OnChange.InvokeAsync(newColors);
+    }
+
+    private async Task AddColor()
+    {
+        var newColors = Colors.Append("#ffffff").ToArray();
+        await OnChange.InvokeAsync(newColors);
+    }
+}

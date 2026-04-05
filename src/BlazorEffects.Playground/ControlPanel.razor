@@ -1,0 +1,28 @@
+@* Sidebar control panel — scrollable container for presets, parameters, and code export *@
+<div class="flex flex-col h-full overflow-y-auto">
+    <PresetGallery Presets="Presets"
+                   ActivePreset="ActivePreset"
+                   OnSelect="OnPresetSelect" />
+
+    <div class="border-t border-white/5">
+        <ParameterEditor Definitions="Definitions"
+                         ConfigValues="ConfigValues"
+                         OnParameterChange="OnParameterChange"
+                         OnReset="OnReset" />
+    </div>
+
+    <div class="border-t border-white/5">
+        <CodeExporter Code="GeneratedCode" />
+    </div>
+</div>
+
+@code {
+    [Parameter] public IReadOnlyList<EffectPresetView> Presets { get; set; } = [];
+    [Parameter] public string? ActivePreset { get; set; }
+    [Parameter] public EventCallback<string> OnPresetSelect { get; set; }
+    [Parameter] public IReadOnlyList<EffectParameterDefinition> Definitions { get; set; } = [];
+    [Parameter] public IDictionary<string, object?> ConfigValues { get; set; } = new Dictionary<string, object?>();
+    [Parameter] public EventCallback<(string propertyName, object? value)> OnParameterChange { get; set; }
+    [Parameter] public EventCallback OnReset { get; set; }
+    [Parameter] public string GeneratedCode { get; set; } = "";
+}

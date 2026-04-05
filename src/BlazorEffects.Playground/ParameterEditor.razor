@@ -1,0 +1,117 @@
+<div class="px-4 py-3">
+    <div class="flex justify-between items-center mb-3">
+        <h3 class="text-xs font-medium uppercase tracking-wider text-white/40">Parameters</h3>
+        @if (OnReset is not null)
+        {
+            <button @onclick="OnReset"
+                    class="text-xs text-white/30 hover:text-white/60 transition-colors"
+                    aria-label="Reset all parameters to defaults"
+                    title="Reset to defaults">
+                ↺ Reset
+            </button>
+        }
+    </div>
+
+    @foreach (var def in Definitions.OrderBy(d => d.Order))
+    {
+        @switch (def.Type)
+        {
+            case EffectParameterType.Range:
+                <RangeSlider Label="@def.Name"
+                             Value="@GetDoubleValue(def)"
+                             Min="@(def.MinValue ?? 0)"
+                             Max="@(def.MaxValue ?? 1)"
+                             Step="@(def.Step ?? 0.01)"
+                             Description="@def.Description"
+                             OnChange="@((double v) => HandleChange(def, v))" />
+                break;
+
+            case EffectParameterType.Integer:
+                <IntegerInput Label="@def.Name"
+                              Value="@GetIntValue(def)"
+                              Min="@(def.MinValue ?? 0)"
+                              Max="@(def.MaxValue ?? 100)"
+                              Step="@(def.Step ?? 1)"
+                              Description="@def.Description"
+                              OnChange="@((int v) => HandleChange(def, v))" />
+                break;
+
+            case EffectParameterType.Toggle:
+                <ToggleSwitch Label="@def.Name"
+                              Value="@GetBoolValue(def)"
+                              Description="@def.Description"
+                              OnChange="@((bool v) => HandleChange(def, v))" />
+                break;
+
+            case EffectParameterType.Color:
+                <ColorPicker Label="@def.Name"
+                             Value="@GetStringValue(def)"
+                             Description="@def.Description"
+                             OnChange="@((string v) => HandleChange(def, v))" />
+                break;
+
+            case EffectParameterType.ColorArray:
+                <ColorArrayEditor Label="@def.Name"
+                                  Colors="@GetStringArrayValue(def)"
+                                  Description="@def.Description"
+                                  OnChange="@((string[] v) => HandleChange(def, v))" />
+                break;
+
+            case EffectParameterType.Text:
+                <TextInput Label="@def.Name"
+                           Value="@GetStringValue(def)"
+                           Description="@def.Description"
+                           OnChange="@((string v) => HandleChange(def, v))" />
+                break;
+
+            case EffectParameterType.Select:
+                <SelectDropdown Label="@def.Name"
+                                Value="@GetStringValue(def)"
+                                Options="@GetSelectOptions(def)"
+                                Description="@def.Description"
+                                OnChange="@((string v) => HandleChange(def, v))" />
+                break;
+        }
+    }
+</div>
+
+@code {
+    [Parameter] public IReadOnlyList<EffectParameterDefinition> Definitions { get; set; } = [];
+    [Parameter] public IDictionary<string, object?> ConfigValues { get; set; } = new Dictionary<string, object?>();
+    [Parameter] public EventCallback<(string propertyName, object? value)> OnParameterChange { get; set; }
+    [Parameter] public EventCallback? OnReset { get; set; }
+
+    private double GetDoubleValue(EffectParameterDefinition def)
+        => ConfigValues.TryGetValue(def.PropertyName, out var val) && val is double d ? d
+           : def.DefaultValue is double dv ? dv : 0;
+
+    private int GetIntValue(EffectParameterDefinition def)
+        => ConfigValues.TryGetValue(def.PropertyName, out var val) && val is int i ? i
+           : def.DefaultValue is int iv ? iv : 0;
+
+    private bool GetBoolValue(EffectParameterDefinition def)
+        => ConfigValues.TryGetValue(def.PropertyName, out var val) && val is bool b ? b
+           : def.DefaultValue is bool bv && bv;
+
+    private string GetStringValue(EffectParameterDefinition def)
+        => ConfigValues.TryGetValue(def.PropertyName, out var val) && val is string s ? s
+           : def.DefaultValue?.ToString() ?? "";
+
+    private string[] GetStringArrayValue(EffectParameterDefinition def)
+    {
+        if (ConfigValues.TryGetValue(def.PropertyName, out var val) && val is string[] arr)
+            return arr;
+        return def.DefaultValue is string[] darr ? darr : [];
+    }
+
+    private string[] GetSelectOptions(EffectParameterDefinition def)
+    {
+        // For select parameters, provide options based on known property patterns
+        return [GetStringValue(def)];
+    }
+
+    private async Task HandleChange(EffectParameterDefinition def, object value)
+    {
+        await OnParameterChange.InvokeAsync((def.PropertyName, value));
+    }
+}

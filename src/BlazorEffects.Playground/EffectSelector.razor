@@ -1,0 +1,24 @@
+@* Header tab bar for switching between effects *@
+<header class="flex items-center h-12 px-4 bg-[#0f172a]/95 backdrop-blur-sm border-b border-white/10">
+    <span class="text-sm font-semibold text-white/60 tracking-wide mr-4">BlazorEffects Playground</span>
+    <nav class="flex items-center gap-1" aria-label="Effect selector">
+        @foreach (var effect in Effects)
+        {
+            var isActive = effect.EffectName == ActiveEffect;
+            <button @onclick="() => OnEffectSelected.InvokeAsync(effect.EffectName)"
+                    class="px-3 py-1 text-sm rounded-md transition-colors duration-150 @GetTabClass(isActive)">
+                @effect.EffectName
+            </button>
+        }
+    </nav>
+</header>
+
+@code {
+    [Parameter] public IReadOnlyList<IEffectDescriptorAdapter> Effects { get; set; } = [];
+    [Parameter] public string? ActiveEffect { get; set; }
+    [Parameter] public EventCallback<string> OnEffectSelected { get; set; }
+
+    private string GetTabClass(bool isActive) => isActive
+        ? "bg-white/10 text-white"
+        : "text-white/40 hover:text-white/60 hover:bg-white/5";
+}

@@ -11,6 +11,7 @@
     <Project Path="src/BlazorEffects.Particles/BlazorEffects.Particles.csproj" />
     <Project Path="src/BlazorEffects.Aurora/BlazorEffects.Aurora.csproj" />
     <Project Path="src/BlazorEffects.Noise/BlazorEffects.Noise.csproj" />
+    <Project Path="src/BlazorEffects.Playground/BlazorEffects.Playground.csproj" />
   </Folder>
   <Folder Name="/tests/">
     <Project Path="tests/Application.UnitTests/Application.UnitTests.csproj" />
@@ -22,5 +23,6 @@
     <Project Path="tests/BlazorEffects.Particles.Tests/BlazorEffects.Particles.Tests.csproj" />
     <Project Path="tests/BlazorEffects.Aurora.Tests/BlazorEffects.Aurora.Tests.csproj" />
     <Project Path="tests/BlazorEffects.Noise.Tests/BlazorEffects.Noise.Tests.csproj" />
+    <Project Path="tests/BlazorEffects.Playground.Tests/BlazorEffects.Playground.Tests.csproj" />
   </Folder>
 </Solution>

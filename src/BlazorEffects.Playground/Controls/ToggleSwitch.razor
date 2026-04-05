@@ -1,0 +1,36 @@
+<div class="py-3 px-4 border-b border-white/5">
+    <div class="flex justify-between items-center">
+        <label class="text-sm font-medium text-white/80"
+               for="@Id">@Label</label>
+        <button id="@Id"
+                type="button"
+                role="switch"
+                aria-checked="@Value.ToString().ToLowerInvariant()"
+                aria-label="@Label"
+                @onclick="Toggle"
+                class="relative w-10 h-5 rounded-full transition-colors duration-150 focus-visible:ring-2 focus-visible:ring-accent-500 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0f172a] outline-none @GetTrackClass()">
+            <span class="absolute top-0.5 left-0.5 w-4 h-4 rounded-full bg-white shadow-sm transition-transform duration-150 @(Value ? "translate-x-5" : "translate-x-0.5")"></span>
+        </button>
+    </div>
+    @if (Description is not null)
+    {
+        <p class="text-xs text-white/30 mt-1">@Description</p>
+    }
+</div>
+
+@code {
+    [Parameter] public string Id { get; set; } = Guid.NewGuid().ToString("N")[..8];
+    [Parameter] public string Label { get; set; } = "";
+    [Parameter] public bool Value { get; set; }
+    [Parameter] public string? Description { get; set; }
+    [Parameter] public EventCallback<bool> OnChange { get; set; }
+
+    private string GetTrackClass() => Value
+        ? "bg-accent-500"
+        : "bg-white/10";
+
+    private async Task Toggle()
+    {
+        await OnChange.InvokeAsync(!Value);
+    }
+}

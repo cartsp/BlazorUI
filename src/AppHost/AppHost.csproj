@@ -7,6 +7,10 @@
     <ProjectReference Include="..\Presentation\Presentation.csproj" />
     <ProjectReference Include="..\BlazorEffects.MatrixRain\BlazorEffects.MatrixRain.csproj" />
     <ProjectReference Include="..\BlazorEffects.Blobs\BlazorEffects.Blobs.csproj" />
+    <ProjectReference Include="..\BlazorEffects.Particles\BlazorEffects.Particles.csproj" />
+    <ProjectReference Include="..\BlazorEffects.Aurora\BlazorEffects.Aurora.csproj" />
+    <ProjectReference Include="..\BlazorEffects.Noise\BlazorEffects.Noise.csproj" />
+    <ProjectReference Include="..\BlazorEffects.Playground\BlazorEffects.Playground.csproj" />
   </ItemGroup>
 
   <PropertyGroup>

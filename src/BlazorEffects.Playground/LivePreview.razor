@@ -1,0 +1,11 @@
+<div class="relative w-full h-full bg-black">
+    @if (ComponentType is not null && Parameters is not null)
+    {
+        <DynamicComponent Type="ComponentType" Parameters="Parameters" />
+    }
+</div>
+
+@code {
+    [Parameter] public Type? ComponentType { get; set; }
+    [Parameter] public IDictionary<string, object?>? Parameters { get; set; }
+}

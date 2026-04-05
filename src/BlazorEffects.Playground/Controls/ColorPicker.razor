@@ -1,0 +1,36 @@
+<div class="py-3 px-4 border-b border-white/5">
+    <div class="flex justify-between items-center">
+        <label class="text-sm font-medium text-white/80"
+               for="@Id">@Label</label>
+        <div class="flex items-center gap-2">
+            <span class="text-sm font-mono text-accent-400">@Value</span>
+            <div class="relative w-8 h-8 rounded-md border border-white/20 cursor-pointer overflow-hidden">
+                <div class="absolute inset-0" style="background: @Value"></div>
+                <input type="color"
+                       id="@Id"
+                       value="@Value"
+                       @oninput="HandleInput"
+                       aria-label="@($"{Label} color")"
+                       class="absolute inset-0 opacity-0 w-full h-full cursor-pointer" />
+            </div>
+        </div>
+    </div>
+    @if (Description is not null)
+    {
+        <p class="text-xs text-white/30 mt-1">@Description</p>
+    }
+</div>
+
+@code {
+    [Parameter] public string Id { get; set; } = Guid.NewGuid().ToString("N")[..8];
+    [Parameter] public string Label { get; set; } = "";
+    [Parameter] public string Value { get; set; } = "#6366f1";
+    [Parameter] public string? Description { get; set; }
+    [Parameter] public EventCallback<string> OnChange { get; set; }
+
+    private async Task HandleInput(ChangeEventArgs e)
+    {
+        var val = e.Value?.ToString() ?? Value;
+        await OnChange.InvokeAsync(val);
+    }
+}

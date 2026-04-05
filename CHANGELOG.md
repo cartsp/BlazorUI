@@ -7,13 +7,31 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.0] - 2026-04-05
+
 ### Added
+- **Starfield** effect (`BlazorEffects.Starfield`) — warp-speed star field with 3D-to-2D projection (Hyperspace, Warp Drive, Golden Drift, Sparse, Blizzard, Retro Terminal presets)
+- **Fire/Embers** effect (`BlazorEffects.FireEmbers`) — rising flame particles with glowing embers (Campfire, Inferno, Candles, Volcanic, Ethereal, EmberStorm presets)
+- **Ripple** effect (`BlazorEffects.Ripple`) — concentric rings expanding from click/touch points (Classic, Neon, Zen, Raindrops, Sonic presets)
+- **Vortex/Tunnel** effect (`BlazorEffects.VortexTunnel`) — spiraling tunnel with eye-drawing depth (Wormhole, Neon Spiral, Hypnotic, Deep Space, Retro presets)
+- Shared `prefers-reduced-motion` utility in `BlazorEffects.Core` — all effects respect OS/browser accessibility setting
+- `aria-hidden="true"` and `role="presentation"` on all canvas elements
 - Interactive Playground UI with live preview, parameter editor, and code export (`BlazorEffects.Playground`)
 - Effect descriptor abstractions for playground integration (`IEffectDescriptor<TConfig>`)
 - EffectDemoLayout and FPS counter for the demo application
+- GitHub Actions CI/CD pipeline (`build.yml`) — build, test, and format verification on every push/PR
+- GitHub Actions NuGet packaging pipeline (`pack.yml`) — `dotnet pack` on version tags
+- NuGet package metadata configured for all 10 effect libraries + Core + Playground
+- Getting-started guide (`docs/getting-started.md`)
+- API reference scaffold (`docs/api-reference.md`)
+- Performance benchmarks for all 10 effects (`tests/QA/performance-benchmarks.md`)
+- Accessibility audit (`docs/accessibility.md`)
 
 ### Changed
 - MatrixRain demo refactored to use shared EffectDemoLayout
+- All 10 effects now support `prefers-reduced-motion` with Pause/Minimal/Ignore behaviors
+
+[0.3.0]: https://github.com/cartsp/BlazorUI/compare/v0.2.0...v0.3.0
 
 ## [0.2.0] - 2026-04-05
 
@@ -37,6 +55,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - DDD + CQRS architecture foundation (Domain, Application, Infrastructure, Presentation layers)
 - Build script with format verification (`build.sh`)
 
-[Unreleased]: https://github.com/cartsp/BlazorUI/compare/v0.2.0...HEAD
+[Unreleased]: https://github.com/cartsp/BlazorUI/compare/v0.3.0...HEAD
 [0.2.0]: https://github.com/cartsp/BlazorUI/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/cartsp/BlazorUI/releases/tag/v0.1.0

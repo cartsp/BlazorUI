@@ -52,5 +52,8 @@ Use this template for each new effect component. Check off items as they are ver
 | Particle Constellation | [AIE-16](/AIE/issues/AIE-16) | ✅ 12 tests | ✅ 5 tests | ✅ 7 tests | ✅ | Complete |
 | Morphing Gradient Blobs | [AIE-17](/AIE/issues/AIE-17) | ✅ 17 tests | ✅ 6 tests | ✅ 7 tests | ✅ | Complete |
 | Noise Field | [AIE-19](/AIE/issues/AIE-19) | ✅ 19 tests | ✅ 8 tests | ✅ 8 tests | ✅ | Complete |
+| Gradient Waves | [AIE-44](/AIE/issues/AIE-44) | ⚠️ Exists, not QA-verified | ⚠️ Exists, not QA-verified | ⚠️ Exists, not QA-verified | ⚠️ Not QA-verified | **Needs QA Review** |
 
 > **Note:** When adding a new effect component, create a test project at `tests/BlazorEffects.{ComponentName}.Tests/` with the three standard test files. Follow the established pattern from MatrixRain or Blobs.
+
+> ⚠️ **Gradient Waves was added without QA review.** Tests exist (component, config, presets, descriptor) but were not independently verified by QA. This is a process gap — see [AIE-49](/AIE/issues/AIE-49).

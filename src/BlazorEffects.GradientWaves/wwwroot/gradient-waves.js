@@ -77,6 +77,14 @@ function createColorPoint(index, count, canvasWidth, canvasHeight, config) {
 
 export function init(canvas, rawConfig) {
     const config = normalizeConfig(rawConfig);
+
+    // Respect prefers-reduced-motion: freeze animation, render a single static frame
+    const prefersReducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches ?? false;
+    if (prefersReducedMotion) {
+        config.speed = 0;
+        config.targetFps = 1;
+    }
+
     const { width, height } = getCanvasSize(canvas);
 
     // Use a moderate resolution — the blur makes pixel density less critical

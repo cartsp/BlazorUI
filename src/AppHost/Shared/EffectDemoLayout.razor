@@ -1,0 +1,272 @@
+@namespace AppHost.Shared
+@using Microsoft.JSInterop
+@using AppHost.Shared
+
+@implements IAsyncDisposable
+
+@* Zone A: Full-viewport effect content *@
+<div class="fixed inset-0 z-0">
+    @EffectContent
+</div>
+
+@* Zone B: Floating header bar (top-left) *@
+<div class="fixed top-6 left-6 z-50 bg-black/30 backdrop-blur-md rounded-xl px-5 py-3 flex items-center gap-3">
+    <a href="/" class="text-white/60 hover:text-white transition-colors text-sm">
+        &larr; Back
+    </a>
+    <span class="text-white/30">|</span>
+    @if (!string.IsNullOrEmpty(EffectIcon))
+    {
+        <span class="text-lg">@EffectIcon</span>
+    }
+    <h1 class="text-white text-xl font-bold drop-shadow-lg">@EffectName</h1>
+
+    @* FPS badge *@
+    <span class="ml-2 px-2.5 py-0.5 text-xs font-mono font-medium rounded-full @GetFpsBadgeClass(_fpsValue)">
+        @_fpsValue FPS
+    </span>
+</div>
+
+@* Panel toggle button (visible when panel is collapsed) *@
+@if (!_panelOpen)
+{
+    <button @onclick="TogglePanel"
+            class="fixed top-6 right-6 z-50 w-11 h-11 rounded-full bg-white/20 backdrop-blur-md hover:bg-white/30 transition-colors flex items-center justify-center text-white text-lg"
+            aria-label="Open controls">
+        ⚙
+    </button>
+}
+
+@* Zone C: Control panel (right sidebar / mobile bottom sheet) *@
+<div class="@GetPanelClasses()">
+    @* Panel header *@
+    <div class="flex items-center justify-between px-5 pt-5 pb-3">
+        <h2 class="text-white text-sm font-semibold uppercase tracking-wider">Controls</h2>
+        <button @onclick="TogglePanel"
+                class="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 transition-colors flex items-center justify-center text-white text-sm"
+                aria-label="Close controls">
+            ✕
+        </button>
+    </div>
+
+    <div class="flex-1 overflow-y-auto px-5 pb-5 space-y-5">
+        @* Preset selector *@
+        @if (Presets is { Count: > 0 })
+        {
+            <div>
+                <h3 class="text-white/50 text-xs font-medium uppercase tracking-wider mb-2">Presets</h3>
+                <div class="flex flex-wrap gap-2">
+                    @foreach (var preset in Presets)
+                    {
+                        var isActive = preset.Key == CurrentPreset;
+                        <button @onclick="() => OnPresetSelected.InvokeAsync(preset.Key)"
+                                class="px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-200 @GetPresetClasses(isActive)">
+                            @if (!string.IsNullOrEmpty(preset.Icon))
+                            {
+                                <span class="mr-1">@preset.Icon</span>
+                            }
+                            @preset.Label
+                        </button>
+                    }
+                </div>
+            </div>
+        }
+
+        @* Parameter controls *@
+        @if (Parameters is { Count: > 0 })
+        {
+            @foreach (var group in Parameters)
+            {
+                <div>
+                    <h3 class="text-white/50 text-xs font-medium uppercase tracking-wider mb-3">@group.Title</h3>
+                    <div class="space-y-3">
+                        @foreach (var param in group.Parameters)
+                        {
+                            @if (param is ColorParameter colorParam)
+                            {
+                                <div>
+                                    <div class="flex items-center justify-between mb-1">
+                                        <label class="text-sm text-white/70">@colorParam.Label</label>
+                                        <span class="text-xs font-mono text-white/40">@colorParam.Value</span>
+                                    </div>
+                                    <input type="color"
+                                           value="@colorParam.Value"
+                                           @onchange="e => OnParameterChanged.InvokeAsync((param.Name, e.Value?.ToString() ?? colorParam.Value))"
+                                           class="w-full h-10 rounded-lg cursor-pointer bg-transparent border border-white/10" />
+                                </div>
+                            }
+                            else if (param is RangeParameter rangeParam)
+                            {
+                                <div>
+                                    <div class="flex items-center justify-between mb-1">
+                                        <label class="text-sm text-white/70">@rangeParam.Label</label>
+                                        <span class="text-xs font-mono text-white/40">@rangeParam.Value.ToString(rangeParam.Format)</span>
+                                    </div>
+                                    <input type="range"
+                                           min="@rangeParam.Min"
+                                           max="@rangeParam.Max"
+                                           step="@rangeParam.Step"
+                                           value="@rangeParam.Value"
+                                           @onchange="e => OnParameterChanged.InvokeAsync((param.Name, e.Value?.ToString() ?? rangeParam.Value.ToString()))"
+                                           class="w-full accent-white/50 h-2 cursor-pointer" />
+                                    <div class="flex justify-between text-xs text-white/30 mt-0.5">
+                                        <span>@rangeParam.Min</span>
+                                        <span>@rangeParam.Max</span>
+                                    </div>
+                                </div>
+                            }
+                            else if (param is SelectParameter selectParam)
+                            {
+                                <div>
+                                    <label class="block text-sm text-white/70 mb-1">@selectParam.Label</label>
+                                    <select value="@selectParam.Value"
+                                            @onchange="e => OnParameterChanged.InvokeAsync((param.Name, e.Value?.ToString() ?? selectParam.Value))"
+                                            class="w-full bg-white/10 border border-white/20 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:border-white/40">
+                                        @foreach (var option in selectParam.Options)
+                                        {
+                                            <option value="@option.Value" selected="@(option.Value == selectParam.Value)">@option.Label</option>
+                                        }
+                                    </select>
+                                </div>
+                            }
+                        }
+                    </div>
+                </div>
+            }
+        }
+
+        @* Code snippet *@
+        @if (GenerateCode is not null)
+        {
+            var snippet = GenerateCode();
+            <div>
+                <div class="flex items-center justify-between mb-2">
+                    <h3 class="text-white/50 text-xs font-medium uppercase tracking-wider">Blazor Markup</h3>
+                    <button @onclick="() => CopyCode(snippet)"
+                            class="text-xs text-white/40 hover:text-white/70 transition-colors px-2 py-1 rounded bg-white/5 hover:bg-white/10">
+                        @_copyLabel
+                    </button>
+                </div>
+                <pre class="bg-black/40 rounded-lg p-3 text-xs font-mono text-white/80 overflow-x-auto whitespace-pre-wrap leading-relaxed">@snippet</pre>
+            </div>
+        }
+    </div>
+</div>
+
+@* Mobile bottom sheet overlay *@
+@if (_panelOpen)
+{
+    <div class="fixed inset-0 z-30 bg-black/30 md:hidden" @onclick="TogglePanel"></div>
+}
+
+@code {
+    // --- Parameters ---
+
+    [Parameter] public string EffectName { get; set; } = "Effect";
+    [Parameter] public string EffectIcon { get; set; } = "";
+    [Parameter] public List<PresetOption> Presets { get; set; } = [];
+    [Parameter] public string CurrentPreset { get; set; } = "";
+    [Parameter] public EventCallback<string> OnPresetSelected { get; set; }
+    [Parameter] public List<ParameterGroup> Parameters { get; set; } = [];
+    [Parameter] public EventCallback<(string Name, string Value)> OnParameterChanged { get; set; }
+    [Parameter] public Func<string>? GenerateCode { get; set; }
+    [Parameter] public RenderFragment? EffectContent { get; set; }
+
+    // --- State ---
+
+    private bool _panelOpen = true;
+    private int _fpsValue;
+    private string _copyLabel = "Copy";
+    private DotNetObjectReference<EffectDemoLayout>? _dotNetRef;
+    private IJSObjectReference? _fpsModule;
+
+    [Inject] private IJSRuntime JS { get; set; } = default!;
+
+    // --- Lifecycle ---
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            _dotNetRef = DotNetObjectReference.Create(this);
+            _fpsModule = await JS.InvokeAsync<IJSObjectReference>("import", "./js/fps-counter.js");
+            await _fpsModule.InvokeVoidAsync("start", _dotNetRef);
+        }
+    }
+
+    [JSInvokable]
+    public void UpdateFps(int fps)
+    {
+        _fpsValue = fps;
+        StateHasChanged();
+    }
+
+    // --- Actions ---
+
+    private void TogglePanel()
+    {
+        _panelOpen = !_panelOpen;
+    }
+
+    private async Task CopyCode(string code)
+    {
+        try
+        {
+            await JS.InvokeVoidAsync("navigator.clipboard.writeText", code);
+            _copyLabel = "Copied!";
+            StateHasChanged();
+            await Task.Delay(1500);
+            _copyLabel = "Copy";
+            StateHasChanged();
+        }
+        catch
+        {
+            _copyLabel = "Failed";
+            StateHasChanged();
+        }
+    }
+
+    // --- Styling helpers ---
+
+    private string GetFpsBadgeClass(int fps) => fps switch
+    {
+        >= 50 => "bg-green-500/30 text-green-400",
+        >= 30 => "bg-yellow-500/30 text-yellow-400",
+        _ => "bg-red-500/30 text-red-400"
+    };
+
+    private string GetPresetClasses(bool isActive) => isActive
+        ? "bg-white/20 text-white ring-1 ring-white/30"
+        : "bg-white/5 text-white/60 hover:bg-white/10 hover:text-white/80";
+
+    private string GetPanelClasses()
+    {
+        // Desktop: right sidebar. Mobile: bottom sheet.
+        var open = _panelOpen;
+        return $"""
+            fixed z-40 flex flex-col
+            bg-black/60 backdrop-blur-xl rounded-2xl border border-white/10
+            transition-transform duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]
+            max-md:bottom-0 max-md:left-0 max-md:right-0 max-md:h-[60vh] max-md:rounded-b-none
+            {(open ? "max-md:translate-y-0" : "max-md:translate-y-full")}
+            md:top-6 md:right-6 md:bottom-6 md:w-80
+            {(open ? "md:translate-x-0" : "md:translate-x-[calc(100%+1.5rem)]")}
+            """;
+    }
+
+    // --- Disposal ---
+
+    public async ValueTask DisposeAsync()
+    {
+        if (_fpsModule is not null)
+        {
+            try
+            {
+                await _fpsModule.InvokeVoidAsync("stop");
+                await _fpsModule.DisposeAsync();
+            }
+            catch { }
+        }
+        _dotNetRef?.Dispose();
+    }
+}

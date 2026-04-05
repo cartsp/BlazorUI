@@ -8,6 +8,10 @@ using BlazorEffects.Aurora;
 using BlazorEffects.MatrixRain;
 using BlazorEffects.Particles;
 using BlazorEffects.GradientWaves;
+using BlazorEffects.Starfield;
+using BlazorEffects.FireEmbers;
+using BlazorEffects.Ripple;
+using BlazorEffects.VortexTunnel;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
@@ -29,6 +33,14 @@ builder.Services.AddBlazorEffectsPlayground(b => b
         c => BlazorMarkupGenerator.Generate(c, "ParticleConstellation"))
     .AddEffect<GradientWavesConfig, GradientWavesDescriptor>(
         c => BlazorMarkupGenerator.Generate(c, "GradientWaves"))
+    .AddEffect<StarfieldConfig, StarfieldDescriptor>(
+        c => BlazorMarkupGenerator.Generate(c, "Starfield"))
+    .AddEffect<FireEmbersConfig, FireEmbersDescriptor>(
+        c => BlazorMarkupGenerator.Generate(c, "FireEmbers"))
+    .AddEffect<RippleConfig, RippleDescriptor>(
+        c => BlazorMarkupGenerator.Generate(c, "Ripple"))
+    .AddEffect<VortexTunnelConfig, VortexTunnelDescriptor>(
+        c => BlazorMarkupGenerator.Generate(c, "VortexTunnel"))
 );
 
 await builder.Build().RunAsync();

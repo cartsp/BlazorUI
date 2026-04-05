@@ -23,6 +23,10 @@
     <ProjectReference Include="..\BlazorEffects.Blobs\BlazorEffects.Blobs.csproj" />
     <ProjectReference Include="..\BlazorEffects.Noise\BlazorEffects.Noise.csproj" />
     <ProjectReference Include="..\BlazorEffects.GradientWaves\BlazorEffects.GradientWaves.csproj" />
+    <ProjectReference Include="..\BlazorEffects.Starfield\BlazorEffects.Starfield.csproj" />
+    <ProjectReference Include="..\BlazorEffects.FireEmbers\BlazorEffects.FireEmbers.csproj" />
+    <ProjectReference Include="..\BlazorEffects.Ripple\BlazorEffects.Ripple.csproj" />
+    <ProjectReference Include="..\BlazorEffects.VortexTunnel\BlazorEffects.VortexTunnel.csproj" />
   </ItemGroup>
 
 </Project>

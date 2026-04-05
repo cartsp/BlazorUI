@@ -23,9 +23,9 @@ Canvas-powered animations, particle systems, and generative art — packaged as 
     <td align="center"><b>🌈 Aurora Borealis</b></td>
   </tr>
   <tr>
-    <td><img src="screenshots/matrix-rain.svg" alt="Matrix Rain effect - cascading green characters on dark background" width="250"/></td>
-    <td><img src="screenshots/particles.svg" alt="Particle Constellation effect - connected indigo dots with glowing lines" width="250"/></td>
-    <td><img src="screenshots/aurora.svg" alt="Aurora Borealis effect - flowing curtains of green, purple, and cyan light" width="250"/></td>
+    <td><img src="screenshots/matrix-rain.png" alt="Matrix Rain effect - cascading green characters on dark background" width="250"/></td>
+    <td><img src="screenshots/particles.png" alt="Particle Constellation effect - connected indigo dots with glowing lines" width="250"/></td>
+    <td><img src="screenshots/aurora.png" alt="Aurora Borealis effect - flowing curtains of green, purple, and cyan light" width="250"/></td>
   </tr>
   <tr>
     <td align="center"><b>🫧 Morphing Blobs</b></td>
@@ -33,13 +33,13 @@ Canvas-powered animations, particle systems, and generative art — packaged as 
     <td></td>
   </tr>
   <tr>
-    <td><img src="screenshots/blobs.svg" alt="Morphing Blobs effect - organic gradient blobs with smooth color blending" width="250"/></td>
-    <td><img src="screenshots/noise.svg" alt="Noise Field effect - animated simplex noise texture with flowing purple-to-pink gradients" width="250"/></td>
+    <td><img src="screenshots/blobs.png" alt="Morphing Blobs effect - organic gradient blobs with smooth color blending" width="250"/></td>
+    <td><img src="screenshots/noise.png" alt="Noise Field effect - animated simplex noise texture with flowing purple-to-pink gradients" width="250"/></td>
     <td></td>
   </tr>
 </table>
 
-> **Note:** These are static SVG previews. The actual effects are **smooth 60fps canvas animations** — run the Playground to see them in motion.
+> **Note:** These are real screenshots captured from the running BlazorEffects Playground. The actual effects are **smooth 60fps canvas animations** — run the Playground to see them in motion.
 
 ---
 

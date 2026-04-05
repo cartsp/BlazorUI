@@ -40,7 +40,8 @@
             @if (_activeDescriptor is not null)
             {
                 <LivePreview ComponentType="_activeDescriptor.ComponentType"
-                             Parameters="_componentParameters" />
+                             Parameters="_componentParameters"
+                             @key="_activeDescriptor.EffectName" />
             }
             else
             {

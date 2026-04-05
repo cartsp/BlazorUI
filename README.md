@@ -7,11 +7,12 @@
 Canvas-powered animations, particle systems, and generative art — packaged as drop-in Razor Class Libraries.
 
 [![.NET](https://img.shields.io/badge/.NET-8%20%7C%209%20%7C%2010-512bd4?logo=dotnet)](https://dotnet.microsoft.com/)
-[![License](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
+[![NuGet](https://img.shields.io/badge/NuGet-prerelease-blueviolet?logo=nuget)](https://www.nuget.org/packages?q=BlazorEffects)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 [![Build](https://img.shields.io/badge/build-passing-brightgreen)](build.sh)
 [![Live Demo](https://img.shields.io/badge/demo-live-brightgreen?logo=github)](https://cartsp.github.io/BlazorUI/)
 
-**[🎮 Live Demo](https://cartsp.github.io/BlazorUI/)** · [Getting Started](#getting-started) · [Effects](#effects) · [Playground](#playground) · [Architecture](#architecture) · [Contributing](CONTRIBUTING.md)
+**[🎮 Live Demo](https://cartsp.github.io/BlazorUI/)** · [Getting Started](docs/getting-started.md) · [API Reference](docs/api-reference.md) · [Effects](#effects) · [Playground](#playground) · [Architecture](#architecture) · [Contributing](CONTRIBUTING.md)
 
 </div>
 
@@ -69,6 +70,10 @@ Most Blazor UI libraries give you buttons, cards, and forms. That's a solved pro
 | 🫧 **Morphing Blobs** | `BlazorEffects.Blobs` | Organic gradient blobs with smooth morphing |
 | 🌊 **Noise Field** | `BlazorEffects.Noise` | Animated simplex noise textures with flowing motion |
 | 🧿 **Gradient Waves** | `BlazorEffects.GradientWaves` | Smoothly morphing mesh gradient with drifting color points — Stripe-style backgrounds |
+| 🔥 **Fire / Embers** | `BlazorEffects.FireEmbers` | Rising flame particles with glowing embers — campfire aesthetic |
+| ⭐ **Starfield** | `BlazorEffects.Starfield` | Stars flying toward the camera with warp-speed trails |
+| 💧 **Ripple** | `BlazorEffects.Ripple` | Concentric rings expanding from click/auto points with configurable decay |
+| 🌀 **Vortex Tunnel** | `BlazorEffects.VortexTunnel` | Rotating concentric shapes spiraling toward the viewer |
 
 ### Quick Look
 
@@ -88,6 +93,18 @@ Most Blazor UI libraries give you buttons, cards, and forms. That's a solved pro
 
 <!-- Gradient Waves with Stripe preset -->
 <GradientWaves Colors="GradientWavesPresets.Stripe" />
+
+<!-- Fire embers -->
+<FireEmbers Config="FireEmbersPresets.Bonfire" />
+
+<!-- Starfield warp -->
+<Starfield Config="StarfieldPresets.WarpDrive" />
+
+<!-- Click-to-ripple -->
+<Ripple Trigger="click" Color="#a78bfa" />
+
+<!-- Hexagonal vortex tunnel -->
+<VortexTunnel Shape="polygon" PolygonSides="6" />
 ```
 
 ---
@@ -111,6 +128,10 @@ dotnet add package BlazorEffects.Aurora
 dotnet add package BlazorEffects.Blobs
 dotnet add package BlazorEffects.Noise
 dotnet add package BlazorEffects.GradientWaves
+dotnet add package BlazorEffects.FireEmbers
+dotnet add package BlazorEffects.Starfield
+dotnet add package BlazorEffects.Ripple
+dotnet add package BlazorEffects.VortexTunnel
 ```
 
 ### Usage
@@ -184,6 +205,10 @@ BlazorEffects/
 ├── Blobs/
 ├── Noise/
 ├── GradientWaves/
+├── FireEmbers/
+├── Starfield/
+├── Ripple/
+├── VortexTunnel/
 │
 └── Playground/              # Interactive parameter editor UI
 ```
@@ -238,7 +263,10 @@ dotnet format BlazorUI.slnx --verify-no-changes
 ## Roadmap
 
 - [x] ~~Gradient Waves~~ (mesh gradient with drifting color points)
-- [ ] More effects (Starfield, Ripple, Vortex)
+- [x] ~~Fire / Embers~~ (rising flame particles with glowing embers)
+- [x] ~~Starfield~~ (warp-speed stars with trails)
+- [x] ~~Ripple~~ (expanding concentric rings, auto and click-triggered)
+- [x] ~~Vortex Tunnel~~ (spiraling concentric shapes)
 - [ ] WebGL-powered effects for GPU-intensive animations
 - [ ] NuGet package publishing
 - [ ] Interactive documentation site

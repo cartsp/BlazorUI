@@ -5,6 +5,7 @@
     <ProjectReference Include="..\Application\Application.csproj" />
     <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
     <ProjectReference Include="..\Presentation\Presentation.csproj" />
+    <ProjectReference Include="..\BlazorEffects.MatrixRain\BlazorEffects.MatrixRain.csproj" />
   </ItemGroup>
 
   <PropertyGroup>

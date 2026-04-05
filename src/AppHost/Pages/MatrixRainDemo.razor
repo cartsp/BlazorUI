@@ -1,0 +1,79 @@
+@page "/matrix-rain"
+@using BlazorEffects.MatrixRain
+
+<div class="relative">
+    <BlazorEffects.MatrixRain.MatrixRain
+        Height="100vh"
+        TargetFps="30"
+        Characters="@_selectedPreset"
+        FontSize="_fontSize"
+        Color="_color"
+        FadeColor="_fadeColor"
+        Speed="_speed"
+        Density="_density"
+        Opacity="_opacity">
+        <div class="relative z-10 flex flex-col items-center justify-center h-full text-white">
+            <h1 class="text-6xl font-bold mb-4 drop-shadow-lg">Matrix Rain</h1>
+            <p class="text-xl mb-8 drop-shadow-md opacity-80">BlazorEffects animated background component</p>
+
+            <div class="bg-black/60 backdrop-blur-sm rounded-xl p-6 max-w-md w-full mx-4">
+                <h2 class="text-lg font-semibold mb-4 text-green-400">Controls</h2>
+
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm mb-1 text-gray-300">Character Preset</label>
+                        <select @bind="_selectedPreset" class="w-full bg-gray-800 text-white rounded px-3 py-2 border border-gray-600">
+                            <option value="@MatrixRainPresets.Classic">Classic</option>
+                            <option value="@MatrixRainPresets.Katakana">Katakana</option>
+                            <option value="@MatrixRainPresets.Binary">Binary</option>
+                            <option value="@MatrixRainPresets.Hex">Hex</option>
+                            <option value="@MatrixRainPresets.Emojis">Emojis</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm mb-1 text-gray-300">Color: @_color</label>
+                        <input type="color" @bind="_color" class="w-full h-10 rounded cursor-pointer" />
+                    </div>
+
+                    <div>
+                        <label class="block text-sm mb-1 text-gray-300">Fade Color: @_fadeColor</label>
+                        <input type="color" @bind="_fadeColor" class="w-full h-10 rounded cursor-pointer" />
+                    </div>
+
+                    <div>
+                        <label class="block text-sm mb-1 text-gray-300">Speed: @_speed.ToString("F1")</label>
+                        <input type="range" min="0.1" max="3.0" step="0.1" @bind="_speed" class="w-full" />
+                    </div>
+
+                    <div>
+                        <label class="block text-sm mb-1 text-gray-300">Density: @_density.ToString("F1")</label>
+                        <input type="range" min="0.1" max="1.0" step="0.1" @bind="_density" class="w-full" />
+                    </div>
+
+                    <div>
+                        <label class="block text-sm mb-1 text-gray-300">Font Size: @_fontSize</label>
+                        <input type="range" min="8" max="32" step="1" @bind="_fontSize" class="w-full" />
+                    </div>
+
+                    <div>
+                        <label class="block text-sm mb-1 text-gray-300">Opacity: @_opacity.ToString("F1")</label>
+                        <input type="range" min="0.1" max="1.0" step="0.1" @bind="_opacity" class="w-full" />
+                    </div>
+                </div>
+            </div>
+
+            <a href="/" class="mt-6 text-green-400 hover:text-green-300 underline">&larr; Back to Home</a>
+        </div>
+    </BlazorEffects.MatrixRain.MatrixRain>
+</div>
+
+@code {
+    private string _selectedPreset = MatrixRainPresets.Classic;
+    private string _color = "#00ff41";
+    private string _fadeColor = "#003b00";
+    private double _speed = 1.0;
+    private double _density = 1.0;
+    private double _fontSize = 16;
+    private double _opacity = 0.8;
+}

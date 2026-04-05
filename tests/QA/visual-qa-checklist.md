@@ -48,9 +48,9 @@ Use this template for each new effect component. Check off items as they are ver
 | Component | Issue | Component Tests | Config Tests | Presets Tests | Build | Status |
 |-----------|-------|----------------|-------------|---------------|-------|--------|
 | Matrix Rain | [AIE-18](/AIE/issues/AIE-18) | ✅ 10 tests | ✅ 4 tests | ✅ 5 tests | ✅ | Complete |
-| Aurora Borealis | [AIE-14](/AIE/issues/AIE-14) | ✅ 15 tests | ✅ 5 tests | ✅ 7 tests | ✅ | Complete |
-| Particle Constellation | [AIE-16](/AIE/issues/AIE-16) | ✅ 13 tests | ✅ 5 tests | ✅ 7 tests | ✅ | Complete |
-| Morphing Gradient Blobs | [AIE-17](/AIE/issues/AIE-17) | ✅ 16 tests | ✅ 6 tests | ✅ 9 tests | ✅ | Complete |
-| Noise Field | [AIE-19](/AIE/issues/AIE-19) | ⬚ Pending | ⬚ Pending | ⬚ Pending | ⬚ | Queued |
+| Aurora Borealis | [AIE-14](/AIE/issues/AIE-14) | ✅ 16 tests | ✅ 6 tests | ✅ 5 tests | ✅ | Complete |
+| Particle Constellation | [AIE-16](/AIE/issues/AIE-16) | ✅ 12 tests | ✅ 5 tests | ✅ 7 tests | ✅ | Complete |
+| Morphing Gradient Blobs | [AIE-17](/AIE/issues/AIE-17) | ✅ 17 tests | ✅ 6 tests | ✅ 7 tests | ✅ | Complete |
+| Noise Field | [AIE-19](/AIE/issues/AIE-19) | ✅ 19 tests | ✅ 8 tests | ✅ 8 tests | ✅ | Complete |
 
 > **Note:** When adding a new effect component, create a test project at `tests/BlazorEffects.{ComponentName}.Tests/` with the three standard test files. Follow the established pattern from MatrixRain or Blobs.

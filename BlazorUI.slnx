@@ -2,6 +2,9 @@
   <Folder Name="/src/">
     <Project Path="src/AppHost/AppHost.csproj" />
     <Project Path="src/Application/Application.csproj" />
+    <Project Path="src/BlazorEffects.Ripple/BlazorEffects.Ripple.csproj" />
+    <Project Path="src/BlazorEffects.Starfield/BlazorEffects.Starfield.csproj" />
+    <Project Path="src/BlazorEffects.VortexTunnel/BlazorEffects.VortexTunnel.csproj" />
     <Project Path="src/Domain/Domain.csproj" />
     <Project Path="src/Infrastructure/Infrastructure.csproj" />
     <Project Path="src/Presentation/Presentation.csproj" />
@@ -12,11 +15,15 @@
     <Project Path="src/BlazorEffects.Aurora/BlazorEffects.Aurora.csproj" />
     <Project Path="src/BlazorEffects.Noise/BlazorEffects.Noise.csproj" />
     <Project Path="src/BlazorEffects.Demo.Wasm/BlazorEffects.Demo.Wasm.csproj" />
+    <Project Path="src/BlazorEffects.FireEmbers/BlazorEffects.FireEmbers.csproj" />
     <Project Path="src/BlazorEffects.GradientWaves/BlazorEffects.GradientWaves.csproj" />
     <Project Path="src/BlazorEffects.Playground/BlazorEffects.Playground.csproj" />
   </Folder>
   <Folder Name="/tests/">
     <Project Path="tests/Application.UnitTests/Application.UnitTests.csproj" />
+    <Project Path="tests/BlazorEffects.Ripple.Tests/BlazorEffects.Ripple.Tests.csproj" />
+    <Project Path="tests/BlazorEffects.Starfield.Tests/BlazorEffects.Starfield.Tests.csproj" />
+    <Project Path="tests/BlazorEffects.VortexTunnel.Tests/BlazorEffects.VortexTunnel.Tests.csproj" />
     <Project Path="tests/Domain.UnitTests/Domain.UnitTests.csproj" />
     <Project Path="tests/Infrastructure.IntegrationTests/Infrastructure.IntegrationTests.csproj" />
     <Project Path="tests/Presentation.IntegrationTests/Presentation.IntegrationTests.csproj" />
@@ -26,6 +33,7 @@
     <Project Path="tests/BlazorEffects.Aurora.Tests/BlazorEffects.Aurora.Tests.csproj" />
     <Project Path="tests/BlazorEffects.Noise.Tests/BlazorEffects.Noise.Tests.csproj" />
     <Project Path="tests/BlazorEffects.Playground.Tests/BlazorEffects.Playground.Tests.csproj" />
+    <Project Path="tests/BlazorEffects.FireEmbers.Tests/BlazorEffects.FireEmbers.Tests.csproj" />
     <Project Path="tests/BlazorEffects.GradientWaves.Tests/BlazorEffects.GradientWaves.Tests.csproj" />
   </Folder>
 </Solution>

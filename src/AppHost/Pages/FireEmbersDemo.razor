@@ -1,0 +1,117 @@
+@page "/fire-embers"
+@using BlazorEffects.FireEmbers
+
+<div class="relative">
+    <FireEmbers
+        Height="100vh"
+        TargetFps="@_targetFps"
+        ParticleCount="@_particleCount"
+        FlameColor="@_flameColor"
+        EmberColor="@_emberColor"
+        Speed="@_speed"
+        ParticleSize="@_particleSize"
+        Turbulence="@_turbulence"
+        EmberRatio="@_emberRatio"
+        BackgroundColor="@_backgroundColor"
+        Opacity="@_opacity">
+        <div class="relative z-10 flex flex-col items-center justify-center h-full text-white">
+            <h1 class="text-6xl font-bold mb-4 drop-shadow-lg">Fire &amp; Embers</h1>
+            <p class="text-xl mb-8 drop-shadow-md opacity-80">Rising flame particle effect</p>
+
+            <div class="bg-black/60 backdrop-blur-sm rounded-xl p-6 max-w-md w-full mx-4">
+                <h2 class="text-lg font-semibold mb-4 text-orange-400">Controls</h2>
+
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm mb-1 text-gray-300">Preset</label>
+                        <select @bind="_selectedPreset" @bind:event="oninput" class="w-full bg-gray-800 text-white rounded px-3 py-2 border border-gray-600">
+                            <option value="Default">Campfire</option>
+                            <option value="Bonfire">Bonfire</option>
+                            <option value="Candlelight">Candlelight</option>
+                            <option value="Inferno">Inferno</option>
+                            <option value="BlueFlame">Blue Flame</option>
+                            <option value="EmbersOnly">Embers Only</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm mb-1 text-gray-300">Particle Count: @_particleCount</label>
+                        <input type="range" min="20" max="600" step="10" @bind="_particleCount" class="w-full" />
+                    </div>
+
+                    <div>
+                        <label class="block text-sm mb-1 text-gray-300">Particle Size: @_particleSize</label>
+                        <input type="range" min="1" max="10" step="0.5" @bind="_particleSize" class="w-full" />
+                    </div>
+
+                    <div>
+                        <label class="block text-sm mb-1 text-gray-300">Speed: @_speed.ToString("F1")</label>
+                        <input type="range" min="0.2" max="5" step="0.1" @bind="_speed" class="w-full" />
+                    </div>
+
+                    <div>
+                        <label class="block text-sm mb-1 text-gray-300">Turbulence: @_turbulence.ToString("F1")</label>
+                        <input type="range" min="0" max="3" step="0.1" @bind="_turbulence" class="w-full" />
+                    </div>
+
+                    <div>
+                        <label class="block text-sm mb-1 text-gray-300">Ember Ratio: @_emberRatio.ToString("F2")</label>
+                        <input type="range" min="0" max="1" step="0.05" @bind="_emberRatio" class="w-full" />
+                    </div>
+
+                    <div>
+                        <label class="block text-sm mb-1 text-gray-300">Opacity: @_opacity.ToString("F2")</label>
+                        <input type="range" min="0.1" max="1" step="0.05" @bind="_opacity" class="w-full" />
+                    </div>
+
+                    <div>
+                        <label class="block text-sm mb-1 text-gray-300">Target FPS: @_targetFps</label>
+                        <input type="range" min="15" max="120" step="5" @bind="_targetFps" class="w-full" />
+                    </div>
+                </div>
+            </div>
+
+            <a href="/" class="mt-6 text-orange-400 hover:text-orange-300 underline">&larr; Back to Home</a>
+        </div>
+    </FireEmbers>
+</div>
+
+@code {
+    private string _selectedPreset = "Default";
+    private int _particleCount = 200;
+    private string _flameColor = "#ff6600";
+    private string _emberColor = "#ffcc00";
+    private double _speed = 1.5;
+    private double _particleSize = 4.0;
+    private double _turbulence = 1.0;
+    private double _emberRatio = 0.3;
+    private string _backgroundColor = "#0a0a0a";
+    private double _opacity = 0.9;
+    private int _targetFps = 60;
+
+    private FireEmbersConfig _currentPreset => _selectedPreset switch
+    {
+        "Default" => FireEmbersPresets.Default,
+        "Bonfire" => FireEmbersPresets.Bonfire,
+        "Candlelight" => FireEmbersPresets.Candlelight,
+        "Inferno" => FireEmbersPresets.Inferno,
+        "BlueFlame" => FireEmbersPresets.BlueFlame,
+        "EmbersOnly" => FireEmbersPresets.EmbersOnly,
+        _ => FireEmbersPresets.Default
+    };
+
+    protected override void OnParametersSet()
+    {
+        var preset = _currentPreset;
+        _particleCount = preset.ParticleCount;
+        _flameColor = preset.FlameColor;
+        _emberColor = preset.EmberColor;
+        _speed = preset.Speed;
+        _particleSize = preset.ParticleSize;
+        _turbulence = preset.Turbulence;
+        _emberRatio = preset.EmberRatio;
+        _backgroundColor = preset.BackgroundColor;
+        _opacity = preset.Opacity;
+        StateHasChanged();
+    }
+}

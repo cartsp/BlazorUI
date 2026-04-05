@@ -1,0 +1,93 @@
+@inherits BlazorEffects.Core.Animation.EffectComponentBase
+
+<div class="ripple-container" style="position:relative;height:@Height;overflow:hidden;">
+    <canvas @ref="CanvasElement"
+            style="position:absolute;top:0;left:0;width:100%;height:100%;opacity:@Opacity.ToString("F2");">
+    </canvas>
+    @if (ChildContent is not null)
+    {
+        <div class="ripple-overlay @CssClass" style="position:relative;z-index:1;">
+            @ChildContent
+        </div>
+    }
+</div>
+
+@code {
+    /// <summary>
+    /// Maximum number of active ripples.
+    /// </summary>
+    [Parameter] public int MaxRipples { get; set; } = 20;
+
+    /// <summary>
+    /// Maximum radius before a ripple is removed (px).
+    /// </summary>
+    [Parameter] public double MaxRadius { get; set; } = 300;
+
+    /// <summary>
+    /// Expansion speed (px per frame).
+    /// </summary>
+    [Parameter] public double Speed { get; set; } = 3.0;
+
+    /// <summary>
+    /// Ripple stroke color (hex).
+    /// </summary>
+    [Parameter] public string Color { get; set; } = "#60a5fa";
+
+    /// <summary>
+    /// Stroke width of each ripple ring (px).
+    /// </summary>
+    [Parameter] public double LineWidth { get; set; } = 2.0;
+
+    /// <summary>
+    /// Opacity decay rate per frame (0–1).
+    /// </summary>
+    [Parameter] public double Decay { get; set; } = 0.02;
+
+    /// <summary>
+    /// Trigger mode: "auto" or "click".
+    /// </summary>
+    [Parameter] public string Trigger { get; set; } = "auto";
+
+    /// <summary>
+    /// Number of auto-generated ripples.
+    /// </summary>
+    [Parameter] public int AutoRippleCount { get; set; } = 5;
+
+    /// <summary>
+    /// Interval between auto-generated ripples (ms).
+    /// </summary>
+    [Parameter] public int AutoInterval { get; set; } = 800;
+
+    /// <summary>
+    /// Background color (hex or CSS value).
+    /// </summary>
+    [Parameter] public string BackgroundColor { get; set; } = "#0f172a";
+
+    /// <summary>
+    /// Overall effect opacity (0.0–1.0).
+    /// </summary>
+    [Parameter] public double Opacity { get; set; } = 1.0;
+
+    protected override string ModulePath => "./_content/BlazorEffects.Ripple/ripple.js";
+
+    protected override object BuildConfig() => new RippleConfig
+    {
+        MaxRipples = MaxRipples,
+        MaxRadius = MaxRadius,
+        Speed = Speed,
+        Color = Color,
+        LineWidth = LineWidth,
+        Decay = Decay,
+        Trigger = Trigger,
+        AutoRippleCount = AutoRippleCount,
+        AutoInterval = AutoInterval,
+        BackgroundColor = BackgroundColor,
+        Opacity = Opacity,
+        TargetFps = TargetFps
+    };
+
+    protected override string ComputeConfigHash()
+    {
+        return $"{MaxRipples}|{MaxRadius}|{Speed}|{Color}|{LineWidth}|{Decay}|{Trigger}|{AutoRippleCount}|{AutoInterval}|{BackgroundColor}|{Opacity}|{TargetFps}";
+    }
+}

@@ -1,0 +1,75 @@
+@inherits BlazorEffects.Core.Animation.EffectComponentBase
+
+<div class="starfield-container" style="position:relative;height:@Height;overflow:hidden;">
+    <canvas @ref="CanvasElement"
+            style="position:absolute;top:0;left:0;width:100%;height:100%;opacity:@Opacity.ToString("F2");">
+    </canvas>
+    @if (ChildContent is not null)
+    {
+        <div class="starfield-overlay @CssClass" style="position:relative;z-index:1;">
+            @ChildContent
+        </div>
+    }
+</div>
+
+@code {
+    /// <summary>
+    /// Number of stars to render.
+    /// </summary>
+    [Parameter] public int StarCount { get; set; } = 800;
+
+    /// <summary>
+    /// Star fill color (hex).
+    /// </summary>
+    [Parameter] public string StarColor { get; set; } = "#ffffff";
+
+    /// <summary>
+    /// Maximum star radius in px.
+    /// </summary>
+    [Parameter] public double StarSize { get; set; } = 2.0;
+
+    /// <summary>
+    /// Warp speed multiplier.
+    /// </summary>
+    [Parameter] public double Speed { get; set; } = 2.0;
+
+    /// <summary>
+    /// Trail length behind each star (0–1).
+    /// </summary>
+    [Parameter] public double TrailLength { get; set; } = 0.6;
+
+    /// <summary>
+    /// Depth of the star field.
+    /// </summary>
+    [Parameter] public double Depth { get; set; } = 1000;
+
+    /// <summary>
+    /// Background color (hex or CSS value).
+    /// </summary>
+    [Parameter] public string BackgroundColor { get; set; } = "#000000";
+
+    /// <summary>
+    /// Overall effect opacity (0.0–1.0).
+    /// </summary>
+    [Parameter] public double Opacity { get; set; } = 1.0;
+
+    protected override string ModulePath => "./_content/BlazorEffects.Starfield/starfield.js";
+
+    protected override object BuildConfig() => new StarfieldConfig
+    {
+        StarCount = StarCount,
+        StarColor = StarColor,
+        StarSize = StarSize,
+        Speed = Speed,
+        TrailLength = TrailLength,
+        Depth = Depth,
+        BackgroundColor = BackgroundColor,
+        Opacity = Opacity,
+        TargetFps = TargetFps
+    };
+
+    protected override string ComputeConfigHash()
+    {
+        return $"{StarCount}|{StarColor}|{StarSize}|{Speed}|{TrailLength}|{Depth}|{BackgroundColor}|{Opacity}|{TargetFps}";
+    }
+}

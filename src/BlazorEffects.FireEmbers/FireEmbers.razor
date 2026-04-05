@@ -1,0 +1,81 @@
+@inherits BlazorEffects.Core.Animation.EffectComponentBase
+
+<div class="fire-embers-container" style="position:relative;height:@Height;overflow:hidden;">
+    <canvas @ref="CanvasElement"
+            style="position:absolute;top:0;left:0;width:100%;height:100%;opacity:@Opacity.ToString("F2");">
+    </canvas>
+    @if (ChildContent is not null)
+    {
+        <div class="fire-embers-overlay @CssClass" style="position:relative;z-index:1;">
+            @ChildContent
+        </div>
+    }
+</div>
+
+@code {
+    /// <summary>
+    /// Number of flame/ember particles.
+    /// </summary>
+    [Parameter] public int ParticleCount { get; set; } = 200;
+
+    /// <summary>
+    /// Base flame color (hex).
+    /// </summary>
+    [Parameter] public string FlameColor { get; set; } = "#ff6600";
+
+    /// <summary>
+    /// Ember spark color (hex).
+    /// </summary>
+    [Parameter] public string EmberColor { get; set; } = "#ffcc00";
+
+    /// <summary>
+    /// Particle rise speed multiplier.
+    /// </summary>
+    [Parameter] public double Speed { get; set; } = 1.5;
+
+    /// <summary>
+    /// Maximum particle size in px.
+    /// </summary>
+    [Parameter] public double ParticleSize { get; set; } = 4.0;
+
+    /// <summary>
+    /// Turbulence intensity (horizontal wobble).
+    /// </summary>
+    [Parameter] public double Turbulence { get; set; } = 1.0;
+
+    /// <summary>
+    /// Percentage of particles that are embers vs flames (0.0–1.0).
+    /// </summary>
+    [Parameter] public double EmberRatio { get; set; } = 0.3;
+
+    /// <summary>
+    /// Background color (hex or CSS value).
+    /// </summary>
+    [Parameter] public string BackgroundColor { get; set; } = "#0a0a0a";
+
+    /// <summary>
+    /// Overall effect opacity (0.0–1.0).
+    /// </summary>
+    [Parameter] public double Opacity { get; set; } = 0.9;
+
+    protected override string ModulePath => "./_content/BlazorEffects.FireEmbers/fire-embers.js";
+
+    protected override object BuildConfig() => new FireEmbersConfig
+    {
+        ParticleCount = ParticleCount,
+        FlameColor = FlameColor,
+        EmberColor = EmberColor,
+        Speed = Speed,
+        ParticleSize = ParticleSize,
+        Turbulence = Turbulence,
+        EmberRatio = EmberRatio,
+        BackgroundColor = BackgroundColor,
+        Opacity = Opacity,
+        TargetFps = TargetFps
+    };
+
+    protected override string ComputeConfigHash()
+    {
+        return $"{ParticleCount}|{FlameColor}|{EmberColor}|{Speed}|{ParticleSize}|{Turbulence}|{EmberRatio}|{BackgroundColor}|{Opacity}|{TargetFps}";
+    }
+}

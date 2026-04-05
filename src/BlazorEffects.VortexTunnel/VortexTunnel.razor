@@ -1,0 +1,88 @@
+@inherits BlazorEffects.Core.Animation.EffectComponentBase
+
+<div class="vortextunnel-container" style="position:relative;height:@Height;overflow:hidden;">
+    <canvas @ref="CanvasElement"
+            style="position:absolute;top:0;left:0;width:100%;height:100%;opacity:@Opacity.ToString("F2");">
+    </canvas>
+    @if (ChildContent is not null)
+    {
+        <div class="vortextunnel-overlay @CssClass" style="position:relative;z-index:1;">
+            @ChildContent
+        </div>
+    }
+</div>
+
+@code {
+    /// <summary>
+    /// Number of concentric rings.
+    /// </summary>
+    [Parameter] public int RingCount { get; set; } = 20;
+
+    /// <summary>
+    /// Rotation speed (radians per frame).
+    /// </summary>
+    [Parameter] public double RotationSpeed { get; set; } = 0.02;
+
+    /// <summary>
+    /// Primary ring color (hex).
+    /// </summary>
+    [Parameter] public string Color { get; set; } = "#8b5cf6";
+
+    /// <summary>
+    /// Array of colors for multi-colored rings.
+    /// </summary>
+    [Parameter] public string[] Colors { get; set; } = [];
+
+    /// <summary>
+    /// Scale factor between successive rings.
+    /// </summary>
+    [Parameter] public double ScaleFactor { get; set; } = 0.92;
+
+    /// <summary>
+    /// Shape of each ring: circle, polygon, or square.
+    /// </summary>
+    [Parameter] public string Shape { get; set; } = "circle";
+
+    /// <summary>
+    /// Number of sides when Shape is polygon.
+    /// </summary>
+    [Parameter] public int PolygonSides { get; set; } = 6;
+
+    /// <summary>
+    /// Base stroke width for the outermost ring.
+    /// </summary>
+    [Parameter] public double LineWidth { get; set; } = 2.0;
+
+    /// <summary>
+    /// Background color (hex or CSS value).
+    /// </summary>
+    [Parameter] public string BackgroundColor { get; set; } = "#030712";
+
+    /// <summary>
+    /// Overall effect opacity (0.0–1.0).
+    /// </summary>
+    [Parameter] public double Opacity { get; set; } = 1.0;
+
+    protected override string ModulePath => "./_content/BlazorEffects.VortexTunnel/vortextunnel.js";
+
+    protected override object BuildConfig() => new VortexTunnelConfig
+    {
+        RingCount = RingCount,
+        RotationSpeed = RotationSpeed,
+        Color = Color,
+        Colors = Colors,
+        ScaleFactor = ScaleFactor,
+        Shape = Shape,
+        PolygonSides = PolygonSides,
+        LineWidth = LineWidth,
+        BackgroundColor = BackgroundColor,
+        Opacity = Opacity,
+        TargetFps = TargetFps
+    };
+
+    protected override string ComputeConfigHash()
+    {
+        var colorsHash = Colors is { Length: > 0 } ? string.Join(",", Colors) : "";
+        return $"{RingCount}|{RotationSpeed}|{Color}|{colorsHash}|{ScaleFactor}|{Shape}|{PolygonSides}|{LineWidth}|{BackgroundColor}|{Opacity}|{TargetFps}";
+    }
+}

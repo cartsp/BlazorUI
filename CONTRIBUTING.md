@@ -180,6 +180,16 @@ Before submitting:
 - [ ] No compiler warnings
 - [ ] Code formatted (`dotnet format`)
 
+## Screenshots
+
+Effect screenshots in the `screenshots/` directory power the GitHub README visuals. If you modify an effect's appearance, regenerate them:
+
+```bash
+npm run screenshots
+```
+
+See [`docs/screenshots.md`](docs/screenshots.md) for full details on the capture pipeline.
+
 ## Questions?
 
 Open an issue with the `question` label and we'll help you out.

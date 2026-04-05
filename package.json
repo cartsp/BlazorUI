@@ -4,7 +4,9 @@
   "private": true,
   "scripts": {
     "tailwind:watch": "npx @tailwindcss/cli -i src/AppHost/wwwroot/css/app.css -o src/AppHost/wwwroot/css/output.css --watch",
-    "tailwind:build": "npx @tailwindcss/cli -i src/AppHost/wwwroot/css/app.css -o src/AppHost/wwwroot/css/output.css --minify"
+    "tailwind:build": "npx @tailwindcss/cli -i src/AppHost/wwwroot/css/app.css -o src/AppHost/wwwroot/css/output.css --minify",
+    "screenshots": "node scripts/capture-screenshots.mjs",
+    "screenshots:install": "npx playwright install chromium"
   },
   "devDependencies": {
     "@tailwindcss/cli": "^4.0.0",

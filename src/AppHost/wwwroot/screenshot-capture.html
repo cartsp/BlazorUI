@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Screenshot Capture</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body { width: 100%; height: 100%; overflow: hidden; background: #000; }
+        #capture-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+        #effect-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div id="capture-container">
+        <canvas id="effect-canvas"></canvas>
+    </div>
+
+    <script type="module">
+        // ─── Effect Module Map ──────────────────────────────────────
+        const EFFECT_MODULES = {
+            aurora:     './_content/BlazorEffects.Aurora/aurora-borealis.js',
+            noise:      './_content/BlazorEffects.Noise/noise-field.js',
+            blobs:      './_content/BlazorEffects.Blobs/morphing-blobs.js',
+            matrixrain: './_content/BlazorEffects.MatrixRain/matrix-rain.js',
+            particles:  './_content/BlazorEffects.Particles/particle-constellation.js',
+        };
+
+        // ─── Default Configs (matched to each effect's normalizeConfig defaults) ───
+        const DEFAULT_CONFIGS = {
+            aurora: {
+                colors: ['#00ff87', '#7b2ff7', '#00b4d8'],
+                ribbonCount: 4,
+                amplitude: 120,
+                speed: 0.008,
+                opacity: 0.5,
+                blendMode: 'screen',
+                targetFps: 60,
+            },
+            noise: {
+                colorStops: ['#0a0a2e', '#1e1b4b', '#6366f1', '#8b5cf6', '#c084fc', '#ec4899', '#f43f5e', '#1e1b4b', '#0a0a2e'],
+                noiseScale: 0.003,
+                speed: 0.005,
+                octaves: 4,
+                persistence: 0.5,
+                lacunarity: 2.0,
+                brightness: 1.0,
+                opacity: 0.85,
+                targetFps: 60,
+            },
+            blobs: {
+                blobCount: 4,
+                colors: ['#6366f1', '#ec4899', '#f97316', '#06b6d4'],
+                blobSize: 300,
+                speed: 0.005,
+                morphIntensity: 80,
+                blendMode: 'screen',
+                opacity: 0.7,
+                targetFps: 60,
+            },
+            matrixrain: {
+                characters: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&',
+                fontSize: 16,
+                fontFamily: 'monospace',
+                color: '#00ff41',
+                fadeColor: '#003b00',
+                speed: 1.0,
+                density: 1.0,
+                opacity: 0.8,
+                targetFps: 30,
+            },
+            particles: {
+                particleCount: 150,
+                particleColor: '#6366f1',
+                particleSize: 2,
+                connectionDistance: 120,
+                connectionColor: '#6366f1',
+                speed: 0.5,
+                mouseInteraction: false,
+                mouseRadius: 150,
+                mouseForce: 'attract',
+                opacity: 0.6,
+                targetFps: 60,
+            },
+        };
+
+        // ─── Parse Query Params ──────────────────────────────────────
+        const params = new URLSearchParams(window.location.search);
+        const effectName = params.get('effect');
+        const containerW = parseInt(params.get('cw'), 10);
+        const containerH = parseInt(params.get('ch'), 10);
+
+        if (!effectName || !EFFECT_MODULES[effectName]) {
+            console.error(`Unknown or missing effect: ${effectName}`);
+            window.__effectReady = true; // Let capture proceed (will be blank)
+        } else {
+            // ─── Set Container Dimensions ───────────────────────────
+            const container = document.getElementById('capture-container');
+            const canvas = document.getElementById('effect-canvas');
+
+            if (containerW && containerH && !isNaN(containerW) && !isNaN(containerH)) {
+                container.style.width = containerW + 'px';
+                container.style.height = containerH + 'px';
+            }
+
+            // ─── Load & Initialize Effect ──────────────────────────
+            const moduleUrl = EFFECT_MODULES[effectName];
+            const config = DEFAULT_CONFIGS[effectName] || {};
+
+            import(moduleUrl)
+                .then(mod => {
+                    if (typeof mod.init !== 'function') {
+                        console.error(`Effect module "${effectName}" has no init() export`);
+                        window.__effectReady = true;
+                        return;
+                    }
+                    mod.init(canvas, config);
+                    console.log(`Effect "${effectName}" initialized (${containerW}x${containerH})`);
+                    window.__effectReady = true;
+                })
+                .catch(err => {
+                    console.error(`Failed to load effect "${effectName}":`, err);
+                    window.__effectReady = true;
+                });
+        }
+    </script>
+</body>
+</html>

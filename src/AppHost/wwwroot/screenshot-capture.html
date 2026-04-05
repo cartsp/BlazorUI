@@ -31,11 +31,12 @@
     <script type="module">
         // ─── Effect Module Map ──────────────────────────────────────
         const EFFECT_MODULES = {
-            aurora:     './_content/BlazorEffects.Aurora/aurora-borealis.js',
-            noise:      './_content/BlazorEffects.Noise/noise-field.js',
-            blobs:      './_content/BlazorEffects.Blobs/morphing-blobs.js',
-            matrixrain: './_content/BlazorEffects.MatrixRain/matrix-rain.js',
-            particles:  './_content/BlazorEffects.Particles/particle-constellation.js',
+            aurora:         './_content/BlazorEffects.Aurora/aurora-borealis.js',
+            noise:          './_content/BlazorEffects.Noise/noise-field.js',
+            blobs:          './_content/BlazorEffects.Blobs/morphing-blobs.js',
+            matrixrain:     './_content/BlazorEffects.MatrixRain/matrix-rain.js',
+            particles:      './_content/BlazorEffects.Particles/particle-constellation.js',
+            gradientwaves:  './_content/BlazorEffects.GradientWaves/gradient-waves.js',
         };
 
         // ─── Default Configs (matched to each effect's normalizeConfig defaults) ───
@@ -93,6 +94,16 @@
                 mouseRadius: 150,
                 mouseForce: 'attract',
                 opacity: 0.6,
+                targetFps: 60,
+            },
+            gradientwaves: {
+                colors: ['#635bff', '#00d4ff', '#ff6b9d', '#a855f7', '#06b6d4', '#f472b6'],
+                pointCount: 6,
+                blobSize: 0.5,
+                speed: 0.004,
+                blurAmount: 80,
+                blendMode: 'normal',
+                opacity: 1.0,
                 targetFps: 60,
             },
         };

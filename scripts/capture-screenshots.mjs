@@ -48,11 +48,12 @@ const OUTPUT_H = 720;
 // Each effect uses a different internal scale factor, so the container
 // must compensate to yield the correct canvas resolution.
 const EFFECTS = [
-  { effect: 'aurora',     file: 'aurora.png',      cw: 5120, ch: 2880, waitMs: 6000 },
-  { effect: 'noise',      file: 'noise.png',       cw: 2560, ch: 1440, waitMs: 5000 },
-  { effect: 'blobs',      file: 'blobs.png',       cw: 2560, ch: 1440, waitMs: 5000 },
-  { effect: 'matrixrain', file: 'matrix-rain.png', cw: 2560, ch: 1440, waitMs: 4000 },
-  { effect: 'particles',  file: 'particles.png',   cw: 1280, ch: 720,  waitMs: 4000 },
+  { effect: 'aurora',         file: 'aurora.png',          cw: 5120, ch: 2880, waitMs: 6000 },
+  { effect: 'noise',          file: 'noise.png',           cw: 2560, ch: 1440, waitMs: 5000 },
+  { effect: 'blobs',          file: 'blobs.png',           cw: 2560, ch: 1440, waitMs: 5000 },
+  { effect: 'matrixrain',     file: 'matrix-rain.png',     cw: 2560, ch: 1440, waitMs: 4000 },
+  { effect: 'particles',      file: 'particles.png',       cw: 1280, ch: 720,  waitMs: 4000 },
+  { effect: 'gradientwaves',  file: 'gradient-waves.png',  cw: 2560, ch: 1440, waitMs: 5000 },
 ];
 
 // ─── Server Management ─────────────────────────────────────────

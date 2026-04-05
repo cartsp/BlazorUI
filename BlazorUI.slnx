@@ -7,6 +7,7 @@
     <Project Path="src/Presentation/Presentation.csproj" />
     <Project Path="src/BlazorEffects.Core/BlazorEffects.Core.csproj" />
     <Project Path="src/BlazorEffects.MatrixRain/BlazorEffects.MatrixRain.csproj" />
+    <Project Path="src/BlazorEffects.Blobs/BlazorEffects.Blobs.csproj" />
   </Folder>
   <Folder Name="/tests/">
     <Project Path="tests/Application.UnitTests/Application.UnitTests.csproj" />
@@ -14,5 +15,6 @@
     <Project Path="tests/Infrastructure.IntegrationTests/Infrastructure.IntegrationTests.csproj" />
     <Project Path="tests/Presentation.IntegrationTests/Presentation.IntegrationTests.csproj" />
     <Project Path="tests/BlazorEffects.MatrixRain.Tests/BlazorEffects.MatrixRain.Tests.csproj" />
+    <Project Path="tests/BlazorEffects.Blobs.Tests/BlazorEffects.Blobs.Tests.csproj" />
   </Folder>
 </Solution>

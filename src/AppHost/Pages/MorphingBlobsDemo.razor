@@ -1,0 +1,111 @@
+@page "/morphing-blobs"
+@using BlazorEffects.Blobs
+
+<div class="relative">
+    <MorphingBlobs
+        Height="100vh"
+        TargetFps="@_targetFps"
+        BlobCount="@_blobCount"
+        Colors="@_selectedColors"
+        BlobSize="@_blobSize"
+        Speed="@_speed"
+        MorphIntensity="@_morphIntensity"
+        BlendMode="@_blendMode"
+        Opacity="@_opacity">
+        <div class="relative z-10 flex flex-col items-center justify-center h-full text-white">
+            <h1 class="text-6xl font-bold mb-4 drop-shadow-lg">Morphing Blobs</h1>
+            <p class="text-xl mb-8 drop-shadow-md opacity-80">BlazorEffects animated background component</p>
+
+            <div class="bg-black/60 backdrop-blur-sm rounded-xl p-6 max-w-md w-full mx-4">
+                <h2 class="text-lg font-semibold mb-4 text-indigo-400">Controls</h2>
+
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm mb-1 text-gray-300">Color Palette</label>
+                        <select @bind="_selectedPreset" @bind:event="oninput" class="w-full bg-gray-800 text-white rounded px-3 py-2 border border-gray-600">
+                            <option value="Default">Default</option>
+                            <option value="Sunset">Sunset</option>
+                            <option value="Ocean">Ocean</option>
+                            <option value="Aurora">Aurora</option>
+                            <option value="Neon">Neon</option>
+                            <option value="Pastel">Pastel</option>
+                            <option value="Monochrome">Monochrome</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm mb-1 text-gray-300">Blob Count: @_blobCount</label>
+                        <input type="range" min="1" max="10" step="1" @bind="_blobCount" class="w-full" />
+                    </div>
+
+                    <div>
+                        <label class="block text-sm mb-1 text-gray-300">Blob Size: @_blobSize</label>
+                        <input type="range" min="100" max="600" step="10" @bind="_blobSize" class="w-full" />
+                    </div>
+
+                    <div>
+                        <label class="block text-sm mb-1 text-gray-300">Speed: @_speed.ToString("F4")</label>
+                        <input type="range" min="0.001" max="0.02" step="0.001" @bind="_speed" class="w-full" />
+                    </div>
+
+                    <div>
+                        <label class="block text-sm mb-1 text-gray-300">Morph Intensity: @_morphIntensity</label>
+                        <input type="range" min="10" max="200" step="5" @bind="_morphIntensity" class="w-full" />
+                    </div>
+
+                    <div>
+                        <label class="block text-sm mb-1 text-gray-300">Blend Mode</label>
+                        <select @bind="_blendMode" class="w-full bg-gray-800 text-white rounded px-3 py-2 border border-gray-600">
+                            <option value="screen">screen</option>
+                            <option value="lighter">lighter</option>
+                            <option value="source-over">source-over</option>
+                            <option value="multiply">multiply</option>
+                            <option value="overlay">overlay</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm mb-1 text-gray-300">Opacity: @_opacity.ToString("F1")</label>
+                        <input type="range" min="0.1" max="1.0" step="0.1" @bind="_opacity" class="w-full" />
+                    </div>
+
+                    <div>
+                        <label class="block text-sm mb-1 text-gray-300">Target FPS: @_targetFps</label>
+                        <input type="range" min="15" max="120" step="5" @bind="_targetFps" class="w-full" />
+                    </div>
+                </div>
+            </div>
+
+            <a href="/" class="mt-6 text-indigo-400 hover:text-indigo-300 underline">&larr; Back to Home</a>
+        </div>
+    </MorphingBlobs>
+</div>
+
+@code {
+    private string _selectedPreset = "Default";
+    private int _blobCount = 4;
+    private double _blobSize = 300;
+    private double _speed = 0.005;
+    private double _morphIntensity = 80;
+    private string _blendMode = "screen";
+    private double _opacity = 0.7;
+    private int _targetFps = 60;
+
+    private string[] _selectedColors => _selectedPreset switch
+    {
+        "Default" => MorphingBlobsPresets.Default,
+        "Sunset" => MorphingBlobsPresets.Sunset,
+        "Ocean" => MorphingBlobsPresets.Ocean,
+        "Aurora" => MorphingBlobsPresets.Aurora,
+        "Neon" => MorphingBlobsPresets.Neon,
+        "Pastel" => MorphingBlobsPresets.Pastel,
+        "Monochrome" => MorphingBlobsPresets.Monochrome,
+        _ => MorphingBlobsPresets.Default
+    };
+
+    protected override void OnParametersSet()
+    {
+        // Update colors when preset changes
+        StateHasChanged();
+    }
+}

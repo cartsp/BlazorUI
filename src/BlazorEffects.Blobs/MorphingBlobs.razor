@@ -1,0 +1,70 @@
+@inherits BlazorEffects.Core.Animation.EffectComponentBase
+
+<div class="morphing-blobs-container" style="position:relative;height:@Height;overflow:hidden;background:#000;">
+    <canvas @ref="CanvasElement"
+            style="position:absolute;top:0;left:0;width:100%;height:100%;opacity:@Opacity.ToString("F2");">
+    </canvas>
+    @if (ChildContent is not null)
+    {
+        <div class="morphing-blobs-overlay @CssClass" style="position:relative;z-index:1;">
+            @ChildContent
+        </div>
+    }
+</div>
+
+@code {
+    /// <summary>
+    /// Number of blobs to render.
+    /// </summary>
+    [Parameter] public int BlobCount { get; set; } = 4;
+
+    /// <summary>
+    /// Blob colors (cycled across blobs).
+    /// </summary>
+    [Parameter] public string[] Colors { get; set; } = MorphingBlobsPresets.Default;
+
+    /// <summary>
+    /// Base blob radius in px.
+    /// </summary>
+    [Parameter] public double BlobSize { get; set; } = 300;
+
+    /// <summary>
+    /// Morphing and drift speed.
+    /// </summary>
+    [Parameter] public double Speed { get; set; } = 0.005;
+
+    /// <summary>
+    /// How much the blob shape deviates from circle.
+    /// </summary>
+    [Parameter] public double MorphIntensity { get; set; } = 80;
+
+    /// <summary>
+    /// Canvas composite operation for blending.
+    /// </summary>
+    [Parameter] public string BlendMode { get; set; } = "screen";
+
+    /// <summary>
+    /// Overall effect opacity.
+    /// </summary>
+    [Parameter] public double Opacity { get; set; } = 0.7;
+
+    protected override string ModulePath => "./_content/BlazorEffects.Blobs/morphing-blobs.js";
+
+    protected override object BuildConfig() => new MorphingBlobsConfig
+    {
+        BlobCount = BlobCount,
+        Colors = Colors,
+        BlobSize = BlobSize,
+        Speed = Speed,
+        MorphIntensity = MorphIntensity,
+        BlendMode = BlendMode,
+        Opacity = Opacity,
+        TargetFps = TargetFps
+    };
+
+    protected override string ComputeConfigHash()
+    {
+        var colorHash = string.Join(",", Colors);
+        return $"{BlobCount}|{colorHash}|{BlobSize}|{Speed}|{MorphIntensity}|{BlendMode}|{Opacity}|{TargetFps}";
+    }
+}

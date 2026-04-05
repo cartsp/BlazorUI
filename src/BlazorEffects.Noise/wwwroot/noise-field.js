@@ -381,7 +381,7 @@ function drawFrame(state) {
 
             // Domain warping: use noise to distort the noise coordinates
             // This creates flowing, organic, lava-lamp-like motion
-            const warpStrength = 0.6;
+            const warpStrength = config.warpStrength;
             const warpFreq = noiseScale * 1.5;
             const warpX = fbm(permData, dx * warpFreq, dy * warpFreq, z * 0.7, Math.max(1, octaves - 1), persistence, lacunarity);
             const warpY = fbm(permData, dx * warpFreq + 5.2, dy * warpFreq + 1.3, z * 0.7, Math.max(1, octaves - 1), persistence, lacunarity);
@@ -423,7 +423,8 @@ function drawFrame(state) {
 
 function normalizeConfig(raw) {
     // Richer default palette with more stops for smoother gradient transitions
-    const defaultStops = ["#0a0a2e", "#1e1b4b", "#6366f1", "#8b5cf6", "#c084fc", "#ec4899", "#f43f5e", "#1e1b4b", "#0a0a2e"];
+    // Deep ocean to aurora-inspired colors for stunning visual impact
+    const defaultStops = ["#0a0a2e", "#1a1a5e", "#4338ca", "#6366f1", "#818cf8", "#a78bfa", "#c084fc", "#e879f9", "#f0abfc", "#c084fc", "#6366f1", "#312e81", "#0a0a2e"];
 
     let colorStops = defaultStops;
     if (raw?.colorStops && Array.isArray(raw.colorStops) && raw.colorStops.length >= 2) {
@@ -432,11 +433,12 @@ function normalizeConfig(raw) {
 
     return {
         colorStops,
-        noiseScale: Math.max(0.0001, Number(raw?.noiseScale) || 0.003),
-        speed: Math.max(0, Number(raw?.speed) || 0.005),
-        octaves: Math.max(1, Math.min(8, Number(raw?.octaves) || 4)),
+        noiseScale: Math.max(0.0001, Number(raw?.noiseScale) || 0.002),
+        speed: Math.max(0, Number(raw?.speed) || 0.004),
+        octaves: Math.max(1, Math.min(8, Number(raw?.octaves) || 3)),
         persistence: Math.max(0, Math.min(1, Number(raw?.persistence) || 0.5)),
         lacunarity: Math.max(1, Number(raw?.lacunarity) || 2.0),
+        warpStrength: Math.max(0, Math.min(5, Number(raw?.warpStrength) || 0.4)),
         brightness: Math.max(0, Math.min(3, Number(raw?.brightness) || 1.0)),
         opacity: Math.max(0, Math.min(1, Number(raw?.opacity) || 0.85)),
         targetFps: Math.max(1, Math.min(120, Number(raw?.targetFps) || 60))

@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <OverrideHtmlAssetPlaceholders>true</OverrideHtmlAssetPlaceholders>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="10.0.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="10.0.3" PrivateAssets="all" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BlazorEffects.Core\BlazorEffects.Core.csproj" />
+    <ProjectReference Include="..\BlazorEffects.Playground\BlazorEffects.Playground.csproj" />
+    <ProjectReference Include="..\BlazorEffects.MatrixRain\BlazorEffects.MatrixRain.csproj" />
+    <ProjectReference Include="..\BlazorEffects.Particles\BlazorEffects.Particles.csproj" />
+    <ProjectReference Include="..\BlazorEffects.Aurora\BlazorEffects.Aurora.csproj" />
+    <ProjectReference Include="..\BlazorEffects.Blobs\BlazorEffects.Blobs.csproj" />
+    <ProjectReference Include="..\BlazorEffects.Noise\BlazorEffects.Noise.csproj" />
+    <ProjectReference Include="..\BlazorEffects.GradientWaves\BlazorEffects.GradientWaves.csproj" />
+  </ItemGroup>
+
+</Project>

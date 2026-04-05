@@ -9,8 +9,9 @@ Canvas-powered animations, particle systems, and generative art — packaged as 
 [![.NET](https://img.shields.io/badge/.NET-8%20%7C%209%20%7C%2010-512bd4?logo=dotnet)](https://dotnet.microsoft.com/)
 [![License](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 [![Build](https://img.shields.io/badge/build-passing-brightgreen)](build.sh)
+[![Live Demo](https://img.shields.io/badge/demo-live-brightgreen?logo=github)](https://cartsp.github.io/BlazorUI/)
 
-[Getting Started](#getting-started) · [Effects](#effects) · [Playground](#playground) · [Architecture](#architecture) · [Contributing](CONTRIBUTING.md)
+**[🎮 Live Demo](https://cartsp.github.io/BlazorUI/)** · [Getting Started](#getting-started) · [Effects](#effects) · [Playground](#playground) · [Architecture](#architecture) · [Contributing](CONTRIBUTING.md)
 
 </div>
 

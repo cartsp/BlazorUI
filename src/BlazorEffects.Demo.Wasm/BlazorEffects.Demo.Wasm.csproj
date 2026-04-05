@@ -6,6 +6,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <OverrideHtmlAssetPlaceholders>true</OverrideHtmlAssetPlaceholders>
     <WasmEnableContentHashing>false</WasmEnableContentHashing>
+    <IsPackable>false</IsPackable>
   </PropertyGroup>
 
   <ItemGroup>

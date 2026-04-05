@@ -1,0 +1,22 @@
+<Project>
+  <!-- Shared NuGet package metadata for all BlazorEffects packages -->
+  <PropertyGroup>
+    <!-- Default to non-packable; individual effect projects override this to true -->
+    <IsPackable>false</IsPackable>
+    <Version>0.3.0</Version>
+    <Authors>cartsp</Authors>
+    <Company>cartsp</Company>
+    <Copyright>Copyright © 2026 cartsp</Copyright>
+    <RepositoryUrl>https://github.com/cartsp/BlazorUI</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageProjectUrl>https://github.com/cartsp/BlazorUI</PackageProjectUrl>
+    <PackageTags>blazor;effects;animation;canvas;blazoreffects</PackageTags>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+</Project>

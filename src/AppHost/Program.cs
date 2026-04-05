@@ -6,6 +6,7 @@ using BlazorEffects.Blobs;
 using BlazorEffects.Aurora;
 using BlazorEffects.MatrixRain;
 using BlazorEffects.Particles;
+using BlazorEffects.GradientWaves;
 using Microsoft.AspNetCore.Components;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -28,6 +29,8 @@ builder.Services.AddBlazorEffectsPlayground(b => b
         c => BlazorMarkupGenerator.Generate(c, "MatrixRain"))
     .AddEffect<ParticleConstellationConfig, ParticleConstellationDescriptor>(
         c => BlazorMarkupGenerator.Generate(c, "ParticleConstellation"))
+    .AddEffect<GradientWavesConfig, GradientWavesDescriptor>(
+        c => BlazorMarkupGenerator.Generate(c, "GradientWaves"))
 );
 
 var app = builder.Build();

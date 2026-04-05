@@ -1,0 +1,75 @@
+@inherits BlazorEffects.Core.Animation.EffectComponentBase
+
+<div class="gradient-waves-container" style="position:relative;height:@Height;overflow:hidden;background:@Background;">
+    <canvas @ref="CanvasElement"
+            style="position:absolute;top:0;left:0;width:100%;height:100%;opacity:@Opacity.ToString("F2");">
+    </canvas>
+    @if (ChildContent is not null)
+    {
+        <div class="gradient-waves-overlay @CssClass" style="position:relative;z-index:1;">
+            @ChildContent
+        </div>
+    }
+</div>
+
+@code {
+    /// <summary>
+    /// Color palette for the gradient waves.
+    /// </summary>
+    [Parameter] public string[] Colors { get; set; } = GradientWavesPresets.Stripe;
+
+    /// <summary>
+    /// Number of color control points that drift across the canvas (2-12).
+    /// </summary>
+    [Parameter] public int PointCount { get; set; } = 6;
+
+    /// <summary>
+    /// Size of each color blob as a fraction of canvas diagonal (0.1-1.0).
+    /// </summary>
+    [Parameter] public double BlobSize { get; set; } = 0.5;
+
+    /// <summary>
+    /// Drift speed of the color points.
+    /// </summary>
+    [Parameter] public double Speed { get; set; } = 0.004;
+
+    /// <summary>
+    /// Gaussian blur radius in pixels for the soft gradient effect.
+    /// </summary>
+    [Parameter] public double BlurAmount { get; set; } = 80;
+
+    /// <summary>
+    /// CSS mix-blend-mode for the canvas.
+    /// </summary>
+    [Parameter] public string BlendMode { get; set; } = "normal";
+
+    /// <summary>
+    /// Overall effect opacity (0.0-1.0).
+    /// </summary>
+    [Parameter] public double Opacity { get; set; } = 1.0;
+
+    /// <summary>
+    /// Background color behind the gradient.
+    /// </summary>
+    [Parameter] public string Background { get; set; } = "#0f172a";
+
+    protected override string ModulePath => "./_content/BlazorEffects.GradientWaves/gradient-waves.js";
+
+    protected override object BuildConfig() => new GradientWavesConfig
+    {
+        Colors = Colors,
+        PointCount = PointCount,
+        BlobSize = BlobSize,
+        Speed = Speed,
+        BlurAmount = BlurAmount,
+        BlendMode = BlendMode,
+        Opacity = Opacity,
+        TargetFps = TargetFps
+    };
+
+    protected override string ComputeConfigHash()
+    {
+        var colorHash = string.Join(",", Colors);
+        return $"{colorHash}|{PointCount}|{BlobSize}|{Speed}|{BlurAmount}|{BlendMode}|{Opacity}|{TargetFps}";
+    }
+}

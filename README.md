@@ -30,12 +30,12 @@ Canvas-powered animations, particle systems, and generative art — packaged as 
   <tr>
     <td align="center"><b>🫧 Morphing Blobs</b></td>
     <td align="center"><b>🌊 Noise Field</b></td>
-    <td></td>
+    <td align="center"><b>🧿 Gradient Waves</b></td>
   </tr>
   <tr>
     <td><img src="screenshots/blobs.png" alt="Morphing Blobs effect - organic gradient blobs with smooth color blending" width="250"/></td>
     <td><img src="screenshots/noise.png" alt="Noise Field effect - animated simplex noise texture with flowing purple-to-pink gradients" width="250"/></td>
-    <td></td>
+    <td><img src="screenshots/gradient-waves.png" alt="Gradient Waves effect - smoothly morphing mesh gradient with drifting color points" width="250"/></td>
   </tr>
 </table>
 
@@ -67,6 +67,7 @@ Most Blazor UI libraries give you buttons, cards, and forms. That's a solved pro
 | 🌈 **Aurora Borealis** | `BlazorEffects.Aurora` | Flowing aurora curtains with multi-color palettes |
 | 🫧 **Morphing Blobs** | `BlazorEffects.Blobs` | Organic gradient blobs with smooth morphing |
 | 🌊 **Noise Field** | `BlazorEffects.Noise` | Animated simplex noise textures with flowing motion |
+| 🧿 **Gradient Waves** | `BlazorEffects.GradientWaves` | Smoothly morphing mesh gradient with drifting color points — Stripe-style backgrounds |
 
 ### Quick Look
 
@@ -83,6 +84,9 @@ Most Blazor UI libraries give you buttons, cards, and forms. That's a solved pro
 
 <!-- Aurora with custom palette -->
 <AuroraBorealis Colors="@(["#00ff87", "#7b2ff7", "#00b4d8"])" />
+
+<!-- Gradient Waves with Stripe preset -->
+<GradientWaves Colors="GradientWavesPresets.Stripe" />
 ```
 
 ---
@@ -105,6 +109,7 @@ dotnet add package BlazorEffects.Particles
 dotnet add package BlazorEffects.Aurora
 dotnet add package BlazorEffects.Blobs
 dotnet add package BlazorEffects.Noise
+dotnet add package BlazorEffects.GradientWaves
 ```
 
 ### Usage
@@ -177,6 +182,7 @@ BlazorEffects/
 ├── Aurora/                  # Includes: Component + Config + Presets + JS
 ├── Blobs/
 ├── Noise/
+├── GradientWaves/
 │
 └── Playground/              # Interactive parameter editor UI
 ```
@@ -230,7 +236,8 @@ dotnet format BlazorUI.slnx --verify-no-changes
 
 ## Roadmap
 
-- [ ] More effects (Gradient Waves, Starfield, Ripple, Vortex)
+- [x] ~~Gradient Waves~~ (mesh gradient with drifting color points)
+- [ ] More effects (Starfield, Ripple, Vortex)
 - [ ] WebGL-powered effects for GPU-intensive animations
 - [ ] NuGet package publishing
 - [ ] Interactive documentation site

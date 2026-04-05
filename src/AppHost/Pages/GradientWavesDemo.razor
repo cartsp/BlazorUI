@@ -1,0 +1,169 @@
+@page "/gradient-waves"
+@using BlazorEffects.GradientWaves
+@using AppHost.Shared
+
+<EffectDemoLayout EffectName="Gradient Waves"
+                  EffectIcon="🌊"
+                  Presets="_presets"
+                  CurrentPreset="_currentPreset"
+                  OnPresetSelected="SelectPreset"
+                  Parameters="_parameters"
+                  OnParameterChanged="HandleParameterChange"
+                  GenerateCode="GenerateMarkup">
+    <EffectContent>
+        <GradientWaves Height="100vh"
+                       TargetFps="@_targetFps"
+                       Colors="@_selectedColors"
+                       PointCount="@_pointCount"
+                       BlobSize="@_blobSize"
+                       Speed="@_speed"
+                       BlurAmount="@_blurAmount"
+                       BlendMode="@_blendMode"
+                       Opacity="@_opacity"
+                       Background="@_background">
+            <div class="relative z-10 flex flex-col items-center justify-center h-full text-white">
+                <h1 class="text-7xl font-black mb-4 tracking-tight drop-shadow-2xl">Gradient Waves</h1>
+                <p class="text-xl mb-2 drop-shadow-lg opacity-80 font-light">Mesh Gradient · Canvas 2D · Blazor Interop</p>
+                <p class="text-sm drop-shadow-md opacity-50 font-mono mt-2">BlazorEffects</p>
+            </div>
+        </GradientWaves>
+    </EffectContent>
+</EffectDemoLayout>
+
+@code {
+    private string _currentPreset = "Stripe";
+    private string[] _selectedColors = GradientWavesPresets.Stripe;
+    private int _pointCount = 6;
+    private double _blobSize = 0.5;
+    private double _speed = 0.004;
+    private double _blurAmount = 80;
+    private string _blendMode = "normal";
+    private double _opacity = 1.0;
+    private string _background = "#0f172a";
+    private int _targetFps = 60;
+
+    private readonly List<PresetOption> _presets =
+    [
+        new("Stripe", "Stripe", "💜"),
+        new("VibrantSunset", "Sunset", "🌅"),
+        new("OceanDeep", "Ocean", "🌊"),
+        new("NorthernLights", "Aurora", "✨"),
+        new("Cyberpunk", "Cyberpunk", "⚡"),
+        new("RoseGarden", "Rose", "🌹"),
+        new("MinimalMono", "Mono", "⬜"),
+        new("Forest", "Forest", "🌲")
+    ];
+
+    private List<ParameterGroup> _parameters = [];
+
+    protected override void OnInitialized()
+    {
+        _parameters = BuildParameterGroups();
+    }
+
+    private List<ParameterGroup> BuildParameterGroups()
+    {
+        return
+        [
+            new("Appearance",
+            [
+                new RangeParameter("PointCount", "Point Count", _pointCount, 2, 12, 1, "F0"),
+                new RangeParameter("BlobSize", "Blob Size", _blobSize, 0.1, 1.0, 0.05, "F2"),
+                new RangeParameter("BlurAmount", "Blur Amount", _blurAmount, 10, 200, 5, "F0"),
+                new RangeParameter("Opacity", "Opacity", _opacity, 0.1, 1.0, 0.05, "F2"),
+            ]),
+            new("Motion",
+            [
+                new RangeParameter("Speed", "Speed", _speed, 0.001, 0.02, 0.001, "F3"),
+                new RangeParameter("TargetFps", "Target FPS", _targetFps, 15, 120, 5, "F0"),
+            ]),
+            new("Blending",
+            [
+                new SelectParameter("BlendMode", "Blend Mode", _blendMode,
+                [
+                    new("normal", "Normal"),
+                    new("screen", "Screen"),
+                    new("lighter", "Lighter"),
+                    new("multiply", "Multiply"),
+                    new("overlay", "Overlay"),
+                ]),
+            ]),
+        ];
+    }
+
+    private void SelectPreset(string presetKey)
+    {
+        _currentPreset = presetKey;
+        (_selectedColors, _pointCount, _blobSize, _speed, _blurAmount, _background) = presetKey switch
+        {
+            "Stripe" => (GradientWavesPresets.Stripe, 6, 0.5, 0.004, 80, "#0f172a"),
+            "VibrantSunset" => (GradientWavesPresets.VibrantSunset, 6, 0.55, 0.003, 90, "#1a0a00"),
+            "OceanDeep" => (GradientWavesPresets.OceanDeep, 5, 0.6, 0.002, 100, "#030712"),
+            "NorthernLights" => (GradientWavesPresets.NorthernLights, 6, 0.45, 0.005, 75, "#020617"),
+            "Cyberpunk" => (GradientWavesPresets.Cyberpunk, 5, 0.4, 0.006, 70, "#0a0a0a"),
+            "RoseGarden" => (GradientWavesPresets.RoseGarden, 5, 0.5, 0.003, 90, "#1a0510"),
+            "MinimalMono" => (GradientWavesPresets.MinimalMono, 4, 0.55, 0.002, 100, "#1a1a1a"),
+            "Forest" => (GradientWavesPresets.Forest, 5, 0.5, 0.003, 85, "#021a0f"),
+            _ => (GradientWavesPresets.Stripe, 6, 0.5, 0.004, 80, "#0f172a")
+        };
+        _parameters = BuildParameterGroups();
+    }
+
+    private void HandleParameterChange((string Name, string Value) change)
+    {
+        _currentPreset = ""; // Custom — deselect preset
+        switch (change.Name)
+        {
+            case "PointCount":
+                _pointCount = int.Parse(change.Value);
+                break;
+            case "BlobSize":
+                _blobSize = double.Parse(change.Value);
+                break;
+            case "Speed":
+                _speed = double.Parse(change.Value);
+                break;
+            case "BlurAmount":
+                _blurAmount = double.Parse(change.Value);
+                break;
+            case "BlendMode":
+                _blendMode = change.Value;
+                break;
+            case "Opacity":
+                _opacity = double.Parse(change.Value);
+                break;
+            case "TargetFps":
+                _targetFps = int.Parse(change.Value);
+                break;
+        }
+        _parameters = BuildParameterGroups();
+    }
+
+    private string GenerateMarkup()
+    {
+        var hasCustom = _pointCount != 6 || _blobSize != 0.5 || _speed != 0.004
+            || _blurAmount != 80 || _blendMode != "normal" || _opacity != 1.0;
+
+        if (!hasCustom && _selectedColors == GradientWavesPresets.Stripe)
+            return "<GradientWaves />";
+
+        var sb = new System.Text.StringBuilder();
+        sb.AppendLine("<GradientWaves");
+
+        // Only emit non-default values
+        if (!_selectedColors.SequenceEqual(GradientWavesPresets.Stripe))
+        {
+            var colorItems = string.Join(", ", _selectedColors.Select(c => $"\"{c}\""));
+            sb.AppendLine($"    Colors=\"@(new[] {{ {colorItems} }})\"");
+        }
+        if (_pointCount != 6) sb.AppendLine($"    PointCount=\"{_pointCount}\"");
+        if (_blobSize != 0.5) sb.AppendLine($"    BlobSize=\"{_blobSize}\"");
+        if (_speed != 0.004) sb.AppendLine($"    Speed=\"{_speed}\"");
+        if (_blurAmount != 80) sb.AppendLine($"    BlurAmount=\"{_blurAmount}\"");
+        if (_blendMode != "normal") sb.AppendLine($"    BlendMode=\"{_blendMode}\"");
+        if (_opacity != 1.0) sb.AppendLine($"    Opacity=\"{_opacity}\"");
+
+        sb.Append(" />");
+        return sb.ToString();
+    }
+}

@@ -11,6 +11,7 @@
     <ProjectReference Include="..\BlazorEffects.Aurora\BlazorEffects.Aurora.csproj" />
     <ProjectReference Include="..\BlazorEffects.Noise\BlazorEffects.Noise.csproj" />
     <ProjectReference Include="..\BlazorEffects.Playground\BlazorEffects.Playground.csproj" />
+    <ProjectReference Include="..\BlazorEffects.GradientWaves\BlazorEffects.GradientWaves.csproj" />
   </ItemGroup>
 
   <PropertyGroup>

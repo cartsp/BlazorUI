@@ -63,6 +63,8 @@
 @code {
     [Inject] private IEffectRegistry Registry { get; set; } = default!;
 
+    [Parameter] public string? InitialEffect { get; set; }
+
     private IReadOnlyList<IEffectDescriptorAdapter> _effects = [];
     private IEffectDescriptorAdapter? _activeDescriptor;
     private IReadOnlyList<EffectPresetView> _activePresets = [];
@@ -77,10 +79,10 @@
     protected override void OnInitialized()
     {
         _effects = Registry.GetAll();
-        if (_effects.Count > 0)
-        {
-            SwitchEffect(_effects[0].EffectName);
-        }
+        var initial = !string.IsNullOrEmpty(InitialEffect)
+            ? _effects.FirstOrDefault(e => e.EffectName == InitialEffect)
+            : null;
+        SwitchEffect(initial?.EffectName ?? (_effects.Count > 0 ? _effects[0].EffectName : ""));
     }
 
     private void SwitchEffect(string effectName)

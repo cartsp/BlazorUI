@@ -69,7 +69,7 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
                     @foreach (var effect in _effects)
                     {
-                        <a href="playground" class="group relative rounded-2xl overflow-hidden border border-white/10 bg-white/5 hover:border-white/20 transition-all duration-300">
+                        <a href="playground?effect=@effect.Slug" class="group relative rounded-2xl overflow-hidden border border-white/10 bg-white/5 hover:border-white/20 transition-all duration-300">
                             <div class="aspect-video relative overflow-hidden">
                                 <div class="absolute inset-0 bg-gradient-to-br @effect.GradientClass opacity-80"></div>
                                 <div class="absolute inset-0 flex items-center justify-center">
@@ -135,15 +135,15 @@
             Colors="@(["#00ff87", "#7b2ff7", "#00b4d8"])" />
         """;
 
-    private readonly record struct EffectCard(string Icon, string Name, string Description, string GradientClass);
+    private readonly record struct EffectCard(string Icon, string Name, string Description, string GradientClass, string Slug);
 
     private readonly List<EffectCard> _effects =
     [
-        new("🌧️", "Matrix Rain", "Cascading character rain à la The Matrix", "from-green-900/50 to-emerald-950/50"),
-        new("🌌", "Particle Constellation", "Connected particle network with glowing lines", "from-indigo-900/50 to-violet-950/50"),
-        new("🌈", "Aurora Borealis", "Flowing curtains of multi-color light", "from-teal-900/50 to-cyan-950/50"),
-        new("🫧", "Morphing Blobs", "Organic gradient blobs with smooth blending", "from-pink-900/50 to-rose-950/50"),
-        new("🌊", "Noise Field", "Animated simplex noise with flowing gradients", "from-purple-900/50 to-fuchsia-950/50"),
-        new("🧿", "Gradient Waves", "Smoothly morphing mesh gradient — Stripe-style", "from-amber-900/50 to-orange-950/50"),
+        new("🌧️", "Matrix Rain", "Cascading character rain à la The Matrix", "from-green-900/50 to-emerald-950/50", "matrix-rain"),
+        new("🌌", "Particle Constellation", "Connected particle network with glowing lines", "from-indigo-900/50 to-violet-950/50", "particle-constellation"),
+        new("🌈", "Aurora Borealis", "Flowing curtains of multi-color light", "from-teal-900/50 to-cyan-950/50", "aurora-borealis"),
+        new("🫧", "Morphing Blobs", "Organic gradient blobs with smooth blending", "from-pink-900/50 to-rose-950/50", "morphing-blobs"),
+        new("🌊", "Noise Field", "Animated simplex noise with flowing gradients", "from-purple-900/50 to-fuchsia-950/50", "noise-field"),
+        new("🧿", "Gradient Waves", "Smoothly morphing mesh gradient — Stripe-style", "from-amber-900/50 to-orange-950/50", "gradient-waves"),
     ];
 }

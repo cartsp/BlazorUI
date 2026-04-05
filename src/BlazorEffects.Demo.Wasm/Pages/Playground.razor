@@ -4,5 +4,25 @@
 <link rel="stylesheet" href="_content/BlazorEffects.Playground/playground.css" />
 
 <div class="h-screen bg-[#0f172a]">
-    <EffectPlayground />
+    <EffectPlayground InitialEffect="@_initialEffect" />
 </div>
+
+@code {
+    [Parameter] [SupplyParameterFromQuery(Name = "effect")] public string? EffectSlug { get; set; }
+
+    private string? _initialEffect;
+
+    protected override void OnInitialized()
+    {
+        _initialEffect = EffectSlug switch
+        {
+            "matrix-rain" => "Matrix Rain",
+            "particle-constellation" => "Particle Constellation",
+            "aurora-borealis" => "Aurora Borealis",
+            "morphing-blobs" => "Morphing Blobs",
+            "noise-field" => "Noise Field",
+            "gradient-waves" => "Gradient Waves",
+            _ => null
+        };
+    }
+}

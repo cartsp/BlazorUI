@@ -1,0 +1,131 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="800" height="450">
+  <defs>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="softGlow">
+      <feGaussianBlur stdDeviation="1"/>
+    </filter>
+  </defs>
+  <rect width="800" height="450" fill="#0a0a1a"/>
+  
+  <!-- Connection lines -->
+  <g stroke="#6366f1" stroke-width="0.5" opacity="0.3">
+    <line x1="120" y1="80" x2="200" y2="130"/>
+    <line x1="120" y1="80" x2="180" y2="60"/>
+    <line x1="200" y1="130" x2="310" y2="110"/>
+    <line x1="200" y1="130" x2="250" y2="200"/>
+    <line x1="200" y1="130" x2="180" y2="60"/>
+    <line x1="310" y1="110" x2="400" y2="90"/>
+    <line x1="310" y1="110" x2="380" y2="180"/>
+    <line x1="310" y1="110" x2="250" y2="200"/>
+    <line x1="400" y1="90" x2="500" y2="120"/>
+    <line x1="400" y1="90" x2="470" y2="60"/>
+    <line x1="400" y1="90" x2="380" y2="180"/>
+    <line x1="500" y1="120" x2="580" y2="80"/>
+    <line x1="500" y1="120" x2="600" y2="180"/>
+    <line x1="500" y1="120" x2="470" y2="60"/>
+    <line x1="580" y1="80" x2="680" y2="100"/>
+    <line x1="580" y1="80" x2="470" y2="60"/>
+    <line x1="680" y1="100" x2="720" y2="180"/>
+    <line x1="600" y1="180" x2="720" y2="180"/>
+    <line x1="600" y1="180" x2="530" y2="260"/>
+    <line x1="250" y1="200" x2="340" y2="280"/>
+    <line x1="250" y1="200" x2="160" y2="260"/>
+    <line x1="380" y1="180" x2="340" y2="280"/>
+    <line x1="380" y1="180" x2="460" y2="240"/>
+    <line x1="460" y1="240" x2="530" y2="260"/>
+    <line x1="460" y1="240" x2="380" y2="330"/>
+    <line x1="340" y1="280" x2="380" y2="330"/>
+    <line x1="340" y1="280" x2="260" y2="350"/>
+    <line x1="160" y1="260" x2="100" y2="350"/>
+    <line x1="160" y1="260" x2="260" y2="350"/>
+    <line x1="100" y1="350" x2="200" y2="400"/>
+    <line x1="260" y1="350" x2="200" y2="400"/>
+    <line x1="260" y1="350" x2="380" y2="380"/>
+    <line x1="380" y1="330" x2="380" y2="380"/>
+    <line x1="380" y1="330" x2="490" y2="350"/>
+    <line x1="530" y1="260" x2="490" y2="350"/>
+    <line x1="530" y1="260" x2="640" y2="290"/>
+    <line x1="640" y1="290" x2="720" y2="180"/>
+    <line x1="640" y1="290" x2="700" y2="370"/>
+    <line x1="490" y1="350" x2="590" y2="390"/>
+    <line x1="700" y1="370" x2="590" y2="390"/>
+    <line x1="380" y1="380" x2="590" y2="390"/>
+    <line x1="380" y1="380" x2="300" y2="420"/>
+    <line x1="200" y1="400" x2="300" y2="420"/>
+  </g>
+  
+  <!-- Glow layer (soft, behind particles) -->
+  <g filter="url(#softGlow)" opacity="0.5">
+    <circle cx="120" cy="80" r="4" fill="#818cf8"/>
+    <circle cx="200" cy="130" r="4" fill="#818cf8"/>
+    <circle cx="310" cy="110" r="4" fill="#818cf8"/>
+    <circle cx="400" cy="90" r="4" fill="#818cf8"/>
+    <circle cx="500" cy="120" r="4" fill="#818cf8"/>
+    <circle cx="580" cy="80" r="4" fill="#818cf8"/>
+    <circle cx="680" cy="100" r="4" fill="#818cf8"/>
+    <circle cx="250" cy="200" r="4" fill="#818cf8"/>
+    <circle cx="380" cy="180" r="4" fill="#818cf8"/>
+    <circle cx="460" cy="240" r="4" fill="#818cf8"/>
+    <circle cx="530" cy="260" r="4" fill="#818cf8"/>
+    <circle cx="600" cy="180" r="4" fill="#818cf8"/>
+    <circle cx="720" cy="180" r="4" fill="#818cf8"/>
+    <circle cx="160" cy="260" r="4" fill="#818cf8"/>
+    <circle cx="340" cy="280" r="4" fill="#818cf8"/>
+    <circle cx="380" cy="330" r="4" fill="#818cf8"/>
+    <circle cx="490" cy="350" r="4" fill="#818cf8"/>
+    <circle cx="640" cy="290" r="4" fill="#818cf8"/>
+    <circle cx="700" cy="370" r="4" fill="#818cf8"/>
+    <circle cx="100" cy="350" r="4" fill="#818cf8"/>
+    <circle cx="260" cy="350" r="4" fill="#818cf8"/>
+    <circle cx="380" cy="380" r="4" fill="#818cf8"/>
+    <circle cx="590" cy="390" r="4" fill="#818cf8"/>
+    <circle cx="200" cy="400" r="4" fill="#818cf8"/>
+    <circle cx="300" cy="420" r="4" fill="#818cf8"/>
+    <circle cx="180" cy="60" r="4" fill="#818cf8"/>
+    <circle cx="470" cy="60" r="4" fill="#818cf8"/>
+  </g>
+  
+  <!-- Particle dots -->
+  <g fill="#6366f1" filter="url(#glow)" opacity="0.9">
+    <circle cx="120" cy="80" r="2"/>
+    <circle cx="200" cy="130" r="2"/>
+    <circle cx="310" cy="110" r="2"/>
+    <circle cx="400" cy="90" r="2"/>
+    <circle cx="500" cy="120" r="2"/>
+    <circle cx="580" cy="80" r="2"/>
+    <circle cx="680" cy="100" r="2"/>
+    <circle cx="250" cy="200" r="2"/>
+    <circle cx="380" cy="180" r="2"/>
+    <circle cx="460" cy="240" r="2"/>
+    <circle cx="530" cy="260" r="2"/>
+    <circle cx="600" cy="180" r="2"/>
+    <circle cx="720" cy="180" r="2"/>
+    <circle cx="160" cy="260" r="2"/>
+    <circle cx="340" cy="280" r="2"/>
+    <circle cx="380" cy="330" r="2"/>
+    <circle cx="490" cy="350" r="2"/>
+    <circle cx="640" cy="290" r="2"/>
+    <circle cx="700" cy="370" r="2"/>
+    <circle cx="100" cy="350" r="2"/>
+    <circle cx="260" cy="350" r="2"/>
+    <circle cx="380" cy="380" r="2"/>
+    <circle cx="590" cy="390" r="2"/>
+    <circle cx="200" cy="400" r="2"/>
+    <circle cx="300" cy="420" r="2"/>
+    <circle cx="180" cy="60" r="2"/>
+    <circle cx="470" cy="60" r="2"/>
+    <!-- Extra scattered particles -->
+    <circle cx="50" cy="200" r="1.5" opacity="0.6"/>
+    <circle cx="750" cy="300" r="1.5" opacity="0.6"/>
+    <circle cx="440" cy="30" r="1.5" opacity="0.5"/>
+    <circle cx="550" cy="420" r="1.5" opacity="0.5"/>
+    <circle cx="80" cy="150" r="1" opacity="0.4"/>
+    <circle cx="350" cy="50" r="1" opacity="0.4"/>
+    <circle cx="660" cy="50" r="1" opacity="0.4"/>
+    <circle cx="30" cy="420" r="1" opacity="0.3"/>
+    <circle cx="770" cy="60" r="1" opacity="0.3"/>
+  </g>
+</svg>

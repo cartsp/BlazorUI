@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="800" height="450">
+  <defs>
+    <filter id="blob-blur">
+      <feGaussianBlur stdDeviation="20"/>
+    </filter>
+    <filter id="blob-blur-light">
+      <feGaussianBlur stdDeviation="30"/>
+    </filter>
+    <radialGradient id="blob-indigo" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#6366f1" stop-opacity="0.8"/>
+      <stop offset="40%" stop-color="#6366f1" stop-opacity="0.5"/>
+      <stop offset="70%" stop-color="#6366f1" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#6366f1" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="blob-pink" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ec4899" stop-opacity="0.8"/>
+      <stop offset="40%" stop-color="#ec4899" stop-opacity="0.5"/>
+      <stop offset="70%" stop-color="#ec4899" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#ec4899" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="blob-orange" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#f97316" stop-opacity="0.8"/>
+      <stop offset="40%" stop-color="#f97316" stop-opacity="0.5"/>
+      <stop offset="70%" stop-color="#f97316" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#f97316" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="blob-cyan" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#06b6d4" stop-opacity="0.8"/>
+      <stop offset="40%" stop-color="#06b6d4" stop-opacity="0.5"/>
+      <stop offset="70%" stop-color="#06b6d4" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#06b6d4" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  
+  <rect width="800" height="450" fill="#0a0a1a"/>
+  
+  <!-- Soft atmospheric glow -->
+  <rect width="800" height="450" opacity="0.15" filter="url(#blob-blur-light)">
+    <animate attributeName="opacity" values="0.1;0.2;0.1" dur="8s" repeatCount="indefinite"/>
+  </rect>
+  
+  <!-- Blob 1 - Indigo (center-left, morphing shape) -->
+  <g filter="url(#blob-blur)" opacity="0.85">
+    <path d="M250,200 C280,140 350,120 390,160 C430,200 440,260 400,300 C360,340 290,330 260,290 C230,250 220,240 250,200 Z" 
+          fill="url(#blob-indigo)">
+      <animateTransform attributeName="transform" type="translate" values="0,0; 20,-10; -10,15; 0,0" dur="12s" repeatCount="indefinite"/>
+    </path>
+  </g>
+  
+  <!-- Blob 2 - Pink (center-right, overlapping) -->
+  <g filter="url(#blob-blur)" opacity="0.8">
+    <path d="M480,180 C520,130 580,110 620,150 C660,190 670,250 630,290 C590,330 530,320 490,280 C450,240 440,220 480,180 Z"
+          fill="url(#blob-pink)">
+      <animateTransform attributeName="transform" type="translate" values="0,0; -15,20; 10,-10; 0,0" dur="15s" repeatCount="indefinite"/>
+    </path>
+  </g>
+  
+  <!-- Blob 3 - Orange (bottom-left) -->
+  <g filter="url(#blob-blur)" opacity="0.7">
+    <path d="M180,300 C210,250 280,230 330,270 C380,310 380,370 340,410 C300,440 240,430 200,390 C160,350 150,340 180,300 Z"
+          fill="url(#blob-orange)">
+      <animateTransform attributeName="transform" type="translate" values="0,0; 25,5; -5,-15; 0,0" dur="10s" repeatCount="indefinite"/>
+    </path>
+  </g>
+  
+  <!-- Blob 4 - Cyan (top-right) -->
+  <g filter="url(#blob-blur)" opacity="0.75">
+    <path d="M530,80 C560,40 620,30 660,60 C700,90 710,140 680,170 C650,200 590,200 550,170 C510,140 500,120 530,80 Z"
+          fill="url(#blob-cyan)">
+      <animateTransform attributeName="transform" type="translate" values="0,0; -20,15; 5,20; 0,0" dur="13s" repeatCount="indefinite"/>
+    </path>
+  </g>
+  
+  <!-- Additional subtle overlapping glow for luminosity blend -->
+  <g filter="url(#blob-blur-light)" opacity="0.3" style="mix-blend-mode:screen">
+    <ellipse cx="320" cy="220" rx="180" ry="150" fill="#818cf8"/>
+    <ellipse cx="540" cy="200" rx="160" ry="140" fill="#f472b6"/>
+    <ellipse cx="400" cy="300" rx="150" ry="120" fill="#fb923c"/>
+  </g>
+</svg>

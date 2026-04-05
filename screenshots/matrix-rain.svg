@@ -1,0 +1,118 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="800" height="450">
+  <defs>
+    <radialGradient id="mg" cx="50%" cy="40%" r="70%">
+      <stop offset="0%" stop-color="#003b00" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#000a00"/>
+    </radialGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="1.5" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="brightGlow">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <rect width="800" height="450" fill="#000a00"/>
+  <rect width="800" height="450" fill="url(#mg)"/>
+  
+  <!-- Matrix rain columns - varying brightness for trail effect -->
+  <g font-family="'Courier New', monospace" font-size="14" fill="#00ff41">
+    <!-- Bright leading characters (column heads) -->
+    <text x="30" y="45" fill="#ffffff" filter="url(#brightGlow)" opacity="0.95">裂</text>
+    <text x="55" y="120" fill="#ffffff" filter="url(#brightGlow)" opacity="0.9">シ</text>
+    <text x="80" y="78" fill="#00ff41" filter="url(#glow)" opacity="0.9">コ</text>
+    <text x="105" y="200" fill="#ffffff" filter="url(#brightGlow)" opacity="0.85">サ</text>
+    <text x="130" y="310" fill="#ffffff" filter="url(#brightGlow)" opacity="0.95">7</text>
+    <text x="155" y="55" fill="#00ff41" filter="url(#glow)" opacity="0.85">ミ</text>
+    <text x="180" y="160" fill="#ffffff" filter="url(#brightGlow)" opacity="0.9">3</text>
+    <text x="205" y="240" fill="#00ff41" filter="url(#glow)" opacity="0.8">キ</text>
+    <text x="230" y="90" fill="#ffffff" filter="url(#brightGlow)" opacity="0.9">ヱ</text>
+    <text x="255" y="370" fill="#ffffff" filter="url(#brightGlow)" opacity="0.85">0</text>
+    <text x="280" y="130" fill="#00ff41" filter="url(#glow)" opacity="0.9">フ</text>
+    <text x="305" y="280" fill="#ffffff" filter="url(#brightGlow)" opacity="0.9">@</text>
+    <text x="330" y="50" fill="#00ff41" filter="url(#glow)" opacity="0.85">9</text>
+    <text x="355" y="180" fill="#ffffff" filter="url(#brightGlow)" opacity="0.95">ネ</text>
+    <text x="380" y="340" fill="#00ff41" filter="url(#glow)" opacity="0.85">カ</text>
+    <text x="405" y="70" fill="#ffffff" filter="url(#brightGlow)" opacity="0.9">$</text>
+    <text x="430" y="220" fill="#00ff41" filter="url(#glow)" opacity="0.8">ホ</text>
+    <text x="455" y="410" fill="#ffffff" filter="url(#brightGlow)" opacity="0.9">5</text>
+    <text x="480" y="100" fill="#00ff41" filter="url(#glow)" opacity="0.9">ワ</text>
+    <text x="505" y="260" fill="#ffffff" filter="url(#brightGlow)" opacity="0.85">テ</text>
+    <text x="530" y="150" fill="#00ff41" filter="url(#glow)" opacity="0.9">%</text>
+    <text x="555" y="380" fill="#ffffff" filter="url(#brightGlow)" opacity="0.9">ヘ</text>
+    <text x="580" y="60" fill="#00ff41" filter="url(#glow)" opacity="0.85">8</text>
+    <text x="605" y="195" fill="#ffffff" filter="url(#brightGlow)" opacity="0.95">リ</text>
+    <text x="630" y="300" fill="#00ff41" filter="url(#glow)" opacity="0.8">A</text>
+    <text x="655" y="110" fill="#ffffff" filter="url(#brightGlow)" opacity="0.9">マ</text>
+    <text x="680" y="230" fill="#00ff41" filter="url(#glow)" opacity="0.9">ト</text>
+    <text x="705" y="350" fill="#ffffff" filter="url(#brightGlow)" opacity="0.85">2</text>
+    <text x="730" y="85" fill="#00ff41" filter="url(#glow)" opacity="0.9">ロ</text>
+    <text x="755" y="420" fill="#ffffff" filter="url(#brightGlow)" opacity="0.9">#</text>
+
+    <!-- Trail characters - fading behind the heads -->
+    <text x="30" y="62" opacity="0.7">K</text>
+    <text x="30" y="79" opacity="0.5">シ</text>
+    <text x="30" y="96" opacity="0.35">3</text>
+    <text x="30" y="113" opacity="0.2">コ</text>
+    
+    <text x="55" y="137" opacity="0.7">ヱ</text>
+    <text x="55" y="154" opacity="0.5">7</text>
+    <text x="55" y="171" opacity="0.35">A</text>
+    <text x="55" y="188" opacity="0.2">ミ</text>
+    <text x="55" y="205" opacity="0.12">カ</text>
+    
+    <text x="105" y="217" opacity="0.7">フ</text>
+    <text x="105" y="234" opacity="0.5">$</text>
+    <text x="105" y="251" opacity="0.35">キ</text>
+    <text x="105" y="268" opacity="0.2">5</text>
+    <text x="105" y="285" opacity="0.12">%</text>
+    
+    <text x="180" y="177" opacity="0.6">ネ</text>
+    <text x="180" y="194" opacity="0.4">ホ</text>
+    <text x="180" y="211" opacity="0.25">テ</text>
+    
+    <text x="255" y="387" opacity="0.6">ヘ</text>
+    <text x="255" y="404" opacity="0.4">ロ</text>
+    <text x="255" y="421" opacity="0.25">マ</text>
+    
+    <text x="355" y="197" opacity="0.7">ワ</text>
+    <text x="355" y="214" opacity="0.5">リ</text>
+    <text x="355" y="231" opacity="0.35">ト</text>
+    <text x="355" y="248" opacity="0.2">9</text>
+    
+    <text x="405" y="87" opacity="0.7">カ</text>
+    <text x="405" y="104" opacity="0.5">8</text>
+    <text x="405" y="121" opacity="0.35">@</text>
+    <text x="405" y="138" opacity="0.2">#</text>
+    
+    <text x="505" y="277" opacity="0.6">コ</text>
+    <text x="505" y="294" opacity="0.4">フ</text>
+    <text x="505" y="311" opacity="0.25">キ</text>
+    
+    <text x="605" y="212" opacity="0.7">サ</text>
+    <text x="605" y="229" opacity="0.5">ミ</text>
+    <text x="605" y="246" opacity="0.35">カ</text>
+    <text x="605" y="263" opacity="0.2">ヱ</text>
+    
+    <!-- Additional scattered dim characters for depth -->
+    <text x="45" y="300" opacity="0.15">ネ</text>
+    <text x="145" y="250" opacity="0.1">ロ</text>
+    <text x="195" y="380" opacity="0.12">ヘ</text>
+    <text x="295" y="50" opacity="0.15">2</text>
+    <text x="345" y="420" opacity="0.1">ホ</text>
+    <text x="445" y="300" opacity="0.12">A</text>
+    <text x="495" y="50" opacity="0.15">シ</text>
+    <text x="595" y="400" opacity="0.1">テ</text>
+    <text x="645" y="170" opacity="0.15">3</text>
+    <text x="745" y="250" opacity="0.12">キ</text>
+    <text x="70" y="400" opacity="0.08">$</text>
+    <text x="170" y="30" opacity="0.1">コ</text>
+    <text x="270" y="180" opacity="0.08">ワ</text>
+    <text x="370" y="100" opacity="0.1">ミ</text>
+    <text x="470" y="350" opacity="0.08">フ</text>
+    <text x="570" y="290" opacity="0.1">ネ</text>
+    <text x="670" y="50" opacity="0.08">ロ</text>
+    <text x="770" y="150" opacity="0.1">サ</text>
+  </g>
+</svg>

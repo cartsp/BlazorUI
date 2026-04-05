@@ -1,0 +1,118 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 500" width="1200" height="500">
+  <defs>
+    <clipPath id="clip1"><rect x="10" y="10" width="226" height="200" rx="8"/></clipPath>
+    <clipPath id="clip2"><rect x="246" y="10" width="226" height="200" rx="8"/></clipPath>
+    <clipPath id="clip3"><rect x="482" y="10" width="226" height="200" rx="8"/></clipPath>
+    <clipPath id="clip4"><rect x="718" y="10" width="226" height="200" rx="8"/></clipPath>
+    <clipPath id="clip5"><rect x="954" y="10" width="226" height="200" rx="8"/></clipPath>
+  </defs>
+  
+  <rect width="1200" height="500" fill="#0a0a1a" rx="12"/>
+  
+  <!-- Matrix Rain preview -->
+  <g clip-path="url(#clip1)">
+    <rect x="10" y="10" width="226" height="200" fill="#000a00"/>
+    <g font-family="'Courier New', monospace" font-size="10" fill="#00ff41">
+      <text x="30" y="30" fill="#fff" opacity="0.9">裂</text><text x="30" y="42" opacity="0.7">K</text><text x="30" y="54" opacity="0.5">シ</text><text x="30" y="66" opacity="0.3">3</text>
+      <text x="50" y="50" fill="#fff" opacity="0.9">シ</text><text x="50" y="62" opacity="0.6">ヱ</text><text x="50" y="74" opacity="0.4">7</text>
+      <text x="70" y="80" opacity="0.8">コ</text><text x="70" y="92" opacity="0.5">フ</text><text x="70" y="104" opacity="0.3">$</text>
+      <text x="90" y="40" fill="#fff" opacity="0.85">サ</text><text x="90" y="52" opacity="0.6">フ</text><text x="90" y="64" opacity="0.35">$</text><text x="90" y="76" opacity="0.2">キ</text>
+      <text x="110" y="100" fill="#fff" opacity="0.9">7</text><text x="110" y="112" opacity="0.6">ネ</text><text x="110" y="124" opacity="0.4">ホ</text>
+      <text x="130" y="60" opacity="0.8">ミ</text><text x="130" y="72" opacity="0.5">テ</text><text x="130" y="84" opacity="0.3">ロ</text>
+      <text x="150" y="140" fill="#fff" opacity="0.9">3</text><text x="150" y="152" opacity="0.7">ネ</text><text x="150" y="164" opacity="0.4">カ</text>
+      <text x="170" y="30" opacity="0.7">キ</text><text x="170" y="42" opacity="0.5">ワ</text><text x="170" y="54" opacity="0.3">リ</text>
+      <text x="190" y="90" fill="#fff" opacity="0.85">ヱ</text><text x="190" y="102" opacity="0.5">コ</text>
+      <text x="210" y="160" fill="#fff" opacity="0.9">@</text><text x="210" y="172" opacity="0.6">ヘ</text>
+      <text x="40" y="130" opacity="0.15">ネ</text>
+      <text x="160" y="180" opacity="0.12">ロ</text>
+      <text x="100" y="150" opacity="0.1">ホ</text>
+    </g>
+  </g>
+  
+  <!-- Particles preview -->
+  <g clip-path="url(#clip2)">
+    <rect x="246" y="10" width="226" height="200" fill="#0a0a1a"/>
+    <g stroke="#6366f1" stroke-width="0.4" opacity="0.35">
+      <line x1="280" y1="50" x2="320" y2="80"/><line x1="320" y1="80" x2="370" y2="60"/>
+      <line x1="370" y1="60" x2="400" y2="100"/><line x1="320" y1="80" x2="350" y2="130"/>
+      <line x1="350" y1="130" x2="400" y2="100"/><line x1="400" y1="100" x2="430" y2="70"/>
+      <line x1="350" y1="130" x2="310" y2="160"/><line x1="310" y1="160" x2="370" y2="170"/>
+      <line x1="370" y1="170" x2="420" y2="150"/><line x1="420" y1="150" x2="440" y2="120"/>
+      <line x1="430" y1="70" x2="440" y2="120"/><line x1="280" y1="50" x2="300" y2="30"/>
+      <line x1="310" y1="160" x2="270" y2="180"/><line x1="370" y1="170" x2="400" y2="190"/>
+    </g>
+    <g fill="#6366f1" opacity="0.85">
+      <circle cx="280" cy="50" r="1.5"/><circle cx="320" cy="80" r="1.5"/>
+      <circle cx="370" cy="60" r="1.5"/><circle cx="400" cy="100" r="1.5"/>
+      <circle cx="350" cy="130" r="1.5"/><circle cx="430" cy="70" r="1.5"/>
+      <circle cx="440" cy="120" r="1.5"/><circle cx="420" cy="150" r="1.5"/>
+      <circle cx="310" cy="160" r="1.5"/><circle cx="370" cy="170" r="1.5"/>
+      <circle cx="300" cy="30" r="1"/><circle cx="270" cy="180" r="1"/>
+      <circle cx="400" cy="190" r="1"/><circle cx="260" cy="100" r="1" opacity="0.5"/>
+      <circle cx="450" cy="40" r="1" opacity="0.5"/><circle cx="460" cy="180" r="1" opacity="0.4"/>
+    </g>
+  </g>
+  
+  <!-- Aurora preview -->
+  <g clip-path="url(#clip3)">
+    <rect x="482" y="10" width="226" height="200" fill="#000"/>
+    <g opacity="0.6">
+      <path d="M482,60 C520,40 560,80 600,50 C640,20 680,60 708,40 L708,120 C680,100 640,110 600,100 C560,120 520,100 482,110 Z" fill="#00ff87" opacity="0.5" filter="url(#none)"/>
+      <path d="M482,80 C530,60 570,100 620,70 C670,40 690,90 708,70 L708,140 C690,120 670,130 620,120 C570,140 530,120 482,130 Z" fill="#7b2ff7" opacity="0.4"/>
+      <path d="M482,100 C520,85 560,120 610,90 C660,60 690,110 708,95 L708,160 C690,145 660,155 610,145 C560,160 520,140 482,150 Z" fill="#00b4d8" opacity="0.35"/>
+    </g>
+    <g fill="white" opacity="0.5">
+      <circle cx="500" cy="25" r="0.7"/><circle cx="560" cy="35" r="0.5"/>
+      <circle cx="620" cy="20" r="0.8"/><circle cx="680" cy="30" r="0.6"/>
+      <circle cx="540" cy="180" r="0.6"/><circle cx="660" cy="190" r="0.5"/>
+    </g>
+  </g>
+  
+  <!-- Blobs preview -->
+  <g clip-path="url(#clip4)">
+    <rect x="718" y="10" width="226" height="200" fill="#0a0a1a"/>
+    <ellipse cx="790" cy="90" rx="55" ry="50" fill="#6366f1" opacity="0.45" filter="url(#none)"/>
+    <ellipse cx="870" cy="120" rx="50" ry="45" fill="#ec4899" opacity="0.4"/>
+    <ellipse cx="830" cy="150" rx="45" ry="40" fill="#f97316" opacity="0.35"/>
+    <ellipse cx="770" cy="160" rx="35" ry="30" fill="#06b6d4" opacity="0.35"/>
+  </g>
+  
+  <!-- Noise preview -->
+  <g clip-path="url(#clip5)">
+    <rect x="954" y="10" width="226" height="200" fill="#0f172a"/>
+    <rect x="954" y="10" width="226" height="200" opacity="0.8">
+      <animate attributeName="fill" values="#6366f1;#a855f7;#ec4899;#6366f1" dur="10s" repeatCount="indefinite"/>
+    </rect>
+  </g>
+  
+  <!-- Labels -->
+  <g font-family="'Segoe UI', system-ui, sans-serif" fill="#94a3b8" font-size="13" text-anchor="middle">
+    <text x="123" y="230">🌧 Matrix Rain</text>
+    <text x="359" y="230">🌌 Particles</text>
+    <text x="595" y="230">🌈 Aurora</text>
+    <text x="831" y="230">🫧 Blobs</text>
+    <text x="1067" y="230">🌊 Noise</text>
+  </g>
+  
+  <!-- Title area -->
+  <g font-family="'Segoe UI', system-ui, sans-serif" text-anchor="middle">
+    <text x="600" y="290" fill="#e2e8f0" font-size="32" font-weight="bold">✨ BlazorEffects</text>
+    <text x="600" y="320" fill="#94a3b8" font-size="16">Visually stunning animated backgrounds for Blazor</text>
+    <text x="600" y="350" fill="#64748b" font-size="13">Canvas-powered • 60fps • Drop-in Razor Components • NuGet packages</text>
+  </g>
+  
+  <!-- Bottom badges -->
+  <g font-family="'Segoe UI', system-ui, sans-serif" font-size="11" text-anchor="middle">
+    <rect x="350" y="375" width="90" height="24" rx="12" fill="#512bd4" opacity="0.3"/>
+    <text x="395" y="391" fill="#a78bfa">.NET 8-10</text>
+    
+    <rect x="455" y="375" width="80" height="24" rx="12" fill="#22c55e" opacity="0.2"/>
+    <text x="495" y="391" fill="#86efac">MIT License</text>
+    
+    <rect x="550" y="375" width="100" height="24" rx="12" fill="#3b82f6" opacity="0.2"/>
+    <text x="600" y="391" fill="#93c5fd">5 Effects</text>
+    
+    <rect x="665" y="375" width="100" height="24" rx="12" fill="#f59e0b" opacity="0.2"/>
+    <text x="715" y="391" fill="#fcd34d">Playground UI</text>
+  </g>
+</svg>

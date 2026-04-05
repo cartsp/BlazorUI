@@ -90,6 +90,21 @@ function simplex2D(perm, x, y) {
 
 // ─── Helpers ──────────────────────────────────────────────────────
 
+function applyReducedMotion(config) {
+    const behavior = config.reducedMotionBehavior || "Minimal";
+    if (behavior === "Ignore") return config;
+    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (!prefersReduced) return config;
+    if (behavior === "Pause") {
+        config.speed = 0;
+        config.targetFps = 1;
+    } else {
+        config.speed = Math.max(0.1, (config.speed || 1) * 0.1);
+        config.targetFps = Math.min(config.targetFps, 12);
+    }
+    return config;
+}
+
 function hexToRgb(hex) {
     const r = parseInt(hex.slice(1, 3), 16);
     const g = parseInt(hex.slice(3, 5), 16);
@@ -99,10 +114,11 @@ function hexToRgb(hex) {
 
 function getCanvasSize(canvas) {
     const rect = canvas.parentElement.getBoundingClientRect();
-    return {
+    const config = {
         width: Math.max(1, Math.floor(rect.width)),
         height: Math.max(1, Math.floor(rect.height))
     };
+    return applyReducedMotion(config);
 }
 
 /**
@@ -119,7 +135,7 @@ function createBlob(index, config, canvasWidth, canvasHeight) {
     const driftAngle = Math.random() * Math.PI * 2;
     const driftSpeed = (0.2 + Math.random() * 0.3) * config.speed * 200;
 
-    return {
+    const config = {
         x: cx,
         y: cy,
         vx: Math.cos(driftAngle) * driftSpeed,
@@ -131,6 +147,7 @@ function createBlob(index, config, canvasWidth, canvasHeight) {
         noiseSeed: Math.floor(Math.random() * 10000),
         perm: buildPerm(Math.floor(Math.random() * 2147483647))
     };
+    return applyReducedMotion(config);
 }
 
 /**
@@ -392,7 +409,7 @@ function normalizeConfig(raw) {
         colors = raw.colors.map(c => String(c));
     }
 
-    return {
+    const config = {
         blobCount: Math.max(1, Math.min(20, Number(raw?.blobCount) || 4)),
         colors: colors,
         blobSize: Math.max(50, Number(raw?.blobSize) || 300),
@@ -402,4 +419,5 @@ function normalizeConfig(raw) {
         opacity: Math.max(0, Math.min(1.0, Number(raw?.opacity) || 0.7)),
         targetFps: Math.max(1, Math.min(120, Number(raw?.targetFps) || 60))
     };
+    return applyReducedMotion(config);
 }

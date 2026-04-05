@@ -1,7 +1,7 @@
 @inherits BlazorEffects.Core.Animation.EffectComponentBase
 
 <div class="noise-field-container" style="position:relative;height:@Height;overflow:hidden;background:#000;">
-    <canvas @ref="CanvasElement"
+    <canvas @ref="CanvasElement" aria-hidden="true" role="presentation"
             style="position:absolute;top:0;left:0;width:100%;height:100%;opacity:@Opacity.ToString("F2");">
     </canvas>
     @if (ChildContent is not null)
@@ -65,12 +65,13 @@
         Lacunarity = Lacunarity,
         Brightness = Brightness,
         Opacity = Opacity,
+        ReducedMotionBehavior = ReducedMotionBehavior.ToString(),
         TargetFps = TargetFps
     };
 
     protected override string ComputeConfigHash()
     {
         var colorHash = string.Join(",", ColorStops);
-        return $"{colorHash}|{NoiseScale}|{Speed}|{Octaves}|{Persistence}|{Lacunarity}|{Brightness}|{Opacity}|{TargetFps}";
+        return $"{colorHash}|{NoiseScale}|{Speed}|{Octaves}|{Persistence}|{Lacunarity}|{Brightness}|{Opacity}|{ReducedMotionBehavior}|{TargetFps}";
     }
 }

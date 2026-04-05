@@ -15,5 +15,13 @@ public sealed record NoiseFieldConfig : IEffectConfig
     public double Lacunarity { get; init; } = 2.0;
     public double Brightness { get; init; } = 1.0;
     public double Opacity { get; init; } = 0.85;
+    /// <summary>
+    /// How to respond to prefers-reduced-motion. Default: Minimal.
+    /// </summary>
+    public string ReducedMotionBehavior { get; init; } = "Minimal";
+
+    /// <summary>
+    /// Target frames per second. Clamped 1-120.
+    /// </summary>
     public int TargetFps { get; init; } = 60;
 }

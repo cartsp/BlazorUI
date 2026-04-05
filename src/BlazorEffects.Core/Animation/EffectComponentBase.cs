@@ -25,6 +25,11 @@ public abstract class EffectComponentBase : ComponentBase, IAsyncDisposable
     [Parameter] public string? CssClass { get; set; }
 
     /// <summary>
+    /// How to respond to prefers-reduced-motion. Default: Minimal (very slow animation).
+    /// </summary>
+    [Parameter] public ReducedMotionBehavior ReducedMotionBehavior { get; set; } = ReducedMotionBehavior.Minimal;
+
+    /// <summary>
     /// Optional child content rendered over the effect.
     /// </summary>
     [Parameter] public RenderFragment? ChildContent { get; set; }

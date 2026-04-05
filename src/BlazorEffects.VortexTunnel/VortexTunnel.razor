@@ -1,7 +1,7 @@
 @inherits BlazorEffects.Core.Animation.EffectComponentBase
 
 <div class="vortextunnel-container" style="position:relative;height:@Height;overflow:hidden;">
-    <canvas @ref="CanvasElement"
+    <canvas @ref="CanvasElement" aria-hidden="true" role="presentation"
             style="position:absolute;top:0;left:0;width:100%;height:100%;opacity:@Opacity.ToString("F2");">
     </canvas>
     @if (ChildContent is not null)
@@ -77,12 +77,13 @@
         LineWidth = LineWidth,
         BackgroundColor = BackgroundColor,
         Opacity = Opacity,
+        ReducedMotionBehavior = ReducedMotionBehavior.ToString(),
         TargetFps = TargetFps
     };
 
     protected override string ComputeConfigHash()
     {
         var colorsHash = Colors is { Length: > 0 } ? string.Join(",", Colors) : "";
-        return $"{RingCount}|{RotationSpeed}|{Color}|{colorsHash}|{ScaleFactor}|{Shape}|{PolygonSides}|{LineWidth}|{BackgroundColor}|{Opacity}|{TargetFps}";
+        return $"{RingCount}|{RotationSpeed}|{Color}|{colorsHash}|{ScaleFactor}|{Shape}|{PolygonSides}|{LineWidth}|{BackgroundColor}|{Opacity}|{ReducedMotionBehavior}|{TargetFps}";
     }
 }

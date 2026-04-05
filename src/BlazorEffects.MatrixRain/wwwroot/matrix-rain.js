@@ -13,16 +13,32 @@ let nextId = 0;
 
 // ─── Helpers ──────────────────────────────────────────────────────
 
+function applyReducedMotion(config) {
+    const behavior = config.reducedMotionBehavior || "Minimal";
+    if (behavior === "Ignore") return config;
+    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (!prefersReduced) return config;
+    if (behavior === "Pause") {
+        config.speed = 0;
+        config.targetFps = 1;
+    } else {
+        config.speed = Math.max(0.1, (config.speed || 1) * 0.1);
+        config.targetFps = Math.min(config.targetFps, 12);
+    }
+    return config;
+}
+
 function randomChar(chars) {
     return chars[Math.floor(Math.random() * chars.length)];
 }
 
 function getCanvasSize(canvas) {
     const rect = canvas.parentElement.getBoundingClientRect();
-    return {
+    const config = {
         width: Math.max(1, Math.floor(rect.width)),
         height: Math.max(1, Math.floor(rect.height))
     };
+    return applyReducedMotion(config);
 }
 
 function buildColumns(config, canvasWidth) {
@@ -230,7 +246,7 @@ function drawFrame(state) {
 // ─── Config Normalization ────────────────────────────────────────
 
 function normalizeConfig(raw) {
-    return {
+    const config = {
         characters: String(raw?.characters || 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&'),
         fontSize: Math.max(4, Number(raw?.fontSize) || 16),
         fontFamily: String(raw?.fontFamily || 'monospace'),
@@ -241,4 +257,5 @@ function normalizeConfig(raw) {
         opacity: Math.max(0, Math.min(1.0, Number(raw?.opacity) || 0.8)),
         targetFps: Math.max(1, Math.min(120, Number(raw?.targetFps) || 30))
     };
+    return applyReducedMotion(config);
 }

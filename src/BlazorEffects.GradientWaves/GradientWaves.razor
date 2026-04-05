@@ -1,7 +1,7 @@
 @inherits BlazorEffects.Core.Animation.EffectComponentBase
 
 <div class="gradient-waves-container" style="position:relative;height:@Height;overflow:hidden;background:@Background;">
-    <canvas @ref="CanvasElement"
+    <canvas @ref="CanvasElement" aria-hidden="true" role="presentation"
             style="position:absolute;top:0;left:0;width:100%;height:100%;opacity:@Opacity.ToString("F2");">
     </canvas>
     @if (ChildContent is not null)
@@ -64,12 +64,13 @@
         BlurAmount = BlurAmount,
         BlendMode = BlendMode,
         Opacity = Opacity,
+        ReducedMotionBehavior = ReducedMotionBehavior.ToString(),
         TargetFps = TargetFps
     };
 
     protected override string ComputeConfigHash()
     {
         var colorHash = string.Join(",", Colors);
-        return $"{colorHash}|{PointCount}|{BlobSize}|{Speed}|{BlurAmount}|{BlendMode}|{Opacity}|{TargetFps}";
+        return $"{colorHash}|{PointCount}|{BlobSize}|{Speed}|{BlurAmount}|{BlendMode}|{Opacity}|{ReducedMotionBehavior}|{TargetFps}";
     }
 }

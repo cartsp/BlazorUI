@@ -100,21 +100,23 @@ function fbm(x, y, octaves) {
 function hexToRgb(hex) {
     const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
     if (!result) return { r: 0, g: 255, b: 135 };
-    return {
+    const config = {
         r: parseInt(result[1], 16),
         g: parseInt(result[2], 16),
         b: parseInt(result[3], 16)
     };
+    return applyReducedMotion(config);
 }
 
 // ─── Canvas Helpers ──────────────────────────────────────────────
 
 function getCanvasSize(canvas) {
     const rect = canvas.parentElement.getBoundingClientRect();
-    return {
+    const config = {
         width: Math.max(1, Math.floor(rect.width)),
         height: Math.max(1, Math.floor(rect.height))
     };
+    return applyReducedMotion(config);
 }
 
 // ─── Ribbon Construction ────────────────────────────────────────
@@ -395,7 +397,7 @@ function normalizeConfig(raw) {
         ? raw.colors.map(c => String(c))
         : ['#00ff87', '#7b2ff7', '#00b4d8'];
 
-    return {
+    const config = {
         colors,
         ribbonCount: Math.max(1, Math.min(10, Number(raw?.ribbonCount) || 4)),
         amplitude: Math.max(10, Number(raw?.amplitude) || 120),
@@ -404,4 +406,5 @@ function normalizeConfig(raw) {
         blendMode: String(raw?.blendMode || 'screen'),
         targetFps: Math.max(1, Math.min(120, Number(raw?.targetFps) || 60))
     };
+    return applyReducedMotion(config);
 }

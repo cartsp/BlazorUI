@@ -17,5 +17,13 @@ public sealed record ParticleConstellationConfig : IEffectConfig
     public double MouseRadius { get; init; } = 150;
     public string MouseForce { get; init; } = "attract";
     public double Opacity { get; init; } = 0.6;
+    /// <summary>
+    /// How to respond to prefers-reduced-motion. Default: Minimal.
+    /// </summary>
+    public string ReducedMotionBehavior { get; init; } = "Minimal";
+
+    /// <summary>
+    /// Target frames per second. Clamped 1-120.
+    /// </summary>
     public int TargetFps { get; init; } = 60;
 }

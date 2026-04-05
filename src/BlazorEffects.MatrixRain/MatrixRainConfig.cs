@@ -15,5 +15,13 @@ public sealed record MatrixRainConfig : IEffectConfig
     public double Speed { get; init; } = 1.0;
     public double Density { get; init; } = 1.0;
     public double Opacity { get; init; } = 0.8;
+    /// <summary>
+    /// How to respond to prefers-reduced-motion. Default: Minimal.
+    /// </summary>
+    public string ReducedMotionBehavior { get; init; } = "Minimal";
+
+    /// <summary>
+    /// Target frames per second. Clamped 1-120.
+    /// </summary>
     public int TargetFps { get; init; } = 30;
 }

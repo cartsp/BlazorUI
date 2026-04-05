@@ -182,10 +182,11 @@ function buildPaletteLUT(colorStops) {
 
 function getCanvasSize(canvas) {
     const rect = canvas.parentElement.getBoundingClientRect();
-    return {
+    const config = {
         width: Math.max(1, Math.floor(rect.width)),
         height: Math.max(1, Math.floor(rect.height))
     };
+    return applyReducedMotion(config);
 }
 
 // ─── Init ─────────────────────────────────────────────────────────
@@ -431,7 +432,7 @@ function normalizeConfig(raw) {
         colorStops = raw.colorStops.map(c => String(c));
     }
 
-    return {
+    const config = {
         colorStops,
         noiseScale: Math.max(0.0001, Number(raw?.noiseScale) || 0.002),
         speed: Math.max(0, Number(raw?.speed) || 0.004),
@@ -443,4 +444,5 @@ function normalizeConfig(raw) {
         opacity: Math.max(0, Math.min(1, Number(raw?.opacity) || 0.85)),
         targetFps: Math.max(1, Math.min(120, Number(raw?.targetFps) || 60))
     };
+    return applyReducedMotion(config);
 }

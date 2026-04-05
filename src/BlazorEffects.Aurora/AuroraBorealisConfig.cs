@@ -13,5 +13,13 @@ public sealed record AuroraBorealisConfig : IEffectConfig
     public double Speed { get; init; } = 0.008;
     public double Opacity { get; init; } = 0.5;
     public string BlendMode { get; init; } = "screen";
+    /// <summary>
+    /// How to respond to prefers-reduced-motion. Default: Minimal.
+    /// </summary>
+    public string ReducedMotionBehavior { get; init; } = "Minimal";
+
+    /// <summary>
+    /// Target frames per second. Clamped 1-120.
+    /// </summary>
     public int TargetFps { get; init; } = 60;
 }

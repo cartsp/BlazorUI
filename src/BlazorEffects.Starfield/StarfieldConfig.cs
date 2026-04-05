@@ -51,5 +51,13 @@ public sealed record StarfieldConfig : IEffectConfig
     /// <summary>
     /// Target frames per second. Clamped 1-120.
     /// </summary>
+    /// <summary>
+    /// How to respond to prefers-reduced-motion. Default: Minimal.
+    /// </summary>
+    public string ReducedMotionBehavior { get; init; } = "Minimal";
+
+    /// <summary>
+    /// Target frames per second. Clamped 1-120.
+    /// </summary>
     public int TargetFps { get; init; } = 60;
 }

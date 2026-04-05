@@ -14,6 +14,21 @@ let nextId = 0;
 
 // ─── Helpers ──────────────────────────────────────────────────────
 
+function applyReducedMotion(config) {
+    const behavior = config.reducedMotionBehavior || "Minimal";
+    if (behavior === "Ignore") return config;
+    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (!prefersReduced) return config;
+    if (behavior === "Pause") {
+        config.speed = 0;
+        config.targetFps = 1;
+    } else {
+        config.speed = Math.max(0.1, (config.speed || 1) * 0.1);
+        config.targetFps = Math.min(config.targetFps, 12);
+    }
+    return config;
+}
+
 function hexToRgb(hex) {
     const r = parseInt(hex.slice(1, 3), 16);
     const g = parseInt(hex.slice(3, 5), 16);
@@ -23,10 +38,11 @@ function hexToRgb(hex) {
 
 function getCanvasSize(canvas) {
     const rect = canvas.parentElement.getBoundingClientRect();
-    return {
+    const config = {
         width: Math.max(1, Math.floor(rect.width)),
         height: Math.max(1, Math.floor(rect.height))
     };
+    return applyReducedMotion(config);
 }
 
 /**
@@ -253,7 +269,7 @@ function startLoop(id) {
 // ─── Config Normalization ────────────────────────────────────────
 
 function normalizeConfig(raw) {
-    return {
+    const config = {
         ringCount: Math.max(5, Math.min(30, Number(raw?.ringCount) || 20)),
         rotationSpeed: Math.max(0.005, Number(raw?.rotationSpeed) || 0.02),
         color: String(raw?.color || '#8b5cf6'),
@@ -266,4 +282,5 @@ function normalizeConfig(raw) {
         opacity: Math.max(0, Math.min(1.0, Number(raw?.opacity) || 1.0)),
         targetFps: Math.max(1, Math.min(120, Number(raw?.targetFps) || 60))
     };
+    return applyReducedMotion(config);
 }

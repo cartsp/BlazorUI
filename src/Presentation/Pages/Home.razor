@@ -1,32 +1,118 @@
 @page "/"
 @using Presentation.Components
+@using Presentation.Tokens
+@using Presentation.Theming
 
-<PageTitle>BlazorUI Demo</PageTitle>
+<PageTitle>BlazorUI Design Tokens</PageTitle>
 
-<div class="min-h-screen bg-gray-50 flex items-center justify-center">
-    <div class="max-w-md w-full space-y-6 p-8 bg-white rounded-xl shadow-lg">
-        <h1 class="text-2xl font-bold text-gray-900 text-center">BlazorUI Components</h1>
-        
-        <div class="space-y-4">
-            <h2 class="text-sm font-medium text-gray-500 uppercase tracking-wider">Buttons</h2>
-            <div class="flex flex-wrap gap-3">
-                <Button Variant="ButtonVariant.Primary">Primary</Button>
-                <Button Variant="ButtonVariant.Secondary">Secondary</Button>
-                <Button Variant="ButtonVariant.Danger">Danger</Button>
-            </div>
-            
-            <h2 class="text-sm font-medium text-gray-500 uppercase tracking-wider">Sizes</h2>
-            <div class="flex flex-wrap items-center gap-3">
-                <Button Size="ButtonSize.Small">Small</Button>
-                <Button Size="ButtonSize.Medium">Medium</Button>
-                <Button Size="ButtonSize.Large">Large</Button>
-            </div>
-            
-            <h2 class="text-sm font-medium text-gray-500 uppercase tracking-wider">States</h2>
-            <div class="flex flex-wrap gap-3">
-                <Button Disabled="true">Disabled</Button>
-                <Button>Enabled</Button>
-            </div>
+<div class="min-h-screen bg-[var(--color-background)] text-[var(--color-text-primary)] transition-colors duration-200">
+    <div class="max-w-4xl mx-auto px-6 py-12 space-y-12">
+        <div class="flex items-center justify-between">
+            <h1 class="text-3xl font-bold">BlazorUI Design Tokens</h1>
+            <ThemeToggle />
         </div>
+
+        <!-- Colors -->
+        <section>
+            <h2 class="text-lg font-semibold text-[var(--color-text-secondary)] mb-4">Colors</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                @foreach (var color in new[] { "primary", "secondary", "accent", "success", "warning", "error" })
+                {
+                    <div class="flex items-center gap-3 p-3 rounded-lg bg-[var(--color-surface)] border border-[var(--color-border)]">
+                        <div class="w-10 h-10 rounded-md shadow-sm" style="background-color: var(--color-@color-500, #@GetColorHex(color))"></div>
+                        <div>
+                            <p class="text-sm font-medium capitalize">@color</p>
+                            <p class="text-xs text-[var(--color-text-muted)]">500</p>
+                        </div>
+                    </div>
+                }
+            </div>
+        </section>
+
+        <!-- Spacing -->
+        <section>
+            <h2 class="text-lg font-semibold text-[var(--color-text-secondary)] mb-4">Spacing Scale</h2>
+            <div class="space-y-2">
+                @foreach (var spacing in DesignTokens.AllSpacing.Where(s => s.Value != "0px"))
+                {
+                    <div class="flex items-center gap-4">
+                        <span class="w-8 text-sm font-mono text-[var(--color-text-muted)]">@spacing.Name</span>
+                        <div class="h-4 bg-blue-500 rounded-sm" style="width: @spacing.Value"></div>
+                        <span class="text-xs text-[var(--color-text-muted)]">@spacing.Value</span>
+                    </div>
+                }
+            </div>
+        </section>
+
+        <!-- Typography -->
+        <section>
+            <h2 class="text-lg font-semibold text-[var(--color-text-secondary)] mb-4">Typography</h2>
+            <div class="space-y-3 p-6 rounded-lg bg-[var(--color-surface)] border border-[var(--color-border)]">
+                @foreach (var size in new[] { DesignTokens.TextXs, DesignTokens.TextSm, DesignTokens.TextBase, DesignTokens.TextLg, DesignTokens.TextXl, DesignTokens.Text2xl, DesignTokens.Text3xl, DesignTokens.Text4xl })
+                {
+                    <p style="font-size: @size.Value" class="font-medium">@size.Name — The quick brown fox jumps over the lazy dog</p>
+                }
+            </div>
+        </section>
+
+        <!-- Shadows -->
+        <section>
+            <h2 class="text-lg font-semibold text-[var(--color-text-secondary)] mb-4">Shadows</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                @foreach (var shadow in DesignTokens.AllShadows)
+                {
+                    <div class="p-6 rounded-lg bg-[var(--color-surface)] border border-[var(--color-border)]" style="box-shadow: @shadow.Value">
+                        <p class="text-sm font-medium">@shadow.Name</p>
+                    </div>
+                }
+            </div>
+        </section>
+
+        <!-- Border Radius -->
+        <section>
+            <h2 class="text-lg font-semibold text-[var(--color-text-secondary)] mb-4">Border Radius</h2>
+            <div class="flex flex-wrap gap-4">
+                @foreach (var radius in DesignTokens.AllBorderRadius)
+                {
+                    <div class="w-16 h-16 bg-blue-500 flex items-center justify-center text-white text-xs" style="border-radius: @radius.Value">
+                        @radius.Name
+                    </div>
+                }
+            </div>
+        </section>
+
+        <!-- Buttons -->
+        <section>
+            <h2 class="text-lg font-semibold text-[var(--color-text-secondary)] mb-4">Buttons</h2>
+            <div class="space-y-4">
+                <div class="flex flex-wrap gap-3">
+                    <Button Variant="ButtonVariant.Primary">Primary</Button>
+                    <Button Variant="ButtonVariant.Secondary">Secondary</Button>
+                    <Button Variant="ButtonVariant.Danger">Danger</Button>
+                </div>
+                <div class="flex flex-wrap items-center gap-3">
+                    <Button Size="ButtonSize.Small">Small</Button>
+                    <Button Size="ButtonSize.Medium">Medium</Button>
+                    <Button Size="ButtonSize.Large">Large</Button>
+                </div>
+                <div class="flex flex-wrap gap-3">
+                    <Button Disabled="true">Disabled</Button>
+                    <Button>Enabled</Button>
+                </div>
+            </div>
+        </section>
     </div>
 </div>
+
+@code {
+    private static string GetColorHex(string name) => name switch
+    {
+        "primary" => "3b82f6",
+        "secondary" => "64748b",
+        "accent" => "8b5cf6",
+        "success" => "22c55e",
+        "warning" => "f59e0b",
+        "error" => "ef4444",
+        _ => "000000"
+    };
+}

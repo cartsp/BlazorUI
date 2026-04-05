@@ -1,0 +1,32 @@
+@using Presentation.Theming
+@implements IDisposable
+
+<CascadingValue Value="this" IsFixed="false">
+    @ChildContent
+</CascadingValue>
+
+@code {
+    [Inject] private IThemeService ThemeService { get; set; } = default!;
+
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+
+    public Theme CurrentTheme => _currentTheme;
+    private Theme _currentTheme = Theme.Light;
+
+    protected override void OnInitialized()
+    {
+        _currentTheme = ThemeService.CurrentTheme;
+        ThemeService.ThemeChanged += OnThemeChanged;
+    }
+
+    private void OnThemeChanged(object? sender, Theme newTheme)
+    {
+        _currentTheme = newTheme;
+        InvokeAsync(StateHasChanged);
+    }
+
+    public void Dispose()
+    {
+        ThemeService.ThemeChanged -= OnThemeChanged;
+    }
+}

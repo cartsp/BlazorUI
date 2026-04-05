@@ -1,4 +1,5 @@
 using Infrastructure;
+using Presentation;
 using Microsoft.AspNetCore.Components;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -6,6 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
+builder.Services.AddPresentation();
 builder.Services.AddInfrastructure(builder.Configuration);
 
 var app = builder.Build();

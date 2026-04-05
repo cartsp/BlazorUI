@@ -1,0 +1,109 @@
+@inherits BlazorEffects.Core.Animation.EffectComponentBase
+
+<div class="particle-constellation-container" style="position:relative;height:@Height;overflow:hidden;"
+     @onmousemove="OnMouseMove"
+     @onmouseleave="OnMouseLeave">
+    <canvas @ref="CanvasElement"
+            style="position:absolute;top:0;left:0;width:100%;height:100%;opacity:@Opacity.ToString("F2");">
+    </canvas>
+    @if (ChildContent is not null)
+    {
+        <div class="particle-constellation-overlay @CssClass" style="position:relative;z-index:1;">
+            @ChildContent
+        </div>
+    }
+</div>
+
+@code {
+    /// <summary>
+    /// Number of particles to render.
+    /// </summary>
+    [Parameter] public int ParticleCount { get; set; } = 150;
+
+    /// <summary>
+    /// Particle fill color (hex).
+    /// </summary>
+    [Parameter] public string ParticleColor { get; set; } = "#6366f1";
+
+    /// <summary>
+    /// Particle radius in px.
+    /// </summary>
+    [Parameter] public double ParticleSize { get; set; } = 2;
+
+    /// <summary>
+    /// Max distance for drawing connections between particles.
+    /// </summary>
+    [Parameter] public double ConnectionDistance { get; set; } = 120;
+
+    /// <summary>
+    /// Connection line color (hex).
+    /// </summary>
+    [Parameter] public string ConnectionColor { get; set; } = "#6366f1";
+
+    /// <summary>
+    /// Particle drift speed multiplier.
+    /// </summary>
+    [Parameter] public double Speed { get; set; } = 0.5;
+
+    /// <summary>
+    /// Enable mouse-based particle interaction.
+    /// </summary>
+    [Parameter] public bool MouseInteraction { get; set; } = true;
+
+    /// <summary>
+    /// Radius of mouse influence zone in px.
+    /// </summary>
+    [Parameter] public double MouseRadius { get; set; } = 150;
+
+    /// <summary>
+    /// Mouse force direction: "attract" or "repel".
+    /// </summary>
+    [Parameter] public string MouseForce { get; set; } = "attract";
+
+    /// <summary>
+    /// Overall effect opacity (0.0–1.0).
+    /// </summary>
+    [Parameter] public double Opacity { get; set; } = 0.6;
+
+    protected override string ModulePath => "./_content/BlazorEffects.Particles/particle-constellation.js";
+
+    protected override object BuildConfig() => new ParticleConstellationConfig
+    {
+        ParticleCount = ParticleCount,
+        ParticleColor = ParticleColor,
+        ParticleSize = ParticleSize,
+        ConnectionDistance = ConnectionDistance,
+        ConnectionColor = ConnectionColor,
+        Speed = Speed,
+        MouseInteraction = MouseInteraction,
+        MouseRadius = MouseRadius,
+        MouseForce = MouseForce,
+        Opacity = Opacity,
+        TargetFps = TargetFps
+    };
+
+    protected override string ComputeConfigHash()
+    {
+        return $"{ParticleCount}|{ParticleColor}|{ParticleSize}|{ConnectionDistance}|{ConnectionColor}|{Speed}|{MouseInteraction}|{MouseRadius}|{MouseForce}|{Opacity}|{TargetFps}";
+    }
+
+    private async void OnMouseMove(MouseEventArgs e)
+    {
+        if (Module is null || InstanceId is null || !MouseInteraction) return;
+        try
+        {
+            await Module.InvokeVoidAsync("setMousePosition", InstanceId, e.OffsetX, e.OffsetY);
+        }
+        catch (JSDisconnectedException) { }
+    }
+
+    private async void OnMouseLeave()
+    {
+        if (Module is null || InstanceId is null || !MouseInteraction) return;
+        try
+        {
+            await Module.InvokeVoidAsync("clearMousePosition", InstanceId);
+        }
+        catch (JSDisconnectedException) { }
+    }
+}

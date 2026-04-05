@@ -1,0 +1,64 @@
+@inherits BlazorEffects.Core.Animation.EffectComponentBase
+
+<div class="aurora-borealis-container" style="position:relative;height:@Height;overflow:hidden;background:#000;">
+    <canvas @ref="CanvasElement"
+            style="position:absolute;top:0;left:0;width:100%;height:100%;opacity:@Opacity.ToString("F2");mix-blend-mode:@BlendMode;">
+    </canvas>
+    @if (ChildContent is not null)
+    {
+        <div class="aurora-borealis-overlay @CssClass" style="position:relative;z-index:1;">
+            @ChildContent
+        </div>
+    }
+</div>
+
+@code {
+    /// <summary>
+    /// Aurora ribbon colors (hex strings).
+    /// </summary>
+    [Parameter] public string[] Colors { get; set; } = AuroraBorealisPresets.Classic;
+
+    /// <summary>
+    /// Number of aurora bands (ribbons).
+    /// </summary>
+    [Parameter] public int RibbonCount { get; set; } = 4;
+
+    /// <summary>
+    /// Vertical wave height in pixels.
+    /// </summary>
+    [Parameter] public double Amplitude { get; set; } = 120;
+
+    /// <summary>
+    /// Animation speed multiplier.
+    /// </summary>
+    [Parameter] public double Speed { get; set; } = 0.008;
+
+    /// <summary>
+    /// Overall effect opacity (0.0–1.0).
+    /// </summary>
+    [Parameter] public double Opacity { get; set; } = 0.5;
+
+    /// <summary>
+    /// CSS mix-blend-mode for the canvas.
+    /// </summary>
+    [Parameter] public string BlendMode { get; set; } = "screen";
+
+    protected override string ModulePath => "./_content/BlazorEffects.Aurora/aurora-borealis.js";
+
+    protected override object BuildConfig() => new AuroraBorealisConfig
+    {
+        Colors = Colors,
+        RibbonCount = RibbonCount,
+        Amplitude = Amplitude,
+        Speed = Speed,
+        Opacity = Opacity,
+        BlendMode = BlendMode,
+        TargetFps = TargetFps
+    };
+
+    protected override string ComputeConfigHash()
+    {
+        var colorsKey = string.Join(",", Colors);
+        return $"{colorsKey}|{RibbonCount}|{Amplitude}|{Speed}|{Opacity}|{BlendMode}|{TargetFps}";
+    }
+}

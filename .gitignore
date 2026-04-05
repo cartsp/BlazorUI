@@ -30,3 +30,7 @@ Thumbs.db
 *.db
 *.db-shm
 *.db-wal
+
+## Project management
+AGENTS.md
+

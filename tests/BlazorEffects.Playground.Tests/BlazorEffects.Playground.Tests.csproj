@@ -22,6 +22,12 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\BlazorEffects.Playground\BlazorEffects.Playground.csproj" />
+    <ProjectReference Include="..\..\src\BlazorEffects.Aurora\BlazorEffects.Aurora.csproj" />
+    <ProjectReference Include="..\..\src\BlazorEffects.Blobs\BlazorEffects.Blobs.csproj" />
+    <ProjectReference Include="..\..\src\BlazorEffects.GradientWaves\BlazorEffects.GradientWaves.csproj" />
+    <ProjectReference Include="..\..\src\BlazorEffects.MatrixRain\BlazorEffects.MatrixRain.csproj" />
+    <ProjectReference Include="..\..\src\BlazorEffects.Noise\BlazorEffects.Noise.csproj" />
+    <ProjectReference Include="..\..\src\BlazorEffects.Particles\BlazorEffects.Particles.csproj" />
   </ItemGroup>
 
 </Project>

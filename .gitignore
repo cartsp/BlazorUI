@@ -1,0 +1,32 @@
+## Build
+bin/
+obj/
+**/bin/
+**/obj/
+
+## NuGet
+*.nupkg
+*.snupkg
+.nuget/
+
+## IDE
+.vs/
+.vscode/
+.idea/
+*.user
+*.suo
+
+## Node
+node_modules/
+
+## Tailwind output (regenerated)
+src/AppHost/wwwroot/css/output.css
+
+## OS
+.DS_Store
+Thumbs.db
+
+## SQLite
+*.db
+*.db-shm
+*.db-wal

@@ -1,0 +1,32 @@
+@page "/"
+@using Presentation.Components
+
+<PageTitle>BlazorUI Demo</PageTitle>
+
+<div class="min-h-screen bg-gray-50 flex items-center justify-center">
+    <div class="max-w-md w-full space-y-6 p-8 bg-white rounded-xl shadow-lg">
+        <h1 class="text-2xl font-bold text-gray-900 text-center">BlazorUI Components</h1>
+        
+        <div class="space-y-4">
+            <h2 class="text-sm font-medium text-gray-500 uppercase tracking-wider">Buttons</h2>
+            <div class="flex flex-wrap gap-3">
+                <Button Variant="ButtonVariant.Primary">Primary</Button>
+                <Button Variant="ButtonVariant.Secondary">Secondary</Button>
+                <Button Variant="ButtonVariant.Danger">Danger</Button>
+            </div>
+            
+            <h2 class="text-sm font-medium text-gray-500 uppercase tracking-wider">Sizes</h2>
+            <div class="flex flex-wrap items-center gap-3">
+                <Button Size="ButtonSize.Small">Small</Button>
+                <Button Size="ButtonSize.Medium">Medium</Button>
+                <Button Size="ButtonSize.Large">Large</Button>
+            </div>
+            
+            <h2 class="text-sm font-medium text-gray-500 uppercase tracking-wider">States</h2>
+            <div class="flex flex-wrap gap-3">
+                <Button Disabled="true">Disabled</Button>
+                <Button>Enabled</Button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -7,13 +7,13 @@ namespace BlazorEffects.Noise;
 /// </summary>
 public sealed record NoiseFieldConfig : IEffectConfig
 {
-    public string[] ColorStops { get; init; } = ["#0f172a", "#6366f1", "#a855f7", "#ec4899", "#0f172a"];
-    public double NoiseScale { get; init; } = 0.005;
-    public double Speed { get; init; } = 0.003;
-    public int Octaves { get; init; } = 3;
+    public string[] ColorStops { get; init; } = ["#0a0a2e", "#1e1b4b", "#6366f1", "#8b5cf6", "#c084fc", "#ec4899", "#f43f5e", "#1e1b4b", "#0a0a2e"];
+    public double NoiseScale { get; init; } = 0.003;
+    public double Speed { get; init; } = 0.005;
+    public int Octaves { get; init; } = 4;
     public double Persistence { get; init; } = 0.5;
     public double Lacunarity { get; init; } = 2.0;
     public double Brightness { get; init; } = 1.0;
-    public double Opacity { get; init; } = 0.8;
+    public double Opacity { get; init; } = 0.85;
     public int TargetFps { get; init; } = 60;
 }

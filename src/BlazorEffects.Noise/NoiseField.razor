@@ -21,17 +21,17 @@
     /// <summary>
     /// Zoom level of noise. Lower = smoother, larger features.
     /// </summary>
-    [Parameter] public double NoiseScale { get; set; } = 0.005;
+    [Parameter] public double NoiseScale { get; set; } = 0.003;
 
     /// <summary>
     /// Evolution speed of the noise animation.
     /// </summary>
-    [Parameter] public double Speed { get; set; } = 0.003;
+    [Parameter] public double Speed { get; set; } = 0.005;
 
     /// <summary>
     /// Number of noise octaves (fractal Brownian motion).
     /// </summary>
-    [Parameter] public int Octaves { get; set; } = 3;
+    [Parameter] public int Octaves { get; set; } = 4;
 
     /// <summary>
     /// Amplitude multiplier per octave.
@@ -51,7 +51,7 @@
     /// <summary>
     /// Overall effect opacity.
     /// </summary>
-    [Parameter] public double Opacity { get; set; } = 0.8;
+    [Parameter] public double Opacity { get; set; } = 0.85;
 
     protected override string ModulePath => "./_content/BlazorEffects.Noise/noise-field.js";
 

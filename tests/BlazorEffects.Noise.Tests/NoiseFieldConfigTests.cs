@@ -11,14 +11,14 @@ public class NoiseFieldConfigTests
     {
         var config = new NoiseFieldConfig();
 
-        config.ColorStops.Should().BeEquivalentTo(["#0f172a", "#6366f1", "#a855f7", "#ec4899", "#0f172a"]);
-        config.NoiseScale.Should().Be(0.005);
-        config.Speed.Should().Be(0.003);
-        config.Octaves.Should().Be(3);
+        config.ColorStops.Should().BeEquivalentTo(["#0a0a2e", "#1e1b4b", "#6366f1", "#8b5cf6", "#c084fc", "#ec4899", "#f43f5e", "#1e1b4b", "#0a0a2e"]);
+        config.NoiseScale.Should().Be(0.003);
+        config.Speed.Should().Be(0.005);
+        config.Octaves.Should().Be(4);
         config.Persistence.Should().Be(0.5);
         config.Lacunarity.Should().Be(2.0);
         config.Brightness.Should().Be(1.0);
-        config.Opacity.Should().Be(0.8);
+        config.Opacity.Should().Be(0.85);
         config.TargetFps.Should().Be(60);
     }
 

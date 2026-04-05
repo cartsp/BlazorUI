@@ -7,8 +7,9 @@
  * for rich, layered textures. Noise values mapped to a configurable color gradient
  * via a pre-computed 256-entry palette LUT for maximum per-pixel performance.
  *
- * Computed at 0.25x resolution with bilinear canvas upscaling for excellent
- * visual quality at minimal CPU cost.
+ * Computed at 0.5x resolution with bilinear canvas upscaling for smooth,
+ * organic visuals. Uses domain warping (noise-of-noise) for flowing,
+ * lava-lamp-like motion with multi-stop color gradients.
  */
 
 // Instance management
@@ -193,8 +194,9 @@ export function init(canvas, rawConfig) {
     const config = normalizeConfig(rawConfig);
     const { width, height } = getCanvasSize(canvas);
 
-    // Compute at 0.25x resolution, canvas smoothing handles upscale
-    const scale = 0.25;
+    // Compute at 0.5x resolution for smooth, organic visuals
+    // (0.25x was too aggressive, causing muddy/pixelated output)
+    const scale = 0.5;
     const noiseW = Math.max(1, Math.floor(width * scale));
     const noiseH = Math.max(1, Math.floor(height * scale));
 
@@ -226,6 +228,8 @@ export function init(canvas, rawConfig) {
         noiseW,
         noiseH,
         scale,
+        displayWidth: width,
+        displayHeight: height,
         running: true,
         animFrameId: null,
         lastFrameTime: 0,
@@ -275,6 +279,8 @@ export function init(canvas, rawConfig) {
             canvas.height = nH;
             state.noiseW = nW;
             state.noiseH = nH;
+            state.displayWidth = newW;
+            state.displayHeight = newH;
             state.imageData = state.ctx.createImageData(nW, nH);
             state.pixels = state.imageData.data;
         }, 100);
@@ -350,33 +356,62 @@ function startLoop(id) {
 }
 
 function drawFrame(state) {
-    const { pixels, paletteLUT, permData, noiseW, noiseH, config, time } = state;
+    const { pixels, paletteLUT, permData, noiseW, noiseH, config, time, displayWidth, displayHeight } = state;
     const { noiseScale, speed, octaves, persistence, lacunarity, brightness } = config;
 
+    // Time drives the z-axis evolution of 3D noise
     const z = time * speed * 100;
-    const brightness8 = Math.max(0, Math.min(255, Math.round(brightness * 255)));
+    // Pre-compute brightness as a 0-255 scale factor
+    const bScale = Math.max(0, Math.min(1, brightness));
+
+    // We compute noise coordinates based on the DISPLAY (parent) size,
+    // not the downscaled buffer size, so the noise pattern is
+    // resolution-independent and looks the same at any scale factor.
+    const dW = displayWidth || noiseW / (state.scale || 0.5);
+    const dH = displayHeight || noiseH / (state.scale || 0.5);
 
     for (let y = 0; y < noiseH; y++) {
         for (let x = 0; x < noiseW; x++) {
-            const nx = x * noiseScale * noiseW;
-            const ny = y * noiseScale * noiseH;
+            // Map buffer pixel → display pixel for consistent noise field
+            const dx = (x / noiseW) * dW;
+            const dy = (y / noiseH) * dH;
 
-            // Fractal Brownian Motion: layered noise for rich texture
-            const noiseVal = fbm(permData, nx, ny, z, octaves, persistence, lacunarity);
+            const nx = dx * noiseScale;
+            const ny = dy * noiseScale;
+
+            // Domain warping: use noise to distort the noise coordinates
+            // This creates flowing, organic, lava-lamp-like motion
+            const warpStrength = 0.6;
+            const warpFreq = noiseScale * 1.5;
+            const warpX = fbm(permData, dx * warpFreq, dy * warpFreq, z * 0.7, Math.max(1, octaves - 1), persistence, lacunarity);
+            const warpY = fbm(permData, dx * warpFreq + 5.2, dy * warpFreq + 1.3, z * 0.7, Math.max(1, octaves - 1), persistence, lacunarity);
+
+            // Fractal Brownian Motion with warped coordinates
+            const noiseVal = fbm(
+                permData,
+                nx + warpX * warpStrength,
+                ny + warpY * warpStrength,
+                z,
+                octaves,
+                persistence,
+                lacunarity
+            );
 
             // Map from [-1, 1] to [0, 1]
             const normalized = (noiseVal + 1) * 0.5;
 
-            // Clamp to [0, 1]
-            const t = Math.max(0, Math.min(1, normalized));
+            // Smooth contrast curve for richer gradients
+            // Smoothstep: 3t² - 2t³ — pushes values away from midgray
+            const raw = Math.max(0, Math.min(1, normalized));
+            const t = raw * raw * (3 - 2 * raw);
 
             // Palette lookup
             const lutIdx = Math.min(255, Math.floor(t * 255)) * 3;
 
             const pixIdx = (y * noiseW + x) * 4;
-            pixels[pixIdx]     = Math.min(255, (paletteLUT[lutIdx]     * brightness8) >> 8);
-            pixels[pixIdx + 1] = Math.min(255, (paletteLUT[lutIdx + 1] * brightness8) >> 8);
-            pixels[pixIdx + 2] = Math.min(255, (paletteLUT[lutIdx + 2] * brightness8) >> 8);
+            pixels[pixIdx]     = Math.min(255, Math.round(paletteLUT[lutIdx]     * bScale));
+            pixels[pixIdx + 1] = Math.min(255, Math.round(paletteLUT[lutIdx + 1] * bScale));
+            pixels[pixIdx + 2] = Math.min(255, Math.round(paletteLUT[lutIdx + 2] * bScale));
             pixels[pixIdx + 3] = 255;
         }
     }
@@ -387,7 +422,8 @@ function drawFrame(state) {
 // ─── Config Normalization ────────────────────────────────────────
 
 function normalizeConfig(raw) {
-    const defaultStops = ["#0f172a", "#6366f1", "#a855f7", "#ec4899", "#0f172a"];
+    // Richer default palette with more stops for smoother gradient transitions
+    const defaultStops = ["#0a0a2e", "#1e1b4b", "#6366f1", "#8b5cf6", "#c084fc", "#ec4899", "#f43f5e", "#1e1b4b", "#0a0a2e"];
 
     let colorStops = defaultStops;
     if (raw?.colorStops && Array.isArray(raw.colorStops) && raw.colorStops.length >= 2) {
@@ -396,13 +432,13 @@ function normalizeConfig(raw) {
 
     return {
         colorStops,
-        noiseScale: Math.max(0.0001, Number(raw?.noiseScale) || 0.005),
-        speed: Math.max(0, Number(raw?.speed) || 0.003),
-        octaves: Math.max(1, Math.min(8, Number(raw?.octaves) || 3)),
+        noiseScale: Math.max(0.0001, Number(raw?.noiseScale) || 0.003),
+        speed: Math.max(0, Number(raw?.speed) || 0.005),
+        octaves: Math.max(1, Math.min(8, Number(raw?.octaves) || 4)),
         persistence: Math.max(0, Math.min(1, Number(raw?.persistence) || 0.5)),
         lacunarity: Math.max(1, Number(raw?.lacunarity) || 2.0),
         brightness: Math.max(0, Math.min(3, Number(raw?.brightness) || 1.0)),
-        opacity: Math.max(0, Math.min(1, Number(raw?.opacity) || 0.8)),
+        opacity: Math.max(0, Math.min(1, Number(raw?.opacity) || 0.85)),
         targetFps: Math.max(1, Math.min(120, Number(raw?.targetFps) || 60))
     };
 }

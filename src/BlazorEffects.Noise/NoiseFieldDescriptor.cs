@@ -27,7 +27,7 @@ public sealed class NoiseFieldDescriptor : IEffectDescriptor<NoiseFieldConfig>
             Name = "Noise Scale",
             PropertyName = nameof(NoiseFieldConfig.NoiseScale),
             Type = EffectParameterType.Range,
-            DefaultValue = 0.005,
+            DefaultValue = 0.003,
             MinValue = 0.0001,
             MaxValue = 0.05,
             Step = 0.0005,
@@ -39,7 +39,7 @@ public sealed class NoiseFieldDescriptor : IEffectDescriptor<NoiseFieldConfig>
             Name = "Speed",
             PropertyName = nameof(NoiseFieldConfig.Speed),
             Type = EffectParameterType.Range,
-            DefaultValue = 0.003,
+            DefaultValue = 0.005,
             MinValue = 0.0,
             MaxValue = 0.02,
             Step = 0.001,
@@ -51,7 +51,7 @@ public sealed class NoiseFieldDescriptor : IEffectDescriptor<NoiseFieldConfig>
             Name = "Octaves",
             PropertyName = nameof(NoiseFieldConfig.Octaves),
             Type = EffectParameterType.Integer,
-            DefaultValue = 3,
+            DefaultValue = 4,
             MinValue = 1,
             MaxValue = 8,
             Step = 1,
@@ -110,13 +110,13 @@ public sealed class NoiseFieldDescriptor : IEffectDescriptor<NoiseFieldConfig>
 
     public IReadOnlyList<EffectPreset<NoiseFieldConfig>> GetPresets() =>
     [
-        new() { Name = "Default", Description = "Dark slate to indigo to purple to pink", Config = new() { ColorStops = NoiseFieldPresets.Default }, PreviewGradient = "linear-gradient(90deg, #0f172a, #6366f1, #a855f7, #ec4899, #0f172a)" },
-        new() { Name = "Aurora", Description = "Deep blues to greens to purples", Config = new() { ColorStops = NoiseFieldPresets.Aurora }, PreviewGradient = "linear-gradient(90deg, #0c1445, #1e3a5f, #10b981, #14b8a6, #8b5cf6, #0c1445)" },
-        new() { Name = "Sunset", Description = "Warm oranges to pinks to deep purples", Config = new() { ColorStops = NoiseFieldPresets.Sunset }, PreviewGradient = "linear-gradient(90deg, #1a0a2e, #f97316, #f43f5e, #a855f7, #1a0a2e)" },
-        new() { Name = "Ocean", Description = "Dark blues to teals to light cyans", Config = new() { ColorStops = NoiseFieldPresets.Ocean }, PreviewGradient = "linear-gradient(90deg, #0a1628, #1e40af, #0d9488, #06b6d4, #67e8f9, #0a1628)" },
-        new() { Name = "Lava", Description = "Deep reds to oranges to yellows", Config = new() { ColorStops = NoiseFieldPresets.Lava }, PreviewGradient = "linear-gradient(90deg, #1c0a00, #991b1b, #dc2626, #f97316, #facc15, #1c0a00)" },
+        new() { Name = "Default", Description = "Deep indigo to violet to purple to pink to rose", Config = new() { ColorStops = NoiseFieldPresets.Default }, PreviewGradient = "linear-gradient(90deg, #0a0a2e, #1e1b4b, #6366f1, #8b5cf6, #c084fc, #ec4899, #f43f5e, #1e1b4b, #0a0a2e)" },
+        new() { Name = "Aurora", Description = "Deep space to emerald to teal to violet", Config = new() { ColorStops = NoiseFieldPresets.Aurora }, PreviewGradient = "linear-gradient(90deg, #020617, #0c1445, #0f4c3a, #10b981, #14b8a6, #22d3ee, #8b5cf6, #0c1445, #020617)" },
+        new() { Name = "Sunset", Description = "Deep plum to coral to amber to violet", Config = new() { ColorStops = NoiseFieldPresets.Sunset }, PreviewGradient = "linear-gradient(90deg, #1a0a2e, #4c1d95, #f97316, #fb923c, #f43f5e, #e879f9, #a855f7, #4c1d95, #1a0a2e)" },
+        new() { Name = "Ocean", Description = "Deep abyss to navy to teal to cyan to light blue", Config = new() { ColorStops = NoiseFieldPresets.Ocean }, PreviewGradient = "linear-gradient(90deg, #020617, #0a1628, #1e3a5f, #1e40af, #0d9488, #06b6d4, #22d3ee, #67e8f9, #0a1628, #020617)" },
+        new() { Name = "Lava", Description = "Deep black to crimson to orange to gold", Config = new() { ColorStops = NoiseFieldPresets.Lava }, PreviewGradient = "linear-gradient(90deg, #0a0000, #1c0a00, #7f1d1d, #991b1b, #dc2626, #f97316, #facc15, #991b1b, #1c0a00, #0a0000)" },
         new() { Name = "Monochrome", Description = "Black to white grayscale", Config = new() { ColorStops = NoiseFieldPresets.Monochrome }, PreviewGradient = "linear-gradient(90deg, #000000, #6b7280, #ffffff, #6b7280, #000000)" },
-        new() { Name = "Neon", Description = "Dark to electric pink to cyan", Config = new() { ColorStops = NoiseFieldPresets.Neon }, PreviewGradient = "linear-gradient(90deg, #0a0a1a, #ec4899, #06b6d4, #a855f7, #0a0a1a)" }
+        new() { Name = "Neon", Description = "Dark to electric pink to cyan to violet", Config = new() { ColorStops = NoiseFieldPresets.Neon }, PreviewGradient = "linear-gradient(90deg, #05051a, #0a0a2e, #ec4899, #f472b6, #06b6d4, #22d3ee, #a855f7, #c084fc, #0a0a2e, #05051a)" }
     ];
 
     public NoiseFieldConfig ApplyParameter(NoiseFieldConfig config, string propertyName, object? value)

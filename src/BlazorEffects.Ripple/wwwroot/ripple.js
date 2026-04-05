@@ -39,28 +39,27 @@ function hexToRgb(hex) {
 
 function getCanvasSize(canvas) {
     const rect = canvas.parentElement.getBoundingClientRect();
-    const config = {
+    return {
         width: Math.max(1, Math.floor(rect.width)),
         height: Math.max(1, Math.floor(rect.height))
     };
-    return applyReducedMotion(config);
 }
 
 /**
  * Create a single ripple at a given center point.
  */
-function createRipple(x, y, config) {
-    const config = {
+function createRipple(x, y, cfg) {
+    const ripple = {
         x: x,
         y: y,
         radius: 0,
         opacity: 1.0,
-        lineWidth: config.lineWidth,
-        speed: config.speed,
-        maxRadius: config.maxRadius,
-        decay: config.decay
+        lineWidth: cfg.lineWidth,
+        speed: cfg.speed,
+        maxRadius: cfg.maxRadius,
+        decay: cfg.decay
     };
-    return applyReducedMotion(config);
+    return applyReducedMotion(ripple);
 }
 
 /**

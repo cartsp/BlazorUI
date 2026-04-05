@@ -38,11 +38,10 @@ function hexToRgb(hex) {
 
 function getCanvasSize(canvas) {
     const rect = canvas.parentElement.getBoundingClientRect();
-    const config = {
+    return {
         width: Math.max(1, Math.floor(rect.width)),
         height: Math.max(1, Math.floor(rect.height))
     };
-    return applyReducedMotion(config);
 }
 
 /**

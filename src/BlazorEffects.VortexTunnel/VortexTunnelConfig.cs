@@ -59,10 +59,8 @@ public sealed record VortexTunnelConfig : IEffectConfig
     public double Opacity { get; init; } = 1.0;
 
     /// <summary>
-    /// Target frames per second. Clamped 1-120.
-    /// </summary>
-    /// <summary>
-    /// How to respond to prefers-reduced-motion. Default: Minimal.
+    /// How to respond to prefers-reduced-motion. Options: Pause, Minimal, Ignore.
+    /// Default: Minimal.
     /// </summary>
     public string ReducedMotionBehavior { get; init; } = "Minimal";
 

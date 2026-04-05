@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BlazorEffects — Live Demo</title>
+    <meta name="description" content="Visually stunning animated background effects for Blazor. Interactive playground with live preview, presets, and code export." />
+    <meta name="og:title" content="BlazorEffects — Live Demo" />
+    <meta name="og:description" content="Canvas-powered animations, particle systems, and generative art for Blazor — drop-in Razor Class Libraries." />
+    <meta name="og:type" content="website" />
+    <link rel="icon" href="favicon.png" />
+    <base href="/" />
+    <link href="css/output.css" rel="stylesheet" />
+    <link href="BlazorEffects.Demo.Wasm.styles.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div id="app">
+        <!-- Loading screen shown before WASM boots -->
+        <style>
+            .wasm-loader {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                height: 100vh;
+                background: #0a0a0a;
+                color: #888;
+                font-family: system-ui, -apple-system, sans-serif;
+            }
+            .wasm-loader h1 { font-size: 1.5rem; color: #e0e0e0; margin-bottom: 1rem; }
+            .wasm-loader .spinner {
+                width: 32px; height: 32px;
+                border: 3px solid #333; border-top-color: #a855f7;
+                border-radius: 50%;
+                animation: spin 0.8s linear infinite;
+            }
+            @keyframes spin { to { transform: rotate(360deg); } }
+        </style>
+        <div class="wasm-loader">
+            <h1>✨ BlazorEffects</h1>
+            <div class="spinner"></div>
+            <p style="margin-top:1rem;font-size:0.875rem;">Loading demo...</p>
+        </div>
+    </div>
+
+    <script src="_framework/blazor.webassembly.js"></script>
+</body>
+
+</html>

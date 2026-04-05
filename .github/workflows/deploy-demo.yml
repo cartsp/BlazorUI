@@ -56,10 +56,15 @@ jobs:
         run: |
           # GitHub Pages serves from /BlazorUI/ when using project pages
           # For custom domain or user pages, this would be "/"
-          $indexPath = "publish-output/wwwroot/index.html"
-          $content = Get-Content $indexPath -Raw
-          $content = $content -replace '<base href="/"', '<base href="/BlazorUI/"'
-          Set-Content $indexPath $content
+          # Fix base path in both index.html and 404.html (SPA routing fallback)
+          foreach ($file in @("index.html", "404.html")) {
+            $path = "publish-output/wwwroot/$file"
+            if (Test-Path $path) {
+              $content = Get-Content $path -Raw
+              $content = $content -replace '<base href="/"', '<base href="/BlazorUI/"'
+              Set-Content $path $content
+            }
+          }
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

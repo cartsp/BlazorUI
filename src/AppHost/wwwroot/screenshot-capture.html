@@ -37,10 +37,64 @@
             matrixrain:     './_content/BlazorEffects.MatrixRain/matrix-rain.js',
             particles:      './_content/BlazorEffects.Particles/particle-constellation.js',
             gradientwaves:  './_content/BlazorEffects.GradientWaves/gradient-waves.js',
+            starfield:      './_content/BlazorEffects.Starfield/starfield.js',
+            fireembers:     './_content/BlazorEffects.FireEmbers/fire-embers.js',
+            ripple:         './_content/BlazorEffects.Ripple/ripple.js',
+            vortextunnel:   './_content/BlazorEffects.VortexTunnel/vortextunnel.js',
         };
 
         // ─── Default Configs (matched to each effect's normalizeConfig defaults) ───
         const DEFAULT_CONFIGS = {
+            starfield: {
+                starCount: 800,
+                starColor: '#ffffff',
+                starSize: 2,
+                speed: 2,
+                trailLength: 0.6,
+                depth: 1000,
+                backgroundColor: '#000000',
+                opacity: 1.0,
+                targetFps: 60,
+            },
+            fireembers: {
+                particleCount: 200,
+                flameColor: '#ff6600',
+                emberColor: '#ffcc00',
+                speed: 1.5,
+                particleSize: 4,
+                turbulence: 1,
+                emberRatio: 0.3,
+                backgroundColor: '#0a0a0a',
+                opacity: 0.9,
+                targetFps: 60,
+            },
+            ripple: {
+                maxRipples: 20,
+                maxRadius: 300,
+                speed: 3,
+                color: '#60a5fa',
+                lineWidth: 2,
+                decay: 0.02,
+                trigger: 'auto',
+                autoRippleCount: 5,
+                autoInterval: 800,
+                backgroundColor: '#0f172a',
+                opacity: 1.0,
+                targetFps: 60,
+            },
+            vortextunnel: {
+                ringCount: 20,
+                rotationSpeed: 0.02,
+                color: '#8b5cf6',
+                colors: [],
+                scaleFactor: 0.92,
+                shape: 'circle',
+                polygonSides: 6,
+                lineWidth: 2,
+                backgroundColor: '#030712',
+                opacity: 1.0,
+                targetFps: 60,
+            },
             aurora: {
                 colors: ['#00ff87', '#7b2ff7', '#00b4d8'],
                 ribbonCount: 4,
@@ -125,6 +179,8 @@
             if (containerW && containerH && !isNaN(containerW) && !isNaN(containerH)) {
                 container.style.width = containerW + 'px';
                 container.style.height = containerH + 'px';
+                canvas.style.width = containerW + 'px';
+                canvas.style.height = containerH + 'px';
             }
 
             // ─── Load & Initialize Effect ──────────────────────────

@@ -49,8 +49,8 @@ function getCanvasSize(canvas) {
 /**
  * Create a single fire/ember particle.
  */
-function createParticle(config, canvasWidth, canvasHeight) {
-    const isEmber = Math.random() < config.emberRatio;
+function createParticle(cfg, canvasWidth, canvasHeight) {
+    const isEmber = Math.random() < cfg.emberRatio;
     const config = {
         x: Math.random() * canvasWidth,
         y: canvasHeight + Math.random() * 50, // Start just below canvas
@@ -60,8 +60,8 @@ function createParticle(config, canvasWidth, canvasHeight) {
         life: 0,
         maxLife: 0.5 + Math.random() * 0.5, // 0.5 to 1.0 normalized lifetime
         size: isEmber
-            ? (0.5 + Math.random() * 1.5) * (config.particleSize / 4)
-            : (1.0 + Math.random() * 1.0) * config.particleSize,
+            ? (0.5 + Math.random() * 1.5) * (cfg.particleSize / 4)
+            : (1.0 + Math.random() * 1.0) * cfg.particleSize,
         wobbleOffset: Math.random() * Math.PI * 2,
         wobbleSpeed: 1 + Math.random() * 2
     };

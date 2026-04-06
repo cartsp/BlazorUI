@@ -39,6 +39,26 @@ Canvas-powered animations, particle systems, and generative art — packaged as 
     <td><img src="screenshots/noise.png" alt="Noise Field effect - animated simplex noise texture with flowing purple-to-pink gradients" width="250"/></td>
     <td><img src="screenshots/gradient-waves.png" alt="Gradient Waves effect - smoothly morphing mesh gradient with drifting color points" width="250"/></td>
   </tr>
+  <tr>
+    <td align="center"><b>⭐ Starfield</b></td>
+    <td align="center"><b>🔥 Fire / Embers</b></td>
+    <td align="center"><b>💧 Ripple</b></td>
+  </tr>
+  <tr>
+    <td><img src="screenshots/starfield.png" alt="Starfield effect - stars flying toward the camera with warp-speed trails on black background" width="250"/></td>
+    <td><img src="screenshots/fire-embers.png" alt="Fire and Embers effect - rising flame particles with glowing orange and yellow embers" width="250"/></td>
+    <td><img src="screenshots/ripple.png" alt="Ripple effect - light blue concentric circles expanding on dark navy background" width="250"/></td>
+  </tr>
+  <tr>
+    <td align="center"><b>🌀 Vortex Tunnel</b></td>
+    <td align="center"></td>
+    <td align="center"></td>
+  </tr>
+  <tr>
+    <td><img src="screenshots/vortex-tunnel.png" alt="Vortex Tunnel effect - purple concentric rings spiraling inward creating tunnel depth" width="250"/></td>
+    <td></td>
+    <td></td>
+  </tr>
 </table>
 
 > **Note:** These are real screenshots captured from the running BlazorEffects Playground. The actual effects are **smooth 60fps canvas animations** — run the Playground to see them in motion.

@@ -3,7 +3,7 @@
   <PropertyGroup>
     <!-- Default to non-packable; individual effect projects override this to true -->
     <IsPackable>false</IsPackable>
-    <Version>0.3.0</Version>
+    <Version>0.3.0-rc.1</Version>
     <Authors>cartsp</Authors>
     <Company>cartsp</Company>
     <Copyright>Copyright © 2026 cartsp</Copyright>

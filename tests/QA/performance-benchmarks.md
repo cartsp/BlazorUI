@@ -143,15 +143,18 @@ Estimated initialization costs:
 
 ## Recommendations (Priority Order)
 
-### P0 — Before v0.3.0 ship
-1. **Add `prefers-reduced-motion` support** to all effects via shared utility in `blazor-effects-core.js`
-2. **Add `aria-hidden="true"` and `role="presentation"`** to canvas elements in `EffectComponentBase`
+### P0 — FIXED before v0.3.0 ship
+1. ✅ **Added `prefers-reduced-motion` support** to all effects (commit `1228de9`)
+2. ✅ **Added `aria-hidden="true"` and `role="presentation"` to all canvas elements (commit `1228de9`)
+3. ✅ **Fixed runtime crash** in Aurora and Noise — missing `applyReducedMotion` (commit `3a6b432`)
+4. ✅ **Removed erroneous `applyReducedMotion` calls** from `getCanvasSize` in all effects (commits `0c483cf`, `3a6b432`, `4f07910`)
 
 ### P1 — Performance improvements
-3. **Add resolution downscaling** to Particles, Starfield, and FireEmbers for mobile
-4. **Add adaptive quality** to NoiseField (auto-reduce octaves when FPS drops)
-5. **Add `devicePixelRatio` capping** option to `EffectComponentBase` for all effects
+5. **Add resolution downscaling** to Particles, Starfield, and FireEmbers for mobile
+6. **Add adaptive quality** to NoiseField (auto-reduce octaves when FPS drops)
+7. **Add `devicePixelRatio` capping** option to `EffectComponentBase` for all effects
 
 ### P2 — Nice to have
-6. **Add FPS counter overlay** for debug/development mode
-7. **Add performance preset** (low/medium/high) to `EffectDefaults`
+8. **Add FPS counter overlay** for debug/development mode
+9. **Add performance preset** (low/medium/high) to `EffectDefaults`
+10. **Refactor `applyReducedMotion`** to use ES module imports from shared `reduced-motion.js` (currently duplicated in 8 effects)

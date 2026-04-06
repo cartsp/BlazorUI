@@ -14,46 +14,43 @@ Use this template for each new effect component. Check off items as they are ver
 - [ ] Applies custom `Height` parameter
 - [ ] Renders child content inside overlay div
 - [ ] Does not render overlay when no child content
-- [ ] Applies `CssClass` to overlay
-- [ ] Applies canvas `Opacity` via inline style
-- [ ] Renders with all presets without errors
-- [ ] Renders with all custom parameters without errors
-- [ ] Component-specific parameters (e.g., Colors, BlendMode) render correctly
+- [ ] Applies `CssClass` parameter
+- [ ] Has `aria-hidden="true"` and `role="presentation"` on canvas
 
 #### Config Tests (`{ComponentName}ConfigTests.cs`)
-- [ ] Default config has expected values matching component defaults
+- [ ] Default config has expected values
 - [ ] Config implements `IEffectConfig`
-- [ ] Custom values stored correctly
-- [ ] Config equality/inequality works for scalar properties
-- [ ] Array property element-wise matching works
+- [ ] Config equality works
+- [ ] Config hash is consistent
+- [ ] `ReducedMotionBehavior` property present with default "Minimal"
 
 #### Presets Tests (`{ComponentName}PresetsTests.cs`)
-- [ ] Each preset returns expected colors/values
-- [ ] All presets return non-null, non-empty arrays
-- [ ] All preset hex colors are valid format (`#` + 7 chars)
+- [ ] All presets are non-null
+- [ ] All color values are valid hex
+- [ ] Expected preset names exist
 
-#### Config-Hash Diffing
-- [ ] `ComputeConfigHash()` returns consistent hash for same parameters
-- [ ] Hash changes when any parameter changes (triggers JS `update()`)
-
-#### Build Verification
-- [ ] RCL project builds without errors (`dotnet build`)
-- [ ] Test project builds and all tests pass (`dotnet test`)
-- [ ] No compiler warnings
+#### Descriptor Tests (`{ComponentName}DescriptorTests.cs`)
+- [ ] Descriptor implements `IEffectDescriptor<TConfig>`
+- [ ] Parameter definitions are correct
+- [ ] Apply/update logic works
+- [ ] Preset metadata is valid
 
 ---
 
 ## Component Status Tracker
 
-| Component | Issue | Component Tests | Config Tests | Presets Tests | Build | Status |
-|-----------|-------|----------------|-------------|---------------|-------|--------|
-| Matrix Rain | [AIE-18](/AIE/issues/AIE-18) | ✅ 10 tests | ✅ 4 tests | ✅ 5 tests | ✅ | Complete |
-| Aurora Borealis | [AIE-14](/AIE/issues/AIE-14) | ✅ 16 tests | ✅ 6 tests | ✅ 5 tests | ✅ | Complete |
-| Particle Constellation | [AIE-16](/AIE/issues/AIE-16) | ✅ 12 tests | ✅ 5 tests | ✅ 7 tests | ✅ | Complete |
-| Morphing Gradient Blobs | [AIE-17](/AIE/issues/AIE-17) | ✅ 17 tests | ✅ 6 tests | ✅ 7 tests | ✅ | Complete |
-| Noise Field | [AIE-19](/AIE/issues/AIE-19) | ✅ 19 tests | ✅ 8 tests | ✅ 8 tests | ✅ | Complete |
-| Gradient Waves | [AIE-44](/AIE/issues/AIE-44) | ⚠️ Exists, not QA-verified | ⚠️ Exists, not QA-verified | ⚠️ Exists, not QA-verified | ⚠️ Not QA-verified | **Needs QA Review** |
+| Component | Issue | Component Tests | Config Tests | Presets Tests | Descriptor Tests | Total | QA Status |
+|-----------|-------|----------------|-------------|--------------|-----------------|-------|-----------|
+| MatrixRain | [AIE-18](/AIE/issues/AIE-18) | 10 | 4 | 5 | 14 | 33 | ✅ QA Reviewed |
+| Aurora | [AIE-14](/AIE/issues/AIE-14) | 16 | 6 | 5 | 18 | 45 | ✅ QA Reviewed |
+| Particles | [AIE-16](/AIE/issues/AIE-16) | 12 | 5 | 7 | 14 | 38 | ✅ QA Reviewed |
+| Blobs | [AIE-17](/AIE/issues/AIE-17) | 17 | 6 | 7 | 20 | 50 | ✅ QA Reviewed |
+| Noise | [AIE-19](/AIE/issues/AIE-19) | 19 | 8 | 8 | 20 | 55 | ✅ QA Reviewed |
+| Gradient Waves | [AIE-44](/AIE/issues/AIE-44) | — | — | — | — | 56 | ✅ QA Reviewed |
+| Starfield | [AIE-73](/AIE/issues/AIE-73) | — | — | — | — | 37 | ✅ QA Reviewed (retroactive) |
+| Fire/Embers | [AIE-73](/AIE/issues/AIE-73) | — | — | — | — | 37 | ✅ QA Reviewed (retroactive) |
+| Ripple | [AIE-74](/AIE/issues/AIE-74) | — | — | — | — | 37 | ✅ QA Reviewed (retroactive) |
+| Vortex/Tunnel | [AIE-74](/AIE/issues/AIE-74) | — | — | — | — | 40 | ✅ QA Reviewed (retroactive) |
+| **TOTAL** | | | | | | **613** | |
 
-> **Note:** When adding a new effect component, create a test project at `tests/BlazorEffects.{ComponentName}.Tests/` with the three standard test files. Follow the established pattern from MatrixRain or Blobs.
-
-> ⚠️ **Gradient Waves was added without QA review.** Tests exist (component, config, presets, descriptor) but were not independently verified by QA. This is a process gap — see [AIE-49](/AIE/issues/AIE-49).
+> **Note:** When adding a new effect component, create a test project at `tests/BlazorEffects.{ComponentName}.Tests/` with the four standard test files. Follow the established pattern from MatrixRain or Blobs.

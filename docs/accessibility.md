@@ -1,7 +1,8 @@
 # Accessibility Guide — BlazorEffects
 
-> **QA Review Date:** 2026-04-05
-> **Status:** Audit complete, critical gaps identified
+> **QA Review Date:** 2026-04-06 (updated)
+> **Status:** Critical gaps FIXED (commits `1228de9`, `0c483cf`, `3a6b432`, `4f07910`)
+> **Remaining:** GradientWaves inline a11y (minor), code duplication in JS (P2)
 
 ## Overview
 
@@ -9,22 +10,22 @@ BlazorEffects uses HTML5 `<canvas>` elements for all visual effects. Canvas-base
 
 ## Current State
 
-### ❌ Critical Gap: `prefers-reduced-motion` Support
+### ✅ FIXED: `prefers-reduced-motion` Support (commit `1228de9`)
 
-**Status:** Only 1 of 10 effects respects `prefers-reduced-motion`.
+**Status:** All 10 effects now have `prefers-reduced-motion` support.
 
 | Effect | Respects `prefers-reduced-motion` | Notes |
 |--------|----------------------------------|-------|
-| MatrixRain | ❌ No | Continuous animation with no pause |
-| Morphing Blobs | ❌ No | Continuous animation with no pause |
-| Particles | ❌ No | Continuous animation with no pause |
-| Aurora Borealis | ❌ No | Continuous animation with no pause |
-| Noise Field | ❌ No | Continuous animation with no pause |
-| Gradient Waves | ✅ Yes | Freezes animation, renders single static frame |
-| Starfield | ❌ No | Continuous animation with no pause |
-| Fire/Embers | ❌ No | Continuous animation with no pause |
-| Ripple | ❌ No | Event-triggered, but no reduced-motion handling |
-| Vortex/Tunnel | ❌ No | Continuous animation with no pause |
+| MatrixRain | ✅ Yes | Via `applyReducedMotion()` in JS |
+| Morphing Blobs | ✅ Yes | Via `applyReducedMotion()` in JS |
+| Particles | ✅ Yes | Via `applyReducedMotion()` in JS |
+| Aurora Borealis | ✅ Yes | Via `applyReducedMotion()` (fixed in `3a6b432`) |
+| Noise Field | ✅ Yes | Via `applyReducedMotion()` (fixed in `3a6b432`) |
+| Gradient Waves | ✅ Yes | Inline check in `init()` — always pauses, doesn't respect enum |
+| Starfield | ✅ Yes | Via `applyReducedMotion()` in JS |
+| Fire/Embers | ✅ Yes | Via `applyReducedMotion()` in JS |
+| Ripple | ✅ Yes | Via `applyReducedMotion()` in JS |
+| Vortex/Tunnel | ✅ Yes | Via `applyReducedMotion()` in JS |
 
 **Recommendation:** Add a shared `prefers-reduced-motion` check to `blazor-effects-core.js` that all effects use:
 
@@ -40,9 +41,9 @@ Each effect should:
 2. Listen for `change` events on the media query — toggle animation on/off dynamically
 3. Expose a `ReducedMotionBehavior` enum in C#: `Pause`, `StaticFrame`, `ReduceIntensity`
 
-### ❌ Critical Gap: Canvas ARIA Attributes
+### ✅ FIXED: Canvas ARIA Attributes (commit `1228de9`)
 
-**Status:** No canvas element has `aria-hidden="true"` or `role="presentation"`.
+**Status:** All 10 canvas elements now have `aria-hidden="true"` and `role="presentation"`.
 
 Canvas elements are invisible to screen readers by default, but without explicit `aria-hidden="true"`:
 - Screen readers may announce an unlabeled image/graphic

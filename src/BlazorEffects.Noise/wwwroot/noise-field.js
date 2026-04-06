@@ -182,11 +182,27 @@ function buildPaletteLUT(colorStops) {
 
 function getCanvasSize(canvas) {
     const rect = canvas.parentElement.getBoundingClientRect();
-    const config = {
+    return {
         width: Math.max(1, Math.floor(rect.width)),
         height: Math.max(1, Math.floor(rect.height))
     };
-    return applyReducedMotion(config);
+}
+
+// ─── Reduced Motion ─────────────────────────────────────────────
+
+function applyReducedMotion(config) {
+    const behavior = config.reducedMotionBehavior || "Minimal";
+    if (behavior === "Ignore") return config;
+    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (!prefersReduced) return config;
+    if (behavior === "Pause") {
+        config.speed = 0;
+        config.targetFps = 1;
+    } else {
+        config.speed = Math.max(0.1, (config.speed || 1) * 0.1);
+        config.targetFps = Math.min(config.targetFps, 12);
+    }
+    return config;
 }
 
 // ─── Init ─────────────────────────────────────────────────────────

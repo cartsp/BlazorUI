@@ -100,23 +100,38 @@ function fbm(x, y, octaves) {
 function hexToRgb(hex) {
     const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
     if (!result) return { r: 0, g: 255, b: 135 };
-    const config = {
+    return {
         r: parseInt(result[1], 16),
         g: parseInt(result[2], 16),
         b: parseInt(result[3], 16)
     };
-    return applyReducedMotion(config);
 }
 
 // ─── Canvas Helpers ──────────────────────────────────────────────
 
 function getCanvasSize(canvas) {
     const rect = canvas.parentElement.getBoundingClientRect();
-    const config = {
+    return {
         width: Math.max(1, Math.floor(rect.width)),
         height: Math.max(1, Math.floor(rect.height))
     };
-    return applyReducedMotion(config);
+}
+
+// ─── Reduced Motion ─────────────────────────────────────────────
+
+function applyReducedMotion(config) {
+    const behavior = config.reducedMotionBehavior || "Minimal";
+    if (behavior === "Ignore") return config;
+    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (!prefersReduced) return config;
+    if (behavior === "Pause") {
+        config.speed = 0;
+        config.targetFps = 1;
+    } else {
+        config.speed = Math.max(0.1, (config.speed || 1) * 0.1);
+        config.targetFps = Math.min(config.targetFps, 12);
+    }
+    return config;
 }
 
 // ─── Ribbon Construction ────────────────────────────────────────
